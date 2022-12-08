@@ -4,9 +4,6 @@ const CustomHead = () => <Head title="Home | The Ethereum Foundation" />
 
 export default CustomHead;
 
-
-
-
 // const Head = () => {
 //   return (
 //     <head>

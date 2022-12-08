@@ -1,0 +1,246 @@
+/* Main Menu */
+.main--menu--container {
+  position: absolute;
+  z-index: 108;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  pointer-events: none;
+
+  &.open {
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+    pointer-events: none;
+
+    .menu--content--text,
+    .menu--content--dot,
+    .secondary--links--container {
+      pointer-events: auto;
+      $time: 0.075s;
+
+      &.one {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 1;
+      }
+
+      &.two {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 2;
+      }
+
+      &.three {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 3;
+      }
+
+      &.four {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 4;
+      }
+
+      &.five {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 5;
+      }
+
+      &.six {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 6;
+      }
+
+      &.seven {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 7;
+      }
+
+      &.eight {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 8;
+      }
+
+      &.nine {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 9;
+      }
+
+      &.ten {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 10;
+      }
+
+      &.eleven {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 11;
+      }
+
+      &.secondary--links--container {
+        animation: fade-in 0.3s ease-in forwards;
+        animation-delay: $time * 12;
+      }
+    }
+  }
+}
+
+.ethereum--foundation--logo--text {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin-top: 43px;
+  margin-left: 43px;
+  color: white;
+  font-family: Darius-Light, serif;
+  font-weight: 300;
+  font-size: 22px;
+  z-index: 110;
+  width: 200px;
+  height: 60px;
+  transition: opacity 0.1s ease-out;
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  @media (max-width: 499px) {
+    margin-top: 9px;
+    margin-left: 25px;
+    color: white;
+    font-family: Darius-Light, serif;
+    font-weight: 300;
+    font-size: 22px;
+    z-index: 110;
+    height: 60px;
+    width: 130px;
+  }
+}
+
+.main--menu--internal--container {
+  width: 100%;
+  height: 100%;
+  background-position: 50% 50%;
+  background-size: cover;
+  background-image: url("/new-ethereum-foundation-menu-background.svg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.menu--content--container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.secondary--links--container {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  justify-content: space-around;
+  max-width: 250px;
+  border-top: 1px solid rgb(255, 255, 255, 0.3);
+  padding-top: 15px;
+  width: 100%;
+  margin-top: 60px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.main--menu--secondary--link {
+  color: white;
+  font-family: Darius-Light, serif;
+  font-size: 16px;
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.menu--content--text {
+  min-width: 250px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: white;
+  font-family: Darius-Light, serif;
+  font-size: 20px;
+  opacity: 0;
+  text-decoration: none;
+  cursor: pointer;
+
+  @media (max-width: 300px) {
+    font-size: 17px;
+  }
+}
+
+.menu--content--dot {
+  // /* -webkit-text-shadow: 0 0 5px 0 rgba(255,255,255,1); */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 1);
+  display: inline;
+  font-size: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  color: white;
+  margin-top: 5px;
+  font-family: auto;
+  margin-bottom: 5px;
+  opacity: 0;
+}
+
+// .menu--content--text,
+// .menu--content--dot,
+// .secondary--links--container {
+//   &.displayed {
+//     opacity: 1;
+//     pointer-events: auto;
+//     transition: opacity 0.3s ease-in;
+//   }
+// }
+
+.hamburger--menu--container {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-top: 51px;
+  margin-right: 60px;
+  z-index: 110;
+  cursor: pointer;
+  user-select: none;
+
+  @media (max-width: 580px) {
+    margin-top: 30px;
+    margin-right: 28px;
+  }
+
+  @media (max-width: 420px) {
+    margin-top: 30px;
+    margin-right: 28px;
+  }
+
+  &.hide--hamburger--menu {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+.header--logo--displayed {
+  filter: invert(80%) sepia(8%) saturate(2216%) hue-rotate(201deg) brightness(101%) contrast(84%);
+}
+
+.menu--content--text:hover,
+.secondary--links--container a:hover {
+  color: #8FFFEB;
+}

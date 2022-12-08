@@ -1,0 +1,150 @@
+.footer--outer--container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  z-index: 3;
+  width: 100vw;
+  z-index: 105;
+  cursor: default;
+  /* pointer-events: none; */
+  /* display: none; */
+  /* #testing #footer #refactor */
+  /* background-color: red; */
+  transition: height 0.2s ease-out, max-height 0.2s ease-out, min-height 0.2s ease-out;
+  color: white;
+
+  // :global(#footer--arrow--desktop) {
+  //   top: 50%;
+  //   transform: translateY(50%) rotate(180deg);
+  //   transition: margin-top 0.2s ease-out, transform 0.2s ease-out;
+  // }
+
+  @media (max-width: 499px) {
+    height: 40px;
+    min-height: 40px;
+    transition: height 0.2s ease-out, min-height 0.2s ease-out;
+
+    &:hover {
+      height: 40px;
+      min-height: 40px;
+    }
+  }
+
+  &.displayed {
+    opacity: 1;
+    height: 172px;
+    min-height: 172px;
+    transition: min-height 0.2s ease-out, height 0.2s ease-out, opacity 0.2s ease-out;
+    /* pointer-events: auto; */
+
+    :global(#footer--arrow--desktop) {
+      top: 0px;
+      margin-top: 50px;
+      transform: rotate(0deg);
+      transition: margin-top 0.2s ease-out, transform 0.2s ease-out;
+    }
+
+    :global(#footer--inner--container--two) {
+      opacity: 1;
+    }
+
+    :global(#footer--main--content--container) {
+      height: calc(var(--doc-height) - 40px);
+      /* background-color: black; */
+      flex-direction: column;
+      pointer-events: auto;
+      padding-top: 4vh;
+      padding-bottom: 4vh;
+      padding-left: 2vw;
+      padding-right: 2vw;
+      display: flex;
+    }
+
+    @media (max-width: 1100px) {
+      height: 220px;
+      min-height: 220px;
+      transition: height 0.2s ease-out, min-height 0.2s ease-out;
+    }
+
+    @media (max-width: 700px) {
+      height: 240px;
+      min-height: 240px;
+      transition: height 0.2s ease-out, min-height 0.2s ease-out;
+    }
+
+    @media (max-width: 499px) {
+      height: var(--doc-height);
+      min-height: var(--doc-height);
+      transition: height 0.2s ease-out, min-height 0.2s ease-out;
+    }
+
+    @media (min-width: 500px) {
+      height: 220px;
+      min-height: 220px;
+      transition: height 0.2s ease-out, min-height 0.2s ease-out;
+
+      :global(#footer--inner--container--two) {
+        opacity: 1;
+        transition: opacity 0.2s ease-out;
+      }
+
+      :global(#footer--ethereum--copyright--container) {
+        max-height: 40px;
+      }
+
+      :global(#footer--main--content--container) {
+        display: block;
+        height: calc(100% - 40px);
+        width: 100%;
+      }
+
+      :global(#footer--arrow--container--desktop) {
+        align-items: flex-start;
+        transition: align-items 0.2s ease-out;
+      }
+
+      :global(#footer--arrow--desktop) {
+        margin-top: 15px;
+        transform: rotate(0deg);
+        transition: margin-top 0.2s ease-out, transform 0.2 ease-out;
+      }
+    }
+  }
+}
+
+// Scroll indicator 
+.home--scroll--navigation--container {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: transform 2s ease-out;
+  animation-name: hover;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  z-index: 80;
+  cursor: ew-resize;
+  /* Main Menu Container has z-index 90 and should be above */
+}
+
+.home--scroll--down--text {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-family: "Libre Franklin", sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #36364C
+}
+
+.homepage--scroll--down--bottom--arrow {
+  cursor: ew-resize;
+}

@@ -146,6 +146,7 @@ body {
   margin: 0px;
   overflow: hidden;
   background-color: white;
+  color: white;
   height: var(--doc-height);
   overflow-y: clip;
   transition: height 0.2s ease-out;
@@ -154,26 +155,26 @@ body {
 
 /* Initial Page */
 
-#ethereum--foundation--logo--text {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  margin-top: 43px;
-  margin-left: 43px;
-  color: white;
-  font-family: Darius-Light, serif;
-  font-weight: 300;
-  font-size: 22px;
-  z-index: 110;
-  width: 200px;
-  height: 60px;
-  transition: opacity 0.1s ease-out;
-}
+// #ethereum--foundation--logo--text {
+//   position: absolute;
+//   top: 0px;
+//   left: 0px;
+//   margin-top: 43px;
+//   margin-left: 43px;
+//   color: white;
+//   font-family: Darius-Light, serif;
+//   font-weight: 300;
+//   font-size: 22px;
+//   z-index: 110;
+//   width: 200px;
+//   height: 60px;
+//   transition: opacity 0.1s ease-out;
+// }
 
-#ethereum--foundation--logo--text.hidden {
-  opacity: 0;
-  transition: opacity 0.1s ease-out;
-}
+// #ethereum--foundation--logo--text.hidden {
+//   opacity: 0;
+//   transition: opacity 0.1s ease-out;
+// }
 
 #canvas {
   pointer-events: none;
@@ -223,8 +224,6 @@ body {
   /* Non-prefixed version, currently
   supported by Chrome, Edge, Opera and Firefox */
 }
-
-
 
 object {
   pointer-events: none;
@@ -477,7 +476,7 @@ ol li {
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-#next--page--text.displayed {
+.next--page--text.displayed {
   transform: translateY(-20px);
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
@@ -492,7 +491,7 @@ ol li {
 
 }
 
-#next--page--text {
+.next--page--text {
   font-size: 12px;
   font-family: "Libre Franklin", sans-serif;
   font-weight: 300;
@@ -501,69 +500,26 @@ ol li {
   text-decoration: none;
   cursor: pointer;
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
+  color: white;
 
-#home--scroll--navigation--container {
-  position: absolute;
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  transition: transform 2s ease-out;
-  animation-name: hover;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  z-index: 80;
-  cursor: ew-resize;
-  /* Main Menu Container has z-index 90 and should be above */
-}
-
-
-#home--scroll--down--text {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  font-family: "Libre Franklin", sans-serif;
-  font-weight: 400;
-  font-size: 10px;
-  text-transform: uppercase;
-  color: #36364C
-}
-
-#homepage--scroll--down--bottom--arrow {
-  cursor: ew-resize;
+  // a {
+  //   color: white;
+  // }
 }
 
 /* Triggers hover state on the scroll down element, removed for now */
 
-#home--scroll--navigation--container.hide--scroll {
-  opacity: 0;
-  transition: opacity 0.3s ease-out;
-  pointer-events: none;
-}
+.hide--scroll {
+  #home--scroll--navigation--container {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+  }
 
-/* Footer Related CSS */
-
-#footer--outer--container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 40px;
-  min-height: 40px;
-  max-height: 40px;
-  z-index: 3;
-  width: 100vw;
-  z-index: 105;
-  cursor: default;
-  /* pointer-events: none; */
-  /* display: none; */
-  /* #testing #footer #refactor */
-  /* background-color: red; */
-  transition: height 0.2s ease-out, max-height 0.2s ease-out, min-height 0.2s ease-out;
-  color: white;
+  #ethereum--menu--svg,
+  #hamburger--menu--svg {
+    filter: none !important;
+  }
 }
 
 /* NEW STYLEs */
@@ -628,85 +584,11 @@ ol li {
 }
 
 @media (min-width: 500px) {
-
-  /** Non-CSS Implementation **/
-
-  #footer--outer--container.displayed {
-    height: 220px;
-    min-height: 220px;
-    transition: height 0.2s ease-out, min-height 0.2s ease-out;
-  }
-
-  #footer--outer--container.displayed #footer--inner--container--two {
-    opacity: 1;
-    transition: opacity 0.2s ease-out;
-  }
-
-  #footer--outer--container.displayed #footer--ethereum--copyright--container {
-    max-height: 40px;
-  }
-
-  #footer--outer--container.displayed #footer--main--content--container {
-    display: block;
-    height: calc(100% - 40px);
-    width: 100%;
-  }
-
-  #footer--outer--container.displayed #footer--arrow--container--desktop {
-    align-items: flex-start;
-    transition: align-items 0.2s ease-out;
-  }
-
-  #footer--outer--container.displayed #footer--arrow--desktop {
-    margin-top: 15px;
-    transform: rotate(0deg);
-    transition: margin-top 0.2s ease-out, transform 0.2 ease-out;
-  }
-
-  /** CSS Implementation */
-
-  /* #footer--outer--container:hover {
-      height: 220px;
-      min-height: 220px;
-      transition: height 0.2s ease-out, min-height 0.2s ease-out;
-  }
-  
-  #footer--outer--container:hover #footer--inner--container--two {
-      opacity: 1;
-      transition: opacity 0.2s ease-out;
-  }
-  
-  #footer--outer--container:hover #footer--ethereum--copyright--container {
-      max-height: 40px;
-  }
-  
-  #footer--outer--container:hover #footer--main--content--container {
-      display: block;
-      height: calc(100% - 40px);
-      width: 100%;
-  }
-
-  #footer--outer--container:hover #footer--arrow--container--desktop {
-      align-items: flex-start;
-      transition: align-items 0.2s ease-out;
-  }
-  
-  #footer--outer--container:hover #footer--arrow--desktop {
-      margin-top: 15px;
-      transform: rotate(0deg);
-      transition: margin-top 0.2s ease-out, transform 0.2 ease-out;
-  } */
-
-  /** End **/
-
-
   #main--content--inner--container {
     padding-left: max(5vw, 15px);
     padding-right: max(5vw, 15px);
   }
-
 }
-
 
 #footer--main--content {
   width: 100%;
@@ -886,14 +768,6 @@ ON desktop it is not set as absolute
   opacity: 0.5;
   background-color: #36364C;
   /* pointer-events: none; */
-}
-
-#footer--outer--container.displayed {
-  opacity: 1;
-  height: 172px;
-  min-height: 172px;
-  transition: min-height 0.2s ease-out, height 0.2s ease-out, opacity 0.2s ease-out;
-  /* pointer-events: auto; */
 }
 
 #footer--inner--container.displayed {
@@ -1207,126 +1081,9 @@ with the footer  */
 }
 
 /* Details */
-#hamburger--menu--container {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  margin-top: 51px;
-  margin-right: 60px;
-  z-index: 110;
-  cursor: pointer;
-  user-select: none;
-}
 
-#hamburger--menu--container.hide--hamburger--menu {
-  pointer-events: none;
-  opacity: 0;
-}
 
-#hamburger--menu--svg.header--logo--displayed {
-  filter: invert(80%) sepia(8%) saturate(2216%) hue-rotate(201deg) brightness(101%) contrast(84%);
-}
-
-#ethereum--menu--svg.header--logo--displayed {
-  filter: invert(80%) sepia(8%) saturate(2216%) hue-rotate(201deg) brightness(101%) contrast(84%);
-}
-
-/* Main Menu */
-
-#main--menu--container {
-  position: absolute;
-  z-index: 108;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  pointer-events: none;
-}
-
-#main--menu--container.displayed {
-  opacity: 1;
-  transition: opacity 0.2s ease-out;
-  pointer-events: none;
-}
-
-#main--menu--internal--container {
-  width: 100%;
-  height: 100%;
-  background-position: 50% 50%;
-  background-size: cover;
-  background-image: url("/new-ethereum-foundation-menu-background.svg");
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-#menu--content--container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-#secondary--links--container {
-  display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-  justify-content: space-around;
-  max-width: 250px;
-  border-top: 1px solid rgb(255, 255, 255, 0.3);
-  padding-top: 15px;
-  width: 100%;
-  margin-top: 60px;
-  opacity: 0;
-  transition: opacity 0.3s ease-in;
-}
-
-.main--menu--secondary--link {
-  color: white;
-  font-family: Darius-Light, serif;
-  font-size: 16px;
-  opacity: 1;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.3s ease-in;
-}
-
-.menu--content--text {
-  min-width: 250px;
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: white;
-  font-family: Darius-Light, serif;
-  font-size: 20px;
-  opacity: 0;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.3s ease-in;
-}
-
-.menu--content--dot {
-  /* -webkit-text-shadow: 0 0 5px 0 rgba(255,255,255,1); */
-  text-shadow: 0 0 5px rgba(255, 255, 255, 1);
-  display: inline;
-  font-size: 20px;
-  text-decoration: none;
-  cursor: pointer;
-  color: white;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  opacity: 0;
-}
-
-.menu--content--text.displayed,
-.menu--content--dot.displayed,
-#secondary--links--container.displayed {
-  opacity: 1;
-  pointer-events: auto;
-  transition: opacity 0.3s ease-in;
-}
+// Footer
 
 #footer--left--logo {
   width: 105px;
@@ -1434,7 +1191,7 @@ with the footer  */
 .executive--board--social--media--handle:hover,
 .menu--content--text:hover,
 #secondary--links--container a:hover,
-#next--page--navigation--container:hover #next--page--text {
+#next--page--navigation--container:hover .next--page--text {
   color: #8FFFEB;
 }
 
@@ -1457,12 +1214,6 @@ with the footer  */
 
 
 @media (max-width: 1100px) {
-
-  #footer--outer--container.displayed {
-    height: 220px;
-    min-height: 220px;
-    transition: height 0.2s ease-out, min-height 0.2s ease-out;
-  }
 
   #footer--ethereum--logo {
     height: 55px;
@@ -1550,13 +1301,6 @@ with the footer  */
 }
 
 @media (max-width: 700px) {
-
-  #footer--outer--container.displayed {
-    height: 240px;
-    min-height: 240px;
-    transition: height 0.2s ease-out, min-height 0.2s ease-out;
-  }
-
   .footer--link--two {
     font-size: 12px;
     transition: width 0.2s ease-out;
@@ -1609,44 +1353,38 @@ with the footer  */
 
 @media (max-width: 580px) {
 
-  /* #footer--outer--container:hover {
-      height: 282px;
-      min-height: 282px;
-      transition: height 0.2s ease-out, min-height 0.2s ease-out;
-  } */
-
   .contact--item--title,
   .contact--item--email {
     font-size: 11px;
     transition: font-size 0.2s ease-out;
   }
 
-  #hamburger--menu--container {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    margin-top: 30px;
-    margin-right: 28px;
-    z-index: 109;
-    cursor: pointer;
-    user-select: none;
-  }
+  // #hamburger--menu--container {
+  //   position: absolute;
+  //   top: 0px;
+  //   right: 0px;
+  //   margin-top: 30px;
+  //   margin-right: 28px;
+  //   z-index: 109;
+  //   cursor: pointer;
+  //   user-select: none;
+  // }
 
-  #ethereum--foundation--logo--text {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    margin-top: 9px;
-    margin-left: 25px;
-    color: white;
-    font-family: Darius-Light, serif;
-    font-weight: 300;
-    font-size: 22px;
-    z-index: 110;
-    width: 200px;
-    height: 60px;
-    width: 130px;
-  }
+  // #ethereum--foundation--logo--text {
+  //   position: absolute;
+  //   top: 0px;
+  //   left: 0px;
+  //   margin-top: 9px;
+  //   margin-left: 25px;
+  //   color: white;
+  //   font-family: Darius-Light, serif;
+  //   font-weight: 300;
+  //   font-size: 22px;
+  //   z-index: 110;
+  //   width: 200px;
+  //   height: 60px;
+  //   width: 130px;
+  // }
 
   #main--content--inner--container {
     padding-left: max(5vw, 15px);
@@ -1680,39 +1418,21 @@ with the footer  */
 @media (max-width: 499px) {
 
 
-  #ethereum--foundation--logo--text {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    margin-top: 9px;
-    margin-left: 25px;
-    color: white;
-    font-family: Darius-Light, serif;
-    font-weight: 300;
-    font-size: 22px;
-    z-index: 110;
-    width: 200px;
-    height: 60px;
-    width: 130px;
-  }
-
-  #footer--outer--container {
-    height: 40px;
-    min-height: 40px;
-    transition: height 0.2s ease-out, min-height 0.2s ease-out;
-  }
-
-  #footer--outer--container:hover {
-    height: 40px;
-    min-height: 40px;
-    transition: height 0.2s ease-out, min-height 0.2s ease-out;
-  }
-
-  #footer--outer--container.displayed {
-    height: var(--doc-height);
-    min-height: var(--doc-height);
-    transition: height 0.2s ease-out, min-height 0.2s ease-out;
-  }
+  // #ethereum--foundation--logo--text {
+  //   position: absolute;
+  //   top: 0px;
+  //   left: 0px;
+  //   margin-top: 9px;
+  //   margin-left: 25px;
+  //   color: white;
+  //   font-family: Darius-Light, serif;
+  //   font-weight: 300;
+  //   font-size: 22px;
+  //   z-index: 110;
+  //   width: 200px;
+  //   height: 60px;
+  //   width: 130px;
+  // }
 
   #main--content--title {
     font-size: 34px;
@@ -1763,18 +1483,6 @@ with the footer  */
     align-items: flex-start;
   }
 
-  #footer--outer--container #footer--arrow--desktop {
-    top: 50%;
-    transform: translateY(50%) rotate(180deg);
-    transition: margin-top 0.2s ease-out, transform 0.2s ease-out;
-  }
-
-  #footer--outer--container.displayed #footer--arrow--desktop {
-    top: 0px;
-    margin-top: 50px;
-    transform: rotate(0deg);
-    transition: margin-top 0.2s ease-out, transform 0.2s ease-out;
-  }
 
   #main--content--inner--container {
     padding-left: max(5vw, 15px);
@@ -1783,22 +1491,6 @@ with the footer  */
 
   #footer--main--content--container {
     display: none;
-  }
-
-  #footer--outer--container.displayed #footer--inner--container--two {
-    opacity: 1;
-  }
-
-  #footer--outer--container.displayed #footer--main--content--container {
-    height: calc(var(--doc-height) - 40px);
-    /* background-color: black; */
-    flex-direction: column;
-    pointer-events: auto;
-    padding-top: 4vh;
-    padding-bottom: 4vh;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    display: flex;
   }
 
   #footer--main--content {
@@ -1915,16 +1607,16 @@ with the footer  */
 
 @media (max-width: 420px) {
 
-  #hamburger--menu--container {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    margin-top: 30px;
-    margin-right: 28px;
-    z-index: 109;
-    cursor: pointer;
-    user-select: none;
-  }
+  // #hamburger--menu--container {
+  //   position: absolute;
+  //   top: 0px;
+  //   right: 0px;
+  //   margin-top: 30px;
+  //   margin-right: 28px;
+  //   z-index: 109;
+  //   cursor: pointer;
+  //   user-select: none;
+  // }
 
 
   #main--content--inner--container {
@@ -1935,7 +1627,6 @@ with the footer  */
   #canari--disclaimer {
     line-height: 22px;
   }
-
 }
 
 
@@ -1946,9 +1637,9 @@ with the footer  */
     font-size: 14px;
   }
 
-  .menu--content--text {
-    font-size: 17px;
-  }
+  // .menu--content--text {
+  //   font-size: 17px;
+  // }
 
 }
 
@@ -1975,8 +1666,6 @@ with the footer  */
 }
 
 
-
-
 /* Hover Effects */
 
 #next--page--navigation--container:hover #downward--arrow {
@@ -1984,7 +1673,7 @@ with the footer  */
   /* background-color: red; */
 }
 
-#next--page--navigation--container:hover #next--page--text {
+#next--page--navigation--container:hover .next--page--text {
   color: #8FFFEB;
 }
 
@@ -1992,6 +1681,6 @@ with the footer  */
   filter: invert(9%) sepia(20%) saturate(482%) hue-rotate(106deg) brightness(101%) contrast(103%);
 }
 
-#next--page--navigation--container--two:hover #next--page--text {
+#next--page--navigation--container--two:hover .next--page--text {
   color: #8FFFEB;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import Link from 'next/link';
+import MouseDownLink from '../../components/MouseDownLink'
 
-const EthereumFoundation = (props: any) => {
+const EthereumFoundation = () => {
   return (
     <>
       <div id="transition--container">
@@ -10,13 +10,12 @@ const EthereumFoundation = (props: any) => {
 
       <div id="canvas"></div>
 
-
       <main id="main--content--outer--container" className="">
         <div id="main--content--inner--container">
           <div id="homepage--welcome--text--inner--container" className="disable--selection">
             <h1 id="main--content--title" className=""> What is the EF? </h1>
             <p id="main--content--general--paragraph" className="">
-              The Ethereum Foundation (EF) is a non-profit that supports the Ethereum ecosystem. We are part of a larger community of organizations and individuals that fund protocol development, <Link id="grow--ecosystem--link" href="https://esp.ethereum.foundation/">grow the ecosystem</Link>, and advocate for Ethereum.
+              The Ethereum Foundation (EF) is a non-profit that supports the Ethereum ecosystem. We are part of a larger community of organizations and individuals that fund protocol development, <MouseDownLink id="grow--ecosystem--link" href="https://esp.ethereum.foundation/">grow the ecosystem</MouseDownLink>, and advocate for Ethereum.
               <br></br>
               Behind that simple description, the EF is hard to categorize. We are not a tech company, or a “normal” non-profit. Just as Ethereum requires new concepts and technologies, it has spawned new kinds of organizations.
               <br></br>
@@ -33,7 +32,7 @@ const EthereumFoundation = (props: any) => {
                   <h4 className="executive--board--member--name">Aya Miyaguchi</h4>
                   <p className="executive--board--member--title">Executive Director</p>
                   <div className="social--media--link--container">
-                    <Link id="executive--board--link--aya" href="https://twitter.com/ayamiyagotchi" className="executive--board--social--media--handle">@AyaMiyagotchi</Link>
+                    <MouseDownLink id="executive--board--link--aya" href="https://twitter.com/ayamiyagotchi" className="executive--board--social--media--handle">@AyaMiyagotchi</MouseDownLink>
                   </div>
                 </div>
               </div>
@@ -43,7 +42,7 @@ const EthereumFoundation = (props: any) => {
                 <div className="column--container--executive--board">
                   <h4 className="executive--board--member--name">Vitalik Buterin</h4>
                   <p className="executive--board--member--title">Co-founder of Ethereum</p>
-                  <Link id="executive--board--link--vitalik" href="https://twitter.com/VitalikButerin" className="executive--board--social--media--handle">@VitalikButerin</Link>
+                  <MouseDownLink id="executive--board--link--vitalik" href="https://twitter.com/VitalikButerin" className="executive--board--social--media--handle">@VitalikButerin</MouseDownLink>
                 </div>
               </div>
 
@@ -56,10 +55,10 @@ const EthereumFoundation = (props: any) => {
               </div>
 
             </div>
-            <div id="next--page--navigation--container">
+            <MouseDownLink href="/philosophy" id="next--page--navigation--container">
               <object data="/assets/bottom-arrow.svg" id="downward--arrow" width="50" height="50" aria-labelledby="Explore Infinite Garden Button"> Explore Infinite Garden </object>
-              <p id="next--page--text"> Sit with our philosophy </p>
-            </div>
+              <p className="next--page--text"> Sit with our philosophy </p>
+            </MouseDownLink>
           </div>
         </div>
       </main>

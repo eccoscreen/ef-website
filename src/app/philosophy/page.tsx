@@ -1,4 +1,5 @@
 import React from 'react';
+import MouseDownLink from '../../components/MouseDownLink';
 
 const Philosophy = (props: any) => {
   return (
@@ -32,10 +33,10 @@ const Philosophy = (props: any) => {
               A set of strong core values such as a commitment to decentralization, open access, and many more have guided the development of Ethereum since the beginning. These values have come to be the soul of Ethereum. We do not try to control or force the natural processes of the ecosystem, but we do try to help the community preserve its values, and in doing so help Ethereum to maintain its soul.
             </p>
 
-            <div id="next--page--navigation--container">
+            <MouseDownLink href="/" id="next--page--navigation--container">
               <object data="/assets/bottom-arrow.svg" id="downward--arrow" width="50" height="50" aria-labelledby="Explore Infinite Garden Button"> Explore Infinite Garden </object>
-              <p id="next--page--text"> Back Home </p>
-            </div>
+              <p className="next--page--text"> Back Home </p>
+            </MouseDownLink>
           </div>
         </div>
       </main>

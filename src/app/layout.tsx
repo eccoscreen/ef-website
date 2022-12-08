@@ -1,5 +1,6 @@
 'use client'
-import React from "react";
+import { usePathname } from 'next/navigation';
+import React, { useReducer } from "react";
 import Footer from "../components/footer/Footer";
 import Nav from "../components/nav/Nav";
 import animate from "../components/page/animate";
@@ -9,15 +10,17 @@ import '../styles/reset.scss'
 const RootLayout = ({ children }: {
   children: React.ReactNode;
 }) => {
+  const pathname = usePathname();
+
   React.useEffect(() => {
-    animate();
-  }, []);
+    return animate(pathname);
+  }, [pathname]);
 
   return (
     <html lang="en">
       <body>
-        <Nav />
         {children}
+        <Nav />
         <Footer />
       </body>
     </html>

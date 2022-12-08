@@ -15,7 +15,7 @@ import firefliesFragmentShader from './animations/firefliesFragmentShader.glsl';
 // import './animations/explosionVertexShader.glsl';
 // import './animations/explosionVertexShaderTwo.glsl';
 
-export default () => {
+export default (url) => {
     const generalSceneControls = {
         ["ETH Rotation Speed"]: 0.0002,
     };
@@ -229,7 +229,7 @@ export default () => {
     }
 
     function isHomePage() {
-        return window.location.pathname === "/";
+        return url === "/";
     }
 
     function load3DModelObject(modelFileName, fileType) {
@@ -868,7 +868,9 @@ export default () => {
         const geometry = new THREE.SphereGeometry(500, 60, 40);
         geometry.scale(- 1, 1, 1);
 
-        let url = window.location.pathname;
+        // let url = window.location.pathname;
+
+        // console.log(url, 'url for animate')
 
         if (url === "/philosophy") {
 
@@ -1113,25 +1115,25 @@ export default () => {
 
     /** Scene Helpers **/
 
-    function addGridHelper() {
-        const size = 100;
-        const divisions = 100;
-        gridHelper = new THREE.GridHelper(size, divisions);
-        scene.add(gridHelper);
-        gridHelperDisplayed = true;
-    }
+    // function addGridHelper() {
+    //     const size = 100;
+    //     const divisions = 100;
+    //     gridHelper = new THREE.GridHelper(size, divisions);
+    //     scene.add(gridHelper);
+    //     gridHelperDisplayed = true;
+    // }
 
-    function addAxesHelper() {
-        const axesHelper = new THREE.AxesHelper(100);
-        scene.add(axesHelper);
-    }
+    // function addAxesHelper() {
+    //     const axesHelper = new THREE.AxesHelper(100);
+    //     scene.add(axesHelper);
+    // }
 
 
-    function begin() {
+    function begin(url) {
 
         initScene();
         initCamera();
-        initRenderer();
+        const disposeRendererElement = initRenderer();
         initPostProcessingEffects();
         initControls();
         initLoaders();
@@ -1173,6 +1175,9 @@ export default () => {
 
         animate(this);
 
+        return () => {
+            disposeRendererElement();
+        }
     }
 
     function initCamera() {
@@ -1192,7 +1197,6 @@ export default () => {
     }
 
     function initRenderer() {
-
         renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, alpha: true })
         renderer.setSize(innerWidth, innerHeight)
         renderer.setPixelRatio(window.devicePixelRatio)
@@ -1205,6 +1209,11 @@ export default () => {
         // Append
         container.appendChild(renderer.domElement)
 
+        // Return disposal function to clear out the canvas 
+        return () => {
+            // renderer.dispose();
+            container.removeChild(renderer.domElement)
+        }
     }
 
     function renderWebPImages() {
@@ -1590,44 +1599,6 @@ export default () => {
 
     }
 
-
-    function displayNewFooter() {
-
-
-        if (!footerDisplayed) {
-
-            let footerContainer = document.getElementById("footer--outer--container");
-            let footerInnerContainer = document.getElementById("footer--inner--container");
-            let elementsContainer = document.getElementById("footer--transitory--container");
-            let footerUpArrow = document.getElementById("footer--up--arrow");
-            let footerDownArrow = document.getElementById("footer--down--arrow");
-            let footerRightContainer = document.getElementById("footer--right--container");
-            let footerArrow = document.getElementById("footer--arrow");
-            let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
-
-            footerContainer.classList.add("displayed");
-            footerInnerContainer.classList.add("displayed");
-            elementsContainer.classList.add("displayed");
-            footerUpArrow.classList.add("hidden");
-            footerDownArrow.classList.add("displayed");
-
-
-            if (!isMobileDevice()) {
-                footerRightContainer.classList.add("footer--displayed");
-                footerArrow.classList.add("footer--displayed");
-            };
-
-            if (isMobileDevice()) {
-                topLeftLogo.classList.add("hidden");
-                hideHamburgerMenu();
-            };
-
-            footerDisplayed = true;
-
-        };
-
-    }
-
     /**
      * Hides or displays the footer depending on whether the user is hovering over the element
      * @called in @addEventListeners function
@@ -1759,48 +1730,6 @@ export default () => {
 
     }
 
-
-    function toggleMenu() {
-
-        if (!menuDisplayed) {
-
-            let menuContainer = document.getElementById("main--menu--container");
-            menuContainer.classList.add("displayed")
-
-            changeNavigationElementsToLightColor()
-
-            setTimeout(() => {
-
-                displayMainMenuText();
-
-            }, 200);
-
-            menuDisplayed = true;
-
-        } else {
-
-            hideMainMenuText();
-
-            setTimeout(() => {
-
-                let menuContainer = document.getElementById("main--menu--container");
-                menuContainer.classList.remove("displayed")
-
-                // Add conditional to prevent the text from going dark if main text is displayed
-                if (!mainContentShownOnPage) {
-                    changeNavigationElementsToDarkColor();
-                };
-
-            }, 1000);
-
-            menuDisplayed = false;
-
-        }
-
-
-    }
-
-
     function changeNavigationElementsToLightColor() {
 
         let ethLogoText = document.getElementById("ethereum--menu--svg");
@@ -1818,144 +1747,6 @@ export default () => {
 
         ethLogoText.classList.add("header--logo--displayed")
         hamburgerMenu.classList.add("header--logo--displayed")
-
-    }
-
-
-    function displayMainMenuText() {
-
-        let oneMenuText = document.getElementById("menu--content--text--one");
-        let twoMenuText = document.getElementById("menu--content--text--two");
-        let threeMenuText = document.getElementById("menu--content--text--three");
-        let fourMenuText = document.getElementById("menu--content--text--four");
-        let fiveMenuText = document.getElementById("menu--content--text--five");
-        let sixMenuText = document.getElementById("menu--content--text--six");
-        let sevenMenuText = document.getElementById("menu--content--text--seven");
-        let eightMenuText = document.getElementById("menu--content--text--eight");
-        let nineMenuText = document.getElementById("menu--content--text--nine");
-        let tenMenuText = document.getElementById("menu--content--text--ten");
-        let elevenMenuText = document.getElementById("menu--content--text--eleven");
-        let subLinksContainer = document.getElementById("secondary--links--container");
-
-        let time = 0;
-
-        setTimeout(() => {
-            oneMenuText.classList.add("displayed")
-        }, time + 75);
-
-        setTimeout(() => {
-            twoMenuText.classList.add("displayed")
-        }, time + 150);
-
-        setTimeout(() => {
-            threeMenuText.classList.add("displayed")
-        }, time + 225);
-
-        setTimeout(() => {
-            fourMenuText.classList.add("displayed")
-        }, time + 300);
-
-        setTimeout(() => {
-            fiveMenuText.classList.add("displayed")
-        }, time + 375);
-
-        setTimeout(() => {
-            sixMenuText.classList.add("displayed")
-        }, time + 450);
-
-        setTimeout(() => {
-            sevenMenuText.classList.add("displayed")
-        }, time + 525);
-
-        setTimeout(() => {
-            eightMenuText.classList.add("displayed")
-        }, time + 600);
-
-        setTimeout(() => {
-            nineMenuText.classList.add("displayed")
-        }, time + 675);
-
-        setTimeout(() => {
-            tenMenuText.classList.add("displayed")
-        }, time + 750);
-
-        setTimeout(() => {
-            elevenMenuText.classList.add("displayed")
-        }, time + 825);
-
-        setTimeout(() => {
-            subLinksContainer.classList.add("displayed")
-        }, time + 900);
-
-
-    }
-
-    function hideMainMenuText() {
-
-        let oneMenuText = document.getElementById("menu--content--text--one");
-        let twoMenuText = document.getElementById("menu--content--text--two");
-        let threeMenuText = document.getElementById("menu--content--text--three");
-        let fourMenuText = document.getElementById("menu--content--text--four");
-        let fiveMenuText = document.getElementById("menu--content--text--five");
-        let sixMenuText = document.getElementById("menu--content--text--six");
-        let sevenMenuText = document.getElementById("menu--content--text--seven");
-        let eightMenuText = document.getElementById("menu--content--text--eight");
-        let nineMenuText = document.getElementById("menu--content--text--nine");
-        let tenMenuText = document.getElementById("menu--content--text--ten");
-        let elevenMenuText = document.getElementById("menu--content--text--eleven");
-        let subLinksContainer = document.getElementById("secondary--links--container");
-
-
-        let time = 0;
-
-        setTimeout(() => {
-            oneMenuText.classList.remove("displayed")
-        }, time + 75);
-
-        setTimeout(() => {
-            twoMenuText.classList.remove("displayed")
-        }, time + 150);
-
-        setTimeout(() => {
-            threeMenuText.classList.remove("displayed")
-        }, time + 225);
-
-        setTimeout(() => {
-            fourMenuText.classList.remove("displayed")
-        }, time + 300);
-
-        setTimeout(() => {
-            fiveMenuText.classList.remove("displayed")
-        }, time + 375);
-
-        setTimeout(() => {
-            sixMenuText.classList.remove("displayed")
-        }, time + 450);
-
-        setTimeout(() => {
-            sevenMenuText.classList.remove("displayed")
-        }, time + 525);
-
-        setTimeout(() => {
-            eightMenuText.classList.remove("displayed")
-        }, time + 600);
-
-        setTimeout(() => {
-            nineMenuText.classList.remove("displayed")
-        }, time + 675);
-
-        setTimeout(() => {
-            tenMenuText.classList.remove("displayed")
-        }, time + 750);
-
-        setTimeout(() => {
-            elevenMenuText.classList.remove("displayed")
-        }, time + 825);
-
-        setTimeout(() => {
-            subLinksContainer.classList.remove("displayed")
-        }, time + 900);
-
 
     }
 
@@ -2004,14 +1795,14 @@ export default () => {
 
     function displayScrollDownCTA() {
 
-        let cta = document.getElementById("home--scroll--navigation--container");
+        let cta = document.body; // document.getElementById("home--scroll--navigation--container");
         cta.classList.remove("hide--scroll");
 
     }
 
     function hideScrollDownCTA() {
 
-        let cta = document.getElementById("home--scroll--navigation--container");
+        let cta = document.body; // document.getElementById("home--scroll--navigation--container");
         cta.classList.add("hide--scroll");
 
     };
@@ -2063,7 +1854,6 @@ export default () => {
      * Ensures that the scene resizes with user window resizing
      */
     function resize() {
-
         innerWidth = window.innerWidth
         innerHeight = window.innerHeight
 
@@ -2072,9 +1862,7 @@ export default () => {
 
         composer.setSize(innerWidth, innerHeight)
         renderer.setSize(innerWidth, innerHeight)
-
     }
-
 
     /**
      * Higher order function to attach all the necessary listeners to the page
@@ -2099,17 +1887,16 @@ export default () => {
             document.getElementById("footer--inner--container--two").addEventListener("mousedown", toggleNewFooter, false);
         } else {
             /** Sets footer animation for desktop => Not done through CSS because in this case the child element causes a change in the parent */
-            document.getElementById("footer--inner--container--two").addEventListener("mouseenter", toggleNewFooter, false);
-            document.getElementById("footer--inner--container--two").addEventListener("mouseleave", toggleNewFooter, false);
+            // document.getElementById("footer--inner--container--two").addEventListener("mouseenter", toggleNewFooter, false);
+            // document.getElementById("footer--inner--container--two").addEventListener("mouseleave", toggleNewFooter, false);
         }
 
-
         // Navigational event listeners
-        document.getElementById("next--page--navigation--container").addEventListener("mousedown", goToNextPage);
-        document.getElementById("downward--arrow").addEventListener("mousedown", goToNextPage);
+        // document.getElementById("next--page--navigation--container").addEventListener("mousedown", goToNextPage);
+        // document.getElementById("downward--arrow").addEventListener("mousedown", goToNextPage);
 
         // Toggle menu animation
-        document.getElementById("hamburger--menu--container").addEventListener("mousedown", toggleMenu);
+        // document.getElementById("hamburger--menu--container").addEventListener("mousedown", toggleMenu);
         // document.getElementById("home--scroll--navigation--container").addEventListener("mousedown", triggerScrollUpAnimation, false);
 
         // Main Menu events
@@ -2118,11 +1905,11 @@ export default () => {
         // redirection to another page.
         // document.getElementById("ef--blog--link").addEventListener("mousedown", goToBlogPage, false)
         // document.getElementById("report--link").addEventListener("mousedown", goToReportPage, false)
-        document.getElementById("menu--content--text--two").addEventListener("mousedown", goToHomePage, false)
-        document.getElementById("menu--content--text--four").addEventListener("mousedown", goToInfiniteGardenPage, false)
-        document.getElementById("menu--content--text--six").addEventListener("mousedown", goToWhatIsEthereumPage, false)
-        document.getElementById("menu--content--text--eight").addEventListener("mousedown", goToEFPage, false)
-        document.getElementById("menu--content--text--ten").addEventListener("mousedown", goToPhilosophyPage, false);
+        // document.getElementById("menu--content--text--two").addEventListener("mousedown", goToHomePage, false)
+        // document.getElementById("menu--content--text--four").addEventListener("mousedown", goToInfiniteGardenPage, false)
+        // document.getElementById("menu--content--text--six").addEventListener("mousedown", goToWhatIsEthereumPage, false)
+        // document.getElementById("menu--content--text--eight").addEventListener("mousedown", goToEFPage, false)
+        // document.getElementById("menu--content--text--ten").addEventListener("mousedown", goToPhilosophyPage, false);
 
         // // Top left logo
         // document.getElementById("ethereum--foundation--logo--text").addEventListener("mousedown", goToHomePage, false)
@@ -2153,6 +1940,25 @@ export default () => {
         // Window
         window.addEventListener("resize", setDocumentHeight);
 
+
+        return () => {
+            window.removeEventListener('resize', resize)
+            document.removeEventListener("wheel", triggerAnimation);
+            document.removeEventListener("scroll", triggerAnimation);
+            document.removeEventListener("touchstart", handleTouchStart);
+            document.removeEventListener("touchmove", handleTouchMove);
+
+            if (isMobileDevice()) {
+                document.getElementById("footer--inner--container--two").removeEventListener("mousedown", toggleNewFooter);
+            } else {
+                // document.getElementById("footer--inner--container--two").removeEventListener("mouseenter", toggleNewFooter);
+                // document.getElementById("footer--inner--container--two").removeEventListener("mouseleave", toggleNewFooter);
+            }
+
+            // document.getElementById("next--page--navigation--container").removeEventListener("mousedown", goToNextPage);
+            // document.getElementById("downward--arrow").removeEventListener("mousedown", goToNextPage);
+            window.removeEventListener("resize", setDocumentHeight);
+        }
     }
 
     /**
@@ -2184,36 +1990,6 @@ export default () => {
         doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
     };
 
-    /** Navigational Event Listeners => Send us to other pages */
-
-    function goToBlogPage() {
-        window.open("https://blog.ethereum.org", "_blank");
-    }
-
-    function goToReportPage() {
-        window.open("https://ethereum.foundation/report-2022-04.pdf", "_blank");
-    }
-
-    function goToHomePage() {
-        window.location.href = "/";
-    };
-
-    function goToInfiniteGardenPage() {
-        window.location.href = "/infinitegarden";
-    };
-
-    function goToWhatIsEthereumPage() {
-        window.location.href = "/ethereum";
-    };
-
-    function goToEFPage() {
-        window.location.href = "/ef";
-    };
-
-    function goToPhilosophyPage() {
-        window.location.href = "/philosophy";
-    };
-
     function triggerScrollUpAnimation() {
 
         if (!scrollDownAnimationTriggered) {
@@ -2223,44 +1999,6 @@ export default () => {
         turnMainContentColorWhite();
 
     }
-
-    function openVitalikTwitter() {
-        let url = "https://twitter.com/VitalikButerin";
-        window.open(url, "_blank").focus();
-    }
-
-
-    function openAyaTwitter() {
-        let url = "https://twitter.com/ayamiyagotchi";
-        window.open(url, "_blank").focus();
-
-    }
-
-    function openGrowEcosystemLink() {
-        let url = "https://esp.ethereum.foundation/";
-        window.open(url, "_blank").focus();
-    }
-
-    function openDevconPage() {
-        window.open("https://devcon.org/", "_blank").focus();
-    };
-
-    function openEthereumBlog() {
-        window.open("https://blog.ethereum.org/", "_blank").focus();
-    };
-
-    function openTermsOfUse() {
-        window.open("https://ethereum.org/en/terms-of-use/", "_blank").focus();
-    };
-
-    function openPrivacyPolicy() {
-        window.open("https://ethereum.org/en/privacy-policy/", "_blank").focus();
-    };
-
-    function openCookiePolicy() {
-        window.open("https://ethereum.org/en/cookie-policy/", "_blank").focus();
-    };
-
 
     /** Mobile Device Related Functions => Allow us to implement swipe up or down functionalities **/
 
@@ -2356,67 +2094,14 @@ export default () => {
 
     }
 
-
-    function goToNextPage() {
-
-        let url = window.location.pathname;
-
-        let transitionPageElement = document.getElementById("transition--container");
-        transitionPageElement.classList.remove("removed");
-
-        if (url === "/") {
-
-            setTimeout(() => {
-                window.location.href = "/infinitegarden";
-            }, 1000);
-
-        } else if (url === "/infinitegarden") {
-
-            setTimeout(() => {
-                window.location.href = "/ethereum";
-            }, 1000);
-
-        } else if (url === "/ethereum") {
-
-            setTimeout(() => {
-                window.location.href = "/ef";
-            }, 1000);
-
-        } else if (url === "/ef") {
-
-            setTimeout(() => {
-                window.location.href = "/philosophy";
-            }, 1000);
-
-        } else if (url === "/philosophy") {
-
-            setTimeout(() => {
-                window.location.href = "/";
-            }, 1000);
-
-        }
-
-    }
-
-
-    // Immediately triggered => Ensures that the white transition page fades away.
-    window.onload = function () {
-
-        // setTimeout(() => {
-        // if (!isHomePage()) {
-        // let transitionPageElement = document.getElementById("transition--container");
-        // transitionPageElement.classList.add("removed");
-        // };
-        // }, 1000);
-
-    }
-
-    begin();
-    addEventListeners();
+    const cleanUpAfterThreejs = begin();
+    const clearAllListeners = addEventListeners();
     modifyElementsAccordingToDevice();
 
+    // Disposal function to prevent memory leaks and remove the animation from the dom 
+    // TODO: This is not sufficient, we need to find out how to fully clear the existing threejs context - current solution causes lag after a few navigations, indicating threejs isnt cleaning up properly
+    return () => {
+        clearAllListeners();
+        cleanUpAfterThreejs();
+    }
 }
-// /** Let the Magic **/
-// begin();
-// addEventListeners();
-// modifyElementsAccordingToDevice();
