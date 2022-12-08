@@ -17,7 +17,10 @@ const MouseDownLink = (props: LinkProps & { children?: React.ReactNode, [key: st
         e.preventDefault();
 
         let transitionPageElement = document.getElementById("transition--container");
-        transitionPageElement.classList.remove("removed");
+
+        if (transitionPageElement) {
+          transitionPageElement.classList.remove("removed");
+        }
 
         setTimeout(() => {
           document.location.href = props.href.toString();
