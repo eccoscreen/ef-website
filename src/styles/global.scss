@@ -510,7 +510,7 @@ ol li {
 /* Triggers hover state on the scroll down element, removed for now */
 
 .hide--scroll {
-  #home--scroll--navigation--container {
+  .home-scroll-navigation-container {
     opacity: 0;
     transition: opacity 0.3s ease-out;
     pointer-events: none;
@@ -720,7 +720,7 @@ ol li {
 
 /* #mobile => this needs to be made position absolute  */
 /* when the click is triggered, it needs to disappear */
-#footer--arrow--container--desktop {
+#footer-arrow-container-desktop {
   width: 72px;
   height: 100%;
   /* background-color: yellow; */
@@ -1475,7 +1475,7 @@ with the footer  */
 
   /* Make position absolute will still keep it within the
   footer outer container */
-  #footer--arrow--container--desktop {
+  #footer-arrow-container-desktop {
     position: absolute;
     right: 10px;
     pointer-events: none;

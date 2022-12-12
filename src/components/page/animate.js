@@ -1608,7 +1608,7 @@ export default (url) => {
 
         if (!footerDisplayed) {
 
-            let footerContainer = document.getElementById("footer--outer--container");
+            let footerContainer = document.getElementById("footer-outer-container");
             // let footerInnerContainer = document.getElementById("footer--inner--container");
             // let elementsContainer = document.getElementById("footer--transitory--container");
             // let footerUpArrow = document.getElementById("footer--up--arrow");
@@ -1638,7 +1638,7 @@ export default (url) => {
 
         } else {
 
-            let footerContainer = document.getElementById("footer--outer--container");
+            let footerContainer = document.getElementById("footer-outer-container");
             // let footerInnerContainer = document.getElementById("footer--inner--container");
             // let elementsContainer = document.getElementById("footer--transitory--container");
             // let footerUpArrow = document.getElementById("footer--up--arrow");
@@ -1698,7 +1698,7 @@ export default (url) => {
     function hideNewFooter() {
 
         if (footerDisplayed) {
-            let footerContainer = document.getElementById("footer--outer--container");
+            let footerContainer = document.getElementById("footer-outer-container");
             let footerInnerContainer = document.getElementById("footer--inner--container");
             let elementsContainer = document.getElementById("footer--transitory--container");
             let footerUpArrow = document.getElementById("footer--up--arrow");
@@ -1795,14 +1795,14 @@ export default (url) => {
 
     function displayScrollDownCTA() {
 
-        let cta = document.body; // document.getElementById("home--scroll--navigation--container");
+        let cta = document.body; // document.getElementById("home-scroll-navigation-container");
         cta.classList.remove("hide--scroll");
 
     }
 
     function hideScrollDownCTA() {
 
-        let cta = document.body; // document.getElementById("home--scroll--navigation--container");
+        let cta = document.body; // document.getElementById("home-scroll-navigation-container");
         cta.classList.add("hide--scroll");
 
     };
@@ -1897,7 +1897,7 @@ export default (url) => {
 
         // Toggle menu animation
         // document.getElementById("hamburger--menu--container").addEventListener("mousedown", toggleMenu);
-        // document.getElementById("home--scroll--navigation--container").addEventListener("mousedown", triggerScrollUpAnimation, false);
+        // document.getElementById("home-scroll-navigation-container").addEventListener("mousedown", triggerScrollUpAnimation, false);
 
         // Main Menu events
         // It might seem redundant to attach events to the main menu links, but we want to trigger an animation before redirection to a new

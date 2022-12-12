@@ -1,4 +1,4 @@
-.footer--outer--container {
+.footer-outer-container {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -16,11 +16,11 @@
   transition: height 0.2s ease-out, max-height 0.2s ease-out, min-height 0.2s ease-out;
   color: white;
 
-  // :global(#footer--arrow--desktop) {
-  //   top: 50%;
-  //   transform: translateY(50%) rotate(180deg);
-  //   transition: margin-top 0.2s ease-out, transform 0.2s ease-out;
-  // }
+
+
+
+
+  
 
   @media (max-width: 499px) {
     height: 40px;
@@ -49,7 +49,7 @@
 
     :global(#footer--inner--container--two) {
       opacity: 1;
-    }
+    } 
 
     :global(#footer--main--content--container) {
       height: calc(var(--doc-height) - 40px);
@@ -115,8 +115,16 @@
   }
 }
 
+
+
+
+
+
+
+
+
 // Scroll indicator 
-.home--scroll--navigation--container {
+.home-scroll-navigation-container {
   position: absolute;
   top: -100px;
   left: 50%;
@@ -145,6 +153,11 @@
   color: #36364C
 }
 
-.homepage--scroll--down--bottom--arrow {
+.homepage-scroll-down-bottom-arrow {
   cursor: ew-resize;
 }
+
+
+
+
+

@@ -5,16 +5,16 @@ import css from './Footer.module.scss';
 const Footer = () => {
   const [open, setOpen] = React.useState(false);
 
-  let className = css['footer--outer--container'];
+  let className = css['footer-outer-container'];
 
   if (open) className += ` ${css['displayed']}`;
 
   return (
     <>
-      <footer /*id="footer--outer--container"*/ className={className} /*onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}*/ onMouseDown={() => setOpen(!open)}>
-        <div id="home--scroll--navigation--container" className={css['home--scroll--navigation--container']}>
-          <p id="home--scroll--down--text" className={css['home--scroll--down--text']}> Scroll </p>
-          <svg width="37" height="37" id="homepage--scroll--down--bottom--arrow" className={css['homepage--scroll--down--bottom--arrow']} viewBox="0 0 52 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <footer className={className} /*onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}*/ onMouseDown={() => setOpen(!open)}>
+        <div className={css['home-scroll-navigation-container']}>
+          <p className={css['home--scroll--down--text']}> Scroll </p>
+          <svg width="37" height="37" className={css['homepage-scroll-down-bottom-arrow']} viewBox="0 0 52 46" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0V15.0485L24.7939 36.6918V21.6433L0 0Z" fill="#36364C" />
             <path d="M52.0001 0L27.2062 21.6433V36.6904L52.0001 15.0485V0Z" fill="#36364C" />
             <path d="M26 42.1213L0 19.4269V23.0344L26 45.7301L52 23.0357V19.4269L26 42.1213Z" fill="#36364C" />
@@ -59,11 +59,11 @@ const Footer = () => {
                         <path d="M11.1563 13.7815V28.0038L0 20.4874L11.1563 13.7815Z" fill="#58B36F" />
                       </svg>
                       <div id="footer--links--container--two">
-                        <MouseDownLink target="_blank" id="footer--link--devcon" rel="noopener noreferrer" href="https://devcon.org/" className="footer--link--two">DevCon</MouseDownLink>
-                        <MouseDownLink target="_blank" id="footer--link--blog" rel="noopener noreferrer" href="https://blog.ethereum.org/" className="footer--link--two">Blog</MouseDownLink>
-                        <MouseDownLink target="_blank" id="footer--link--terms" rel="noopener noreferrer" href="https://ethereum.org/en/terms-of-use/" className="footer--link--two">Terms of Use</MouseDownLink>
-                        <MouseDownLink target="_blank" id="footer--link--privacy" rel="noopener noreferrer" href="https://ethereum.org/en/privacy-policy/" className="footer--link--two">Privacy Policy</MouseDownLink>
-                        <MouseDownLink target="_blank" id="footer--link--cookies" rel="noopener noreferrer" href="https://ethereum.org/en/cookie-policy/" className="footer--link--two">Cookie Policy</MouseDownLink>
+                        <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://devcon.org/" className="footer--link--two">DevCon</MouseDownLink>
+                        <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://blog.ethereum.org/" className="footer--link--two">Blog</MouseDownLink>
+                        <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/terms-of-use/" className="footer--link--two">Terms of Use</MouseDownLink>
+                        <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/privacy-policy/" className="footer--link--two">Privacy Policy</MouseDownLink>
+                        <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/cookie-policy/" className="footer--link--two">Cookie Policy</MouseDownLink>
                       </div>
                     </div>
                     <div className="dividing--line"></div>
@@ -91,7 +91,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div id="footer--arrow--container--desktop">
+          <div id="footer-arrow-container-desktop">
             <object data="/assets/arrow.svg" id="footer--arrow--desktop" width="20" height="20" aria-label="Footer Arrow">Footer Arrow</object>
           </div>
         </div>
