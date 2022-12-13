@@ -1891,52 +1891,6 @@ export default (url) => {
             // document.getElementById("footer--inner--container--two").addEventListener("mouseleave", toggleNewFooter, false);
         }
 
-        // Navigational event listeners
-        // document.getElementById("next--page--navigation--container").addEventListener("mousedown", goToNextPage);
-        // document.getElementById("downward--arrow").addEventListener("mousedown", goToNextPage);
-
-        // Toggle menu animation
-        // document.getElementById("hamburger--menu--container").addEventListener("mousedown", toggleMenu);
-        // document.getElementById("home-scroll-navigation-container").addEventListener("mousedown", triggerScrollUpAnimation, false);
-
-        // Main Menu events
-        // It might seem redundant to attach events to the main menu links, but we want to trigger an animation before redirection to a new
-        // page. For this reason, JS was used to ensure that we had a granularity of control over the fade in animation and the subsequent
-        // redirection to another page.
-        // document.getElementById("ef--blog--link").addEventListener("mousedown", goToBlogPage, false)
-        // document.getElementById("report--link").addEventListener("mousedown", goToReportPage, false)
-        // document.getElementById("menu--content--text--two").addEventListener("mousedown", goToHomePage, false)
-        // document.getElementById("menu--content--text--four").addEventListener("mousedown", goToInfiniteGardenPage, false)
-        // document.getElementById("menu--content--text--six").addEventListener("mousedown", goToWhatIsEthereumPage, false)
-        // document.getElementById("menu--content--text--eight").addEventListener("mousedown", goToEFPage, false)
-        // document.getElementById("menu--content--text--ten").addEventListener("mousedown", goToPhilosophyPage, false);
-
-        // // Top left logo
-        // document.getElementById("ethereum--foundation--logo--text").addEventListener("mousedown", goToHomePage, false)
-
-        // // Conditional Renders
-        // if (document.getElementById("next--page--navigation--container--two")) {
-        //     document.getElementById("next--page--navigation--container--two").addEventListener("mousedown", goToNextPage);
-        // };
-
-        // if (!isMobileDevice()) {
-        //     if (document.getElementById("executive--board--link--aya")) {
-        //         document.getElementById("executive--board--link--aya").addEventListener("mousedown", openAyaTwitter);
-        //         document.getElementById("executive--board--link--vitalik").addEventListener("mousedown", openVitalikTwitter);
-        //     };
-        // };
-
-        // if (document.getElementById("grow--ecosystem--link")) {
-        //     document.getElementById("grow--ecosystem--link").addEventListener("mousedown", openGrowEcosystemLink)
-        // }
-
-        // // Footer
-        // document.getElementById("footer--link--devcon").addEventListener("mousedown", openDevconPage);
-        // document.getElementById("footer--link--blog").addEventListener("mousedown", openEthereumBlog);
-        // document.getElementById("footer--link--terms").addEventListener("mousedown", openTermsOfUse);
-        // document.getElementById("footer--link--privacy").addEventListener("mousedown", openPrivacyPolicy);
-        // document.getElementById("footer--link--cookies").addEventListener("mousedown", openCookiePolicy);
-
         // Window
         window.addEventListener("resize", setDocumentHeight);
 
