@@ -190,6 +190,7 @@ export default (url) => {
     const ETH_12K = "eth_12k.obj"; // This is the one currently displayed as you can see in the @addMainObjectToScene function
     const ETH_24K = "eth_24k.obj";
     const ETH_12K_MIN = "eth_12k.glb";
+    const SPHARE = "sphare.glb";
     // Defines the current file type => Needs to be changed if we change the asset from glb format to obj format
     const FILE_TYPE = "glb";
     /**
@@ -203,7 +204,7 @@ export default (url) => {
          * Pass in one of the variables above to see the ethereum object rendered with different number
          * of vertices
          **/
-        const ASSET_URL = ETH_12K_MIN;
+        const ASSET_URL = ETH_12K_MIN; //
 
         nameOfFinalFileSelected = ASSET_URL;
 
