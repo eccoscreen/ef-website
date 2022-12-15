@@ -13,7 +13,7 @@
   &.open {
     opacity: 1;
     transition: opacity 0.2s ease-out;
-    pointer-events: none;
+    pointer-events: auto;
 
     .menu--content--text,
     .menu--content--dot,

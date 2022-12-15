@@ -6,10 +6,10 @@ import { UnrealBloomPass } from './assets/UnrealBloomPass.js'; // Added to test 
 import { GlitchPass } from './assets/GlitchPass.js'; // Updated DEV branch
 import { EffectComposer } from './assets/EffectComposer.js'; // Updated DEV Branch
 import * as GLTFLoader from './assets/GLTFLoader.js'; // Updated
-
 import firefliesVertexShader from './animations/firefliesVertexShader.glsl';
 import firefliesVertexShaderETHLogo from './animations/firefliesVertexShader_ETHLogo.glsl';
 import firefliesFragmentShader from './animations/firefliesFragmentShader.glsl';
+import { resolve } from 'path';
 // import './animations/firefliesVertexShader_ETHLogo_SLOW.glsl';
 // import './animations/firefliesFragmentShaderTwo.glsl';
 // import './animations/explosionVertexShader.glsl';
@@ -52,6 +52,8 @@ export default (url) => {
     let loadingManager;
     let currentLoader;
     let textureLoader;
+    let texture;
+    let dotTexture;
     const environment = "dev";
     const RELATIVE_URL = environment === "dev" ? "/assets/" : "/public/assets/"
     // ETH Logo
@@ -100,7 +102,6 @@ export default (url) => {
     // Main Object
     let mainObject;
 
-
     // Mesh Surface Sampler
     let sampler, group;
     let meshSurfaceColors = [];
@@ -112,7 +113,6 @@ export default (url) => {
     const tempPosition = new THREE.Vector3();
 
     function addPoint() {
-
         // Sample a new point
         sampler.sample(tempPosition);
 
@@ -128,13 +128,9 @@ export default (url) => {
         meshSurfaceColors.push(color.r, color.g, color.b);
         // Updates color
         sparklesGeometry.setAttribute("color", new THREE.Float32BufferAttribute(meshSurfaceColors, 3));
-
-
     }
 
     function removePoint() {
-
-
         // Push the point coordinates
         meshSurfaceVertices.pop();
         meshSurfaceVertices.pop();
@@ -150,26 +146,23 @@ export default (url) => {
 
         // Updates color
         sparklesGeometry.setAttribute("color", new THREE.Float32BufferAttribute(meshSurfaceColors, 3));
-
     }
 
-    /** Loaders **/
-    function initLoadingManager() {
-        loadingManager = new THREE.LoadingManager();
+    // /** Loaders **/
+    // function initLoadingManager() {
+    //     loadingManager = new THREE.LoadingManager();
 
-        loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
-        }
+    //     loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
+    //     }
 
-        loadingManager.onLoad = () => {
-            removeLoadingScreen();
-        }
+    //     loadingManager.onLoad = () => { }
 
-        loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-        }
+    //     loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+    //     }
 
-        loadingManager.onError = (url) => {
-        }
-    }
+    //     loadingManager.onError = (url) => {
+    //     }
+    // }
 
     function removeLoadingScreen() {
         let transitionContainer = document.getElementById("transition--container");
@@ -177,10 +170,8 @@ export default (url) => {
     };
 
     function initLoaders() {
-        initLoadingManager();
-
-        textureLoader = new THREE.TextureLoader(loadingManager);
-        glbLoader = new GLTFLoader.GLTFLoader(loadingManager);
+        textureLoader = new THREE.TextureLoader();
+        glbLoader = new GLTFLoader.GLTFLoader();
     }
 
     /**
@@ -222,9 +213,9 @@ export default (url) => {
          * function below
          */
         if (isHomePage()) {
-            load3DModelObject(ASSET_URL, FILE_TYPE);
+            return load3DModelObject(ASSET_URL, FILE_TYPE);
         } else {
-            loadDegenerateParticleMesh(ASSET_URL, FILE_TYPE);
+            return loadDegenerateParticleMesh(ASSET_URL, FILE_TYPE);
         }
     }
 
@@ -248,118 +239,120 @@ export default (url) => {
             size: animatedModelParticleSize,
             transparent: true,
             // The line below can be removed
-            map: new THREE.TextureLoader().load("assets/dotTexture.png"),
+            map: dotTexture, // new THREE.TextureLoader().load("assets/dotTexture.png"),
             blending: THREE.AdditiveBlending,
             depthWrite: false,
             toneMapped: false,
         });
 
-        currentLoader.load(modelFileName, function (object) {
-            let mesh = object.scene.children[0];
-            let geometry = mesh.geometry;
+        return new Promise((resolve) => {
+            currentLoader.load(modelFileName, function (object) {
+                let mesh = object.scene.children[0];
+                let geometry = mesh.geometry;
 
-            let scaleArray = new Float32Array(48000);
+                let scaleArray = new Float32Array(48000);
 
-            for (let i = 0; i < scaleArray.length; i++) {
-                scaleArray[i] = 0.01;
-            }
+                for (let i = 0; i < scaleArray.length; i++) {
+                    scaleArray[i] = 0.01;
+                }
 
-            geometry.setAttribute(
-                "aScale",
-                new THREE.BufferAttribute(scaleArray, 1),
-            );
-
-            finalPointsShaderMaterial = new THREE.ShaderMaterial({
-                vertexShader: firefliesVertexShaderETHLogo,
-                // vertexShader: explosionVertexShaderTwo,
-                fragmentShader: firefliesFragmentShader,
-                transparent: true,
-                uniforms: {
-                    uTime: { value: 0 },
-                    uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-                    uSize: { value: 15000 },
-                    color: {
-                        type: "v3",
-                        value: new THREE.Vector3(...rgbToPercentage(color)),
-                    },
-                    mouseIntensity: {
-                        type: "f",
-                        value: generalSceneControls["Mouse Intensity"],
-                    }
-                },
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
-            });
-
-            // Morph Target I
-            // This code can be replicated across different geometries
-            // Should most likely be
-
-            let newPositions = [];
-            const positionAttribute = geometry.attributes.position;
-
-            for (let i = 0; i < positionAttribute.count; i++) {
-
-                let xValue;
-
-                // Only sets positive values
-                // newPositions.push(
-                // 	(Math.random() - 0.5) * 100,
-                // 	(Math.random() * 1.5) * 100,
-                // 	(Math.random() - 0.5) * 100,
-                // );
-
-                // Sets positive and negative values
-                let distance = 50;
-                let theta = THREE.MathUtils.randFloatSpread(360);
-                let phi = THREE.MathUtils.randFloatSpread(360);
-
-                newPositions.push(
-                    // Math.ceil(Math.random() * distance * 20) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 30) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                    // 10 * Math.sin(theta) * Math.cos(phi), // Puts particles on the surface of a sphere
-                    // 10 * Math.sin(theta) * Math.sin(phi), // Puts particles on the surface of a sphere
-                    // 10 * Math.cos(theta), // Puts particles on the surface of a sphere
-                    Math.ceil(Math.random() * 150 * distance) * Math.sin(theta) * Math.cos(phi), // Sets particles within the sphere
-                    Math.ceil(Math.random() * 150 * distance) * Math.sin(theta) * Math.sin(phi), // Sets particles within the sphere
-                    Math.ceil(Math.random() * 150 * distance) * Math.cos(theta), // Sets particles within the sphere
+                geometry.setAttribute(
+                    "aScale",
+                    new THREE.BufferAttribute(scaleArray, 1),
                 );
 
-            };
+                finalPointsShaderMaterial = new THREE.ShaderMaterial({
+                    vertexShader: firefliesVertexShaderETHLogo,
+                    // vertexShader: explosionVertexShaderTwo,
+                    fragmentShader: firefliesFragmentShader,
+                    transparent: true,
+                    uniforms: {
+                        uTime: { value: 0 },
+                        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+                        uSize: { value: 15000 },
+                        color: {
+                            type: "v3",
+                            value: new THREE.Vector3(...rgbToPercentage(color)),
+                        },
+                        mouseIntensity: {
+                            type: "f",
+                            value: generalSceneControls["Mouse Intensity"],
+                        }
+                    },
+                    blending: THREE.AdditiveBlending,
+                    depthWrite: false
+                });
 
-            // Replica Geometry
+                // Morph Target I
+                // This code can be replicated across different geometries
+                // Should most likely be
 
-            // const replica = createReplicaWithOutsideParticlesOfGeometry(geometry)
+                let newPositions = [];
+                const positionAttribute = geometry.attributes.position;
 
-            // Test II: we create our own sphere filled with actual particles
-            // newPositions = createMorphSphereGeometry();
+                for (let i = 0; i < positionAttribute.count; i++) {
 
-            geometry.morphAttributes.position = [];
-            geometry.morphAttributes.position[0] = new THREE.Float32BufferAttribute(newPositions, 3);
+                    let xValue;
 
-            let points = new THREE.Points(geometry, animatedModelPointsMaterial);
+                    // Only sets positive values
+                    // newPositions.push(
+                    // 	(Math.random() - 0.5) * 100,
+                    // 	(Math.random() * 1.5) * 100,
+                    // 	(Math.random() - 0.5) * 100,
+                    // );
 
-            // points.scale.x = points.scale.y = points.scale.z = 0.1;
-            points.scale.x = points.scale.y = points.scale.z = 2;
-            points.position.x = 0;
-            points.position.y = 0.5;
-            points.position.z = 0;
+                    // Sets positive and negative values
+                    let distance = 50;
+                    let theta = THREE.MathUtils.randFloatSpread(360);
+                    let phi = THREE.MathUtils.randFloatSpread(360);
 
-            points.rotation.x = Math.PI / 2;
+                    newPositions.push(
+                        // Math.ceil(Math.random() * distance * 20) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 30) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
+                        // 10 * Math.sin(theta) * Math.cos(phi), // Puts particles on the surface of a sphere
+                        // 10 * Math.sin(theta) * Math.sin(phi), // Puts particles on the surface of a sphere
+                        // 10 * Math.cos(theta), // Puts particles on the surface of a sphere
+                        Math.ceil(Math.random() * 150 * distance) * Math.sin(theta) * Math.cos(phi), // Sets particles within the sphere
+                        Math.ceil(Math.random() * 150 * distance) * Math.sin(theta) * Math.sin(phi), // Sets particles within the sphere
+                        Math.ceil(Math.random() * 150 * distance) * Math.cos(theta), // Sets particles within the sphere
+                    );
 
-            finalPoints = points;
+                };
 
-            scene.add(points);
+                // Replica Geometry
 
-        })
+                // const replica = createReplicaWithOutsideParticlesOfGeometry(geometry)
 
+                // Test II: we create our own sphere filled with actual particles
+                // newPositions = createMorphSphereGeometry();
+
+                geometry.morphAttributes.position = [];
+                geometry.morphAttributes.position[0] = new THREE.Float32BufferAttribute(newPositions, 3);
+
+                let points = new THREE.Points(geometry, animatedModelPointsMaterial);
+
+                // points.scale.x = points.scale.y = points.scale.z = 0.1;
+                points.scale.x = points.scale.y = points.scale.z = 2;
+                points.position.x = 0;
+                points.position.y = 0.5;
+                points.position.z = 0;
+
+                points.rotation.x = Math.PI / 2;
+
+                finalPoints = points;
+
+                scene.add(points);
+
+                resolve();
+            })
+        });
     }
 
 
@@ -380,77 +373,79 @@ export default (url) => {
             color: new THREE.Color(10, 10, 10),
             size: animatedModelParticleSize,
             transparent: true,
-            map: new THREE.TextureLoader().load("assets/dotTexture.png"),
+            map: dotTexture, // new THREE.TextureLoader().load("assets/dotTexture.png"),
             blending: THREE.AdditiveBlending,
             depthWrite: false,
             toneMapped: false,
         });
 
-        currentLoader.load(modelFileName, function (object) {
+        return new Promise((resolve) => {
+            currentLoader.load(modelFileName, function (object) {
 
-            const mesh = object.scene.children[0];
-            const geometry = mesh.geometry;
+                const mesh = object.scene.children[0];
+                const geometry = mesh.geometry;
 
-            let count = 48000;
-            let newPositions = [];
-            let scaleArray = new Float32Array(count);
+                let count = 48000;
+                let newPositions = [];
+                let scaleArray = new Float32Array(count);
 
-            const positionAttribute = geometry.attributes.position;
+                const positionAttribute = geometry.attributes.position;
 
 
-            for (let i = 0; i < positionAttribute.count; i++) {
+                for (let i = 0; i < positionAttribute.count; i++) {
+                    // let distance = 3;
+                    // #distance: Modifies how far the particles are rendered from the center
+                    // and therefore how close they are to camera
+                    let distance = 4;
+                    let theta = THREE.MathUtils.randFloatSpread(360);
+                    let phi = THREE.MathUtils.randFloatSpread(360);
 
-                // let distance = 3;
-                // #distance: Modifies how far the particles are rendered from the center
-                // and therefore how close they are to camera
-                let distance = 4;
-                let theta = THREE.MathUtils.randFloatSpread(360);
-                let phi = THREE.MathUtils.randFloatSpread(360);
+                    newPositions.push(
+                        // Rectangular Algorithm
+                        // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
+                        // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
+                        // Spherical Rendering Algorithm
+                        Math.ceil(Math.random() * 50 * distance) * Math.sin(theta) * Math.cos(phi), // Sets particles within the sphere
+                        Math.ceil(Math.random() * 50 * distance) * Math.sin(theta) * Math.sin(phi), // Sets particles within the sphere
+                        Math.ceil(Math.random() * 50 * distance) * Math.cos(theta), // Sets particles within the sphere
+                    );
 
-                newPositions.push(
-                    // Rectangular Algorithm
-                    // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
-                    // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
-                    // Spherical Rendering Algorithm
-                    Math.ceil(Math.random() * 50 * distance) * Math.sin(theta) * Math.cos(phi), // Sets particles within the sphere
-                    Math.ceil(Math.random() * 50 * distance) * Math.sin(theta) * Math.sin(phi), // Sets particles within the sphere
-                    Math.ceil(Math.random() * 50 * distance) * Math.cos(theta), // Sets particles within the sphere
+                    // Comment: This does not affect the actual size of the particles
+                    scaleArray[i] = Math.random() * 100;
+
+                };
+
+                // We simply 1. distribute points in space
+                // 2. We set the scale,
+                // 3. We create the object
+
+                let bufferGeometry = new THREE.BufferGeometry();
+                bufferGeometry.setAttribute("position", new THREE.Float32BufferAttribute(newPositions, 3));
+
+                let finalPointsGeometry = new THREE.BufferGeometry().setFromPoints(newPositions);
+
+                finalPointsGeometry.setAttribute(
+                    "aScale",
+                    new THREE.BufferAttribute(scaleArray, 3),
                 );
 
-                // Comment: This does not affect the actual size of the particles
-                scaleArray[i] = Math.random() * 100;
+                bufferGeometry.setAttribute(
+                    "aScale",
+                    new THREE.BufferAttribute(scaleArray, 3),
+                );
 
-            };
+                let points = new THREE.Points(bufferGeometry, animatedModelPointsMaterial);
+                points.scale.x = points.scale.y = points.scale.z = 2;
+                finalPoints = points;
 
-            // We simply 1. distribute points in space
-            // 2. We set the scale,
-            // 3. We create the object
+                points.rotation.x = Math.PI / 2;
 
-            let bufferGeometry = new THREE.BufferGeometry();
-            bufferGeometry.setAttribute("position", new THREE.Float32BufferAttribute(newPositions, 3));
+                scene.add(points);
 
-            let finalPointsGeometry = new THREE.BufferGeometry().setFromPoints(newPositions);
-
-            finalPointsGeometry.setAttribute(
-                "aScale",
-                new THREE.BufferAttribute(scaleArray, 3),
-            );
-
-            bufferGeometry.setAttribute(
-                "aScale",
-                new THREE.BufferAttribute(scaleArray, 3),
-            );
-
-            let points = new THREE.Points(bufferGeometry, animatedModelPointsMaterial);
-            points.scale.x = points.scale.y = points.scale.z = 2;
-            finalPoints = points;
-
-            points.rotation.x = Math.PI / 2;
-
-            scene.add(points);
-
-        })
+                resolve();
+            })
+        });
     }
 
     /**
@@ -458,7 +453,6 @@ export default (url) => {
      * animation sequences between particles
      */
     function createDegenerateParticles() {
-
         const geometry = createPointMeshForBlockchainMiningAnimation();
 
         const meshSurfaceSamplerPointSize = 0.1;
@@ -466,7 +460,7 @@ export default (url) => {
         const pointsMaterial = new THREE.PointsMaterial({
             size: meshSurfaceSamplerPointSize,
             alphaTest: 0.2,
-            map: new THREE.TextureLoader().load("assets/dotTexture.png"),
+            map: dotTexture, // new THREE.TextureLoader().load("assets/dotTexture.png"),
             vertexColors: true,
             color: 0xffffff,
         });
@@ -486,7 +480,6 @@ export default (url) => {
 
     // Helper function for @createDegenerateParticles
     function createPointMeshForBlockchainMiningAnimation() {
-
         // Create initial mesh which will hold all the particles outside the mesh
         let particleCount = 100;
         let newPositions = [];
@@ -494,7 +487,6 @@ export default (url) => {
         let scales = [];
 
         for (let i = 0; i < particleCount; i++) {
-
             const v = new THREE.Vector3(
                 THREE.MathUtils.randFloat(-10, 10),
                 THREE.MathUtils.randFloat(-10, 10),
@@ -510,7 +502,6 @@ export default (url) => {
             // Add scale array
             let randomScale = 0.001;
             scales.push(randomScale);
-
         }
 
         // After we've set the positions, we most likely want to create an actual buffer geometry with these attributes
@@ -522,15 +513,12 @@ export default (url) => {
         degenerateGeometry.morphAttributes.position[0] = new THREE.Float32BufferAttribute(newPositions, 3);
 
         return degenerateGeometry;
-
     }
-
 
     // Helper function for @createDegenerateParticles - the "end state" here refers to the illusory mesh that we will create
     // in order to give the impression that particles are "expanding", which will be the transition between the different potential
     // animations we might be implementing.
     function createDegenerateParticleSystemInEndState() {
-
         let particleCount = 100;
         let newPositions = [];
         let colors = [];
@@ -538,8 +526,6 @@ export default (url) => {
         let distance = 50;
 
         for (let i = 0; i < particleCount; i++) {
-
-
             const v = new THREE.Vector3(
                 0,
                 0,
@@ -563,10 +549,8 @@ export default (url) => {
         bufferGeometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3))
         bufferGeometry.setAttribute("aScale", new THREE.Float32BufferAttribute(scales, 1));
 
-
         // return bufferGeometry;
         return newPositions;
-
     }
 
     /**
@@ -577,16 +561,12 @@ export default (url) => {
      * as the geometry that we have passed
      */
     function createParticleMorphTargetForGeometry(geometry) {
-
         // New Positions
         let newPositions = [];
 
-
         const positionAttribute = geometry.attributes?.position;
 
-
         for (let i = 0; i < positionAttribute?.length; i++) {
-
             let xValue;
             let distance = 50;
 
@@ -595,16 +575,13 @@ export default (url) => {
                 Math.ceil(Math.random() * distance * 30) * (Math.round(Math.random()) ? 1 : -1),
                 Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
             );
-
         };
 
         // Test II: we create our own sphere filled with actual particles
 
         geometry.morphAttributes.position = [];
         geometry.morphAttributes.position[0] = new THREE.Float32BufferAttribute(newPositions, 3);
-
     }
-
 
     /**
      *
@@ -617,7 +594,6 @@ export default (url) => {
      *
      */
     function loadVisible3DModelWithSurfaceSampler(modelFileName, fileType, assetType) {
-
         let currentLoader = objectLoader;
         material = new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: true });
 
@@ -640,7 +616,7 @@ export default (url) => {
         sparklesMaterial = new THREE.PointsMaterial({
             size: meshSurfaceSamplerPointSize,
             alphaTest: 0.2,
-            map: new THREE.TextureLoader().load("assets/dotTexture.png"),
+            map: dotTexture, // new THREE.TextureLoader().load("assets/dotTexture.png"),
             vertexColors: true, // Let Three.JS know that each point has a different color
         });
 
@@ -674,14 +650,12 @@ export default (url) => {
         group.position.y = 0.5;
         group.position.z = 0;
 
-
         // We modify the size of the ETH logo rendered depending on the file that we are using
         if (modelFileName === "Eth_logo_grids.obj") {
             group.scale.x = group.scale.y = group.scale.z = 3.4;
         } else {
             group.scale.x = group.scale.y = group.scale.z = 1.8;
         };
-
 
         // let sampler = null;
         let shape = null;
@@ -704,11 +678,8 @@ export default (url) => {
             sampler = new MeshSurfaceSampler(mesh).setWeightAttribute("uv").build();
 
             scene.add(object);
-
         })
-
     };
-
 
     /**
      *
@@ -721,7 +692,6 @@ export default (url) => {
      *
      */
     function fillGeometryWithPoints(geometry, count, bufferGeometry) {
-
         let dummyTarget = new THREE.Vector3();
         let ray = new THREE.Ray();
         let size = new THREE.Vector3();
@@ -734,8 +704,6 @@ export default (url) => {
         let dir = new THREE.Vector3(1, 1, 1).normalize();
 
         if (geometry.computeBoundingBox) {
-
-
             geometry.computeBoundingBox();
             boundingBox = geometry.boundingBox;
 
@@ -743,7 +711,6 @@ export default (url) => {
             let counter = 0;
 
             while (counter < count) {
-
                 let v = new THREE.Vector3(
                     THREE.MathUtils.randFloat(boundingBox.min.x, boundingBox.max.x),
                     THREE.MathUtils.randFloat(boundingBox.min.y, boundingBox.max.y),
@@ -751,7 +718,6 @@ export default (url) => {
                 )
 
                 if (isInside(v, geometry)) {
-
                     // First we push the actual point into the relevant array
                     points.push(v);
 
@@ -761,16 +727,10 @@ export default (url) => {
 
                     // Then we increment the counter
                     counter++;
-
                 }
-
             }
-
         } else {
-
-
             geometry.traverse((child) => {
-
                 if (child instanceof THREE.Mesh) {
 
                     child.geometry.computeBoundingBox();
@@ -782,7 +742,6 @@ export default (url) => {
                     let counter = 0;
 
                     while (counter < count) {
-
                         let v = new THREE.Vector3(
                             THREE.MathUtils.randFloat(boundingBox.min.x, boundingBox.max.x),
                             THREE.MathUtils.randFloat(boundingBox.min.y, boundingBox.max.y),
@@ -793,22 +752,16 @@ export default (url) => {
                             points.push(v);
                             counter++;
                         }
-
                     }
-
                 }
             })
-
         }
-
 
         /** Helper Function
          * @called by @fillGeometryWithPoints
          * @returns {Boolean} Letting us know whether the vertex that we have passed is inside the geometry that we have passed
          **/
-
         function isInside(v, geometry) {
-
             // We run a raycaster from inside the mesh in every direction and count how many
             // triangles are intersected. If the # of intersected faces is odd, then the point
             // are located within the bounding box of the mesh
@@ -831,7 +784,6 @@ export default (url) => {
             }
 
             return counter % 2 == 1;
-
         }
 
         // At the end, we return a buffer geometry with the right attributes set to it
@@ -843,8 +795,6 @@ export default (url) => {
         bufferGeometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
         // Return the buffer geometry
         return bufferGeometry;
-
-
     }
 
 
@@ -859,140 +809,8 @@ export default (url) => {
     /** SkyBox **/
 
     function createEquirectangularBackground() {
-
-        let webPFormatSupported = testWebP();
-
-        // We download the relevant background based on the URL that is displayed
-        let texture;
-
         const geometry = new THREE.SphereGeometry(500, 60, 40);
         geometry.scale(- 1, 1, 1);
-
-        // let url = window.location.pathname;
-
-        // console.log(url, 'url for animate')
-
-        if (url === "/philosophy") {
-
-            if (webPFormatSupported) {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-philosophy-03-6000px.webp");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-philosophy-03-8000px.webp");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-philosophy-03-12000px.webp");
-                }
-
-            } else {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-philosophy-03-6000px.jpg");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-philosophy-03-8000px.jpg");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-philosophy-03-12000px.jpg");
-                }
-
-            }
-
-        } else if (url === "/ef") {
-
-            if (webPFormatSupported) {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ef-03-6000px.webp");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ef-03-8000px.webp");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ef-03-12000px.webp");
-                }
-
-            } else {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ef-03-6000px.jpg");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ef-03-8000px.jpg");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ef-03-12000px.jpg");
-                }
-
-            }
-
-        } else if (url === "/ethereum") {
-
-            if (webPFormatSupported) {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ethereum-03-6000px.webp");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ethereum-03-8000px.webp");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ethereum-03-12000px.webp");
-                }
-
-            } else {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ethereum-03-6000px.jpg");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ethereum-03-8000px.jpg");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-ethereum-03-12000px.jpg");
-                }
-
-            }
-
-        } else if (url === "/infinitegarden") {
-
-            if (webPFormatSupported) {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-infinite-garden-03-6000px.webp");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-infinite-garden-03-8000px.webp");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-infinite-garden-03-12000px.webp");
-                }
-
-            } else {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-infinite-garden-03-6000px.jpg");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-infinite-garden-03-8000px.jpg");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-infinite-garden-03-12000px.jpg");
-                }
-
-            }
-
-        } else if (isHomePage()) {
-
-            if (webPFormatSupported) {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-landing-03-6000px.webp");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-landing-03-8000px.webp");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-landing-03-12000px.webp");
-                }
-
-            } else {
-
-                if (screen.width < 500) {
-                    texture = textureLoader.load("assets/EF-website-landscape-landing-03-6000px.jpg");
-                } else if (screen.width >= 500 && screen.width <= 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-landing-03-8000px.jpg");
-                } else if (screen.width > 1700) {
-                    texture = textureLoader.load("assets/EF-website-landscape-landing-03-12000px.jpg");
-                }
-
-            }
-
-        }
 
         // Render the material with the previously retrieved texture
         const material = new THREE.MeshBasicMaterial({ map: texture, toneMapped: false });
@@ -1014,11 +832,7 @@ export default (url) => {
         }
 
         scene.add(mesh);
-
-        render();
-
     }
-
 
     /** FIREFLIES **/
 
@@ -1026,7 +840,6 @@ export default (url) => {
      * Creates and renders fireflies in scene with custom fragment and vertex shader
      **/
     function addFireflies() {
-
         firefliesGeometry = new THREE.BufferGeometry();
         const firefliesCount = 1000;
         const positionArray = new Float32Array(firefliesCount * 3);
@@ -1080,7 +893,6 @@ export default (url) => {
         scene.add(fireflies);
 
         firefliesActivated = true;
-
     }
 
     /**
@@ -1089,7 +901,6 @@ export default (url) => {
      * scene is changin
      */
     function createHomePageCylinder() {
-
         homePagePlanetMaterial = new THREE.MeshBasicMaterial({
             color: "#00000F",
             transparent: true,
@@ -1109,9 +920,7 @@ export default (url) => {
         backgroundPlaneMesh.position.z = 0;
 
         scene.add(backgroundPlaneMesh);
-
     }
-
 
     /** Scene Helpers **/
 
@@ -1128,8 +937,132 @@ export default (url) => {
     //     scene.add(axesHelper);
     // }
 
+    function loadAssets() {
+        const assetLoaders = [
+            // Panorama background
+            new Promise((resolve) => {
+                const loadingManager = new THREE.LoadingManager();
+                loadingManager.onLoad = () => resolve();
+                const backgroundLoader = new THREE.TextureLoader(loadingManager);
+                const webPFormatSupported = testWebP();
 
-    function begin(url) {
+                if (url === "/philosophy") {
+                    if (webPFormatSupported) {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-philosophy-03-6000px.webp");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-philosophy-03-8000px.webp");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-philosophy-03-12000px.webp");
+                        }
+                    } else {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-philosophy-03-6000px.jpg");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-philosophy-03-8000px.jpg");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-philosophy-03-12000px.jpg");
+                        }
+                    }
+                } else if (url === "/ef") {
+                    if (webPFormatSupported) {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ef-03-6000px.webp");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ef-03-8000px.webp");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ef-03-12000px.webp");
+                        }
+                    } else {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ef-03-6000px.jpg");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ef-03-8000px.jpg");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ef-03-12000px.jpg");
+                        }
+                    }
+                } else if (url === "/ethereum") {
+                    if (webPFormatSupported) {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ethereum-03-6000px.webp");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ethereum-03-8000px.webp");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ethereum-03-12000px.webp");
+                        }
+                    } else {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ethereum-03-6000px.jpg");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ethereum-03-8000px.jpg");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-ethereum-03-12000px.jpg");
+                        }
+                    }
+                } else if (url === "/infinitegarden") {
+                    if (webPFormatSupported) {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-infinite-garden-03-6000px.webp");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-infinite-garden-03-8000px.webp");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-infinite-garden-03-12000px.webp");
+                        }
+                    } else {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-infinite-garden-03-6000px.jpg");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-infinite-garden-03-8000px.jpg");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-infinite-garden-03-12000px.jpg");
+                        }
+                    }
+                } else if (isHomePage()) {
+                    if (webPFormatSupported) {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-landing-03-6000px.webp");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-landing-03-8000px.webp");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-landing-03-12000px.webp");
+                        }
+                    } else {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-landing-03-6000px.jpg");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-landing-03-8000px.jpg");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-landing-03-12000px.jpg");
+                        }
+                    }
+                }
+            }),
+            // Dot texture
+            new Promise((resolve) => {
+                const loadingManager = new THREE.LoadingManager();
+                loadingManager.onLoad = () => resolve();
+                const dotLoader = new THREE.TextureLoader(loadingManager);
+
+                dotTexture = dotLoader.load("assets/dotTexture.png")
+            }),
+        ]
+
+        return Promise.all(assetLoaders);
+    }
+
+    function begin() {
+        // TODO: Possibly a way to do this without waiting for the animation to begin which would remove the need for a loading spinner entirely
+        // How? - Probably some webpack configuration that allows us to inline the assets so they're included in the page bundle rather than fetched asynchronously when page loads
+        loadAssets()
+            .then(() => addMainObjectToScene())
+            .then(() => {
+                removeLoadingScreen();
+                animate();
+                // TODO: Calling the animation loop twice because that's how it was (probably accidentally done) before - this effectively "doubles" the animation speed
+                // Should just speed up the animation the proper way, when there's time to figure out how
+                animate();
+            });
 
         initScene();
         initCamera();
@@ -1155,9 +1088,6 @@ export default (url) => {
             createEquirectangularBackground();
         };
 
-        /** Objects rendered onto the scene **/
-        addMainObjectToScene();
-
         // Future implementation if we add different objects:
         // Create the degenerate particles as the basis and set the different objects
         // as morph targets, which in turn allows us to morph the object in between different shapes.
@@ -1172,8 +1102,6 @@ export default (url) => {
         // Helpers
         // addGridHelper();
         // addAxesHelper();
-
-        animate(this);
 
         return () => {
             disposeRendererElement();
@@ -1338,27 +1266,24 @@ export default (url) => {
      * This allows us to prevent a race condition within which the user can both scroll to display the main content on the page
      * and scroll the content itself, which ends up giving unexpected results
      */
-    function allowScrollBehaviorOnMainContent() {
-        let mainContentContainer = document.getElementById("main--content--inner--container");
-        mainContentContainer.classList.add("vertical--scroll--allowed");
-    }
+    // function allowScrollBehaviorOnMainContent() {
+    //     let mainContentContainer = document.getElementById("main--content--inner--container");
+    //     mainContentContainer.classList.add("vertical--scroll--allowed");
+    // }
 
-    function disallowScrollBehaviorOnMainContent() {
-        let mainContentContainer = document.getElementById("main--content--inner--container");
-        mainContentContainer.classList.remove("vertical--scroll--allowed");
-    }
+    // function disallowScrollBehaviorOnMainContent() {
+    //     let mainContentContainer = document.getElementById("main--content--inner--container");
+    //     mainContentContainer.classList.remove("vertical--scroll--allowed");
+    // }
 
 
     /** Animation Code **/
-
     function animate() {
-
         if (statsAdded) {
             stats.update();
         }
 
         render();
-
     }
 
     let counter = 0;
@@ -1387,7 +1312,6 @@ export default (url) => {
     let homePage = isHomePage();
 
     function render() {
-
         // Standard Geometry
         if (finalPoints !== undefined && activateParticleRotation !== false) {
 
@@ -1409,40 +1333,16 @@ export default (url) => {
             ethLogoFirefliesMesh.rotation.y += generalSceneControls["ETH Rotation Speed"];
         };
 
-        // Final Method
-        // Trigger animation for all of the elements at once
-        // The second conditional ensures that both animations can't be triggered at the same time
-        if (scrollUpAnimationTriggered && !scrollDownAnimationTriggered) {
+        const contentVisible = document.body.classList.contains('content-scrolled');
 
-            // Hide Scroll Down Text
-            hideScrollDownCTA();
-            changeNavigationElementsToLightColor();
-
-            // If main content is not displayed, show it.
-            if (!mainContentDisplayed) {
-
-                displayMainContent();
-
-                setTimeout(() => {
-                    allowScrollBehaviorOnMainContent();
-                    // 2000 is equivalent to the 2s it takes for the animation @displayMainContent animation to be finished above
-                }, 2000);
-
-                mainContentDisplayed = true;
-
-            }
-
-            // As the main content shows, increase the opacity of the cylinder mesh between the camera and the background
-            // to give the illusion that whole scene is becoming darker
+        if (contentVisible) {
             if (backgroundPlaneMesh.material.opacity < 0.7) {
                 backgroundPlaneMesh.material.opacity += 0.004;
             } else {
                 meshOpacityAnimationEnded = true;
             };
 
-            // Triggers the particle expansion if user on the homepage
             if (homePage) {
-
                 let morphValue = finalPoints.morphTargetInfluences[0];
 
                 if (morphValue < 0.0001) {
@@ -1456,130 +1356,63 @@ export default (url) => {
                 } else {
                     ethLogoAnimationEnded = true;
                 }
-
+            }
+        } else {
+            if (backgroundPlaneMesh.material.opacity >= 0.1) {
+                backgroundPlaneMesh.material.opacity -= 0.004;
+            } else {
+                backgroundOpacityReverseAnimationEnded = true;
             }
 
-            if (!homePage) {
-
-                if (meshOpacityAnimationEnded) {
-                    scrollUpAnimationTriggered = false;
-                    meshOpacityAnimationEnded = false;
-                };
-
-            } else {
-
-                if (ethLogoAnimationEnded && meshOpacityAnimationEnded) {
-                    scrollUpAnimationTriggered = false;
-                    ethLogoAnimationEnded = false;
-                    meshOpacityAnimationEnded = false;
-                };
-
+            // Ensures that if the cylinder opacity goes below 0.1, it is reset to 0.1
+            if (backgroundPlaneMesh.material.opacity <= 0.1) {
+                backgroundPlaneMesh.material.opacity = 0.1;
+                backgroundOpacityReverseAnimationEnded = true;
             };
 
-        };
+            // Trigger the reversal of the particle expansion (thus contraction) if we are on the home page
+            // and the user scrolls the opposite direction
 
-        // Ensures that the animation can be reversed automatically
-        // Adding the second conditional prevents them from being triggered at the same time
-        if (scrollDownAnimationTriggered && !scrollUpAnimationTriggered) {
+            if (homePage) {
+                const currentMorphTargetInfluence = finalPoints.morphTargetInfluences[0];
 
-            let textOuterContainer = document.getElementById("main--content--inner--container")
-            let topPositionOfOuterContainer = textOuterContainer.scrollTop;
-
-            // If the scroll takes place when the title of the page is at the top of it's container, we trigger the animations
-            // which remove 1. the main content and 2. reduce the opacity of the scene
-            if (topPositionOfOuterContainer === 0) {
-
-                changeNavigationElementsToDarkColor();
-                displayScrollDownCTA();
-                hideMainContent();
-                disallowScrollBehaviorOnMainContent();
-
-                // Make the background cylinder lighter, which gives the illusion that the whole scene is becoming darker
-                if (backgroundPlaneMesh.material.opacity >= 0.1) {
-                    backgroundPlaneMesh.material.opacity -= 0.004;
+                if (currentMorphTargetInfluence > 0.001) {
+                    deltaY = - 0.0000025;
                 } else {
-                    backgroundOpacityReverseAnimationEnded = true;
+                    deltaY = - 0.000005;
                 }
 
-                // Ensures that if the cylinder opacity goes below 0.1, it is reset to 0.1
-                if (backgroundPlaneMesh.material.opacity <= 0.1) {
-                    backgroundPlaneMesh.material.opacity = 0.1;
-                    backgroundOpacityReverseAnimationEnded = true;
-                };
+                let morphTarget = finalPoints.morphTargetInfluences[0];
+                let finalValue = morphTarget - deltaY;
 
-                // Trigger the reversal of the particle expansion (thus contraction) if we are on the home page
-                // and the user scrolls the opposite direction
+                const finalStopPoint = 0;
 
-                if (homePage) {
+                if (finalValue >= finalStopPoint) {
+                    // finalPoints.morphTargetInfluences[0] -= finalValue;
+                    finalPoints.morphTargetInfluences[0] += deltaY;
 
-                    const currentMorphTargetInfluence = finalPoints.morphTargetInfluences[0];
-
-                    if (currentMorphTargetInfluence > 0.001) {
-                        deltaY = - 0.0000025;
-                    } else {
-                        deltaY = - 0.000005;
-                    }
-
-                    let morphTarget = finalPoints.morphTargetInfluences[0];
-                    let finalValue = morphTarget - deltaY;
-
-                    const finalStopPoint = 0;
-
-                    if (finalValue >= finalStopPoint) {
-
-                        // finalPoints.morphTargetInfluences[0] -= finalValue;
-                        finalPoints.morphTargetInfluences[0] += deltaY;
-
-                        // If the morph target is ever smaller than 0, we keep it at zero
-                        // This is a control measure that ensures that we never end up in a state where the mesh
-                        // looks still altered
-                        if (finalPoints.morphTargetInfluences[0] <= 0) {
-                            finalValue = 0;
-                            finalPoints.morphTargetInfluences[0] = 0;
-                            ethObjectReverseAnimationEnded = true;
-                        };
-
-                    };
-
-                    // We don't want the mortphTargetInfluences to ever be below 0 unless we want unexpected
-                    // shapes to be rendered
-                    if (finalPoints.morphTargetInfluences[0] < 0) {
+                    // If the morph target is ever smaller than 0, we keep it at zero
+                    // This is a control measure that ensures that we never end up in a state where the mesh
+                    // looks still altered
+                    if (finalPoints.morphTargetInfluences[0] <= 0) {
                         finalValue = 0;
                         finalPoints.morphTargetInfluences[0] = 0;
                         ethObjectReverseAnimationEnded = true;
                     };
+                };
 
-                }
-
-
-                if (!homePage) {
-
-                    // After the opacity change has finished, we reset all the variables in order to allow the animation to run again
-                    if (backgroundOpacityReverseAnimationEnded) {
-                        scrollDownAnimationTriggered = false;
-                        backgroundOpacityReverseAnimationEnded = false;
-                        scrollUpCounter = 0;
-                    };
-
-                } else {
-
-                    if (ethObjectReverseAnimationEnded && backgroundOpacityReverseAnimationEnded) {
-                        scrollDownAnimationTriggered = false;
-                        ethObjectReverseAnimationEnded = false;
-                        backgroundOpacityReverseAnimationEnded = false;
-                        scrollUpCounter = 0;
-                    };
-
-
-                }
-
-
+                // We don't want the mortphTargetInfluences to ever be below 0 unless we want unexpected
+                // shapes to be rendered
+                if (finalPoints.morphTargetInfluences[0] < 0) {
+                    finalValue = 0;
+                    finalPoints.morphTargetInfluences[0] = 0;
+                    ethObjectReverseAnimationEnded = true;
+                };
             }
-
         }
 
         // Time used to change the position of the fireflies and create a randomized brownian-like movement
-        let elapsedTime;
+        // let elapsedTime;
 
         if (clock) {
             elapsedTime = clock.getElapsedTime();
@@ -1587,88 +1420,85 @@ export default (url) => {
 
         // If first iteration of fireflies activated and displayed, pass in the elapsed time as a uniform to the shader
         if (firefliesActivated) {
-
             if (finalPointsShaderMaterial) {
                 finalPointsShaderMaterial.uniforms.uTime.value = elapsedTime;
             }
-
         };
 
         window.requestAnimationFrame(animate);
         composer.render();
 
+        return;
     }
 
     /**
      * Hides or displays the footer depending on whether the user is hovering over the element
      * @called in @addEventListeners function
      */
-    function toggleNewFooter() {
+    // function toggleNewFooter() {
+    //     if (!footerDisplayed) {
+
+    //         let footerContainer = document.getElementById("footer-outer-container");
+    //         // let footerInnerContainer = document.getElementById("footer--inner--container");
+    //         // let elementsContainer = document.getElementById("footer--transitory--container");
+    //         // let footerUpArrow = document.getElementById("footer--up--arrow");
+    //         // let footerDownArrow = document.getElementById("footer--down--arrow");
+    //         // let footerRightContainer = document.getElementById("footer--right--container");
+    //         // let footerArrow = document.getElementById("footer--arrow");
+    //         let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
+
+    //         footerContainer.classList.add("displayed");
+    //         // footerInnerContainer.classList.add("displayed");
+    //         // elementsContainer.classList.add("displayed");
+    //         // footerUpArrow.classList.add("hidden");
+    //         // footerDownArrow.classList.add("displayed");
+
+    //         if (isMobileDevice()) {
+    //             hideHamburgerMenu();
+    //             topLeftLogo.classList.add("hidden");;
+    //         };
+
+    //         if (isMobileDevice()) {
+    //             // footerRightContainer.classList.add("footer--displayed");
+    //             // footerArrow.classList.add("footer--displayed");
+    //             // changeNavigationElementsToLightColor();
+    //         };
+
+    //         footerDisplayed = true;
+
+    //     } else {
+
+    //         let footerContainer = document.getElementById("footer-outer-container");
+    //         // let footerInnerContainer = document.getElementById("footer--inner--container");
+    //         // let elementsContainer = document.getElementById("footer--transitory--container");
+    //         // let footerUpArrow = document.getElementById("footer--up--arrow");
+    //         // let footerDownArrow = document.getElementById("footer--down--arrow");
+    //         // let footerRightContainer = document.getElementById("footer--right--container");
+    //         // let footerArrow = document.getElementById("footer--arrow");
+    //         let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
+
+    //         footerContainer.classList.remove("displayed");
+    //         // footerInnerContainer.classList.remove("displayed");
+    //         // elementsContainer.classList.remove("displayed");
+    //         // footerUpArrow.classList.remove("hidden");
+    //         // footerDownArrow.classList.remove("displayed");
+
+    //         if (isMobileDevice()) {
+    //             displayHamburgerMenu();
+    //             topLeftLogo.classList.remove("hidden");;
+    //         }
+
+    //         if (!isMobileDevice()) {
+    //             // footerRightContainer.classList.remove("footer--displayed");
+    //             // footerArrow.classList.remove("footer--displayed");
+    //         };
 
 
-        if (!footerDisplayed) {
+    //         footerDisplayed = false;
 
-            let footerContainer = document.getElementById("footer-outer-container");
-            // let footerInnerContainer = document.getElementById("footer--inner--container");
-            // let elementsContainer = document.getElementById("footer--transitory--container");
-            // let footerUpArrow = document.getElementById("footer--up--arrow");
-            // let footerDownArrow = document.getElementById("footer--down--arrow");
-            // let footerRightContainer = document.getElementById("footer--right--container");
-            // let footerArrow = document.getElementById("footer--arrow");
-            let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
+    //     }
 
-            footerContainer.classList.add("displayed");
-            // footerInnerContainer.classList.add("displayed");
-            // elementsContainer.classList.add("displayed");
-            // footerUpArrow.classList.add("hidden");
-            // footerDownArrow.classList.add("displayed");
-
-            if (isMobileDevice()) {
-                hideHamburgerMenu();
-                topLeftLogo.classList.add("hidden");;
-            };
-
-            if (isMobileDevice()) {
-                // footerRightContainer.classList.add("footer--displayed");
-                // footerArrow.classList.add("footer--displayed");
-                // changeNavigationElementsToLightColor();
-            };
-
-            footerDisplayed = true;
-
-        } else {
-
-            let footerContainer = document.getElementById("footer-outer-container");
-            // let footerInnerContainer = document.getElementById("footer--inner--container");
-            // let elementsContainer = document.getElementById("footer--transitory--container");
-            // let footerUpArrow = document.getElementById("footer--up--arrow");
-            // let footerDownArrow = document.getElementById("footer--down--arrow");
-            // let footerRightContainer = document.getElementById("footer--right--container");
-            // let footerArrow = document.getElementById("footer--arrow");
-            let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
-
-            footerContainer.classList.remove("displayed");
-            // footerInnerContainer.classList.remove("displayed");
-            // elementsContainer.classList.remove("displayed");
-            // footerUpArrow.classList.remove("hidden");
-            // footerDownArrow.classList.remove("displayed");
-
-            if (isMobileDevice()) {
-                displayHamburgerMenu();
-                topLeftLogo.classList.remove("hidden");;
-            }
-
-            if (!isMobileDevice()) {
-                // footerRightContainer.classList.remove("footer--displayed");
-                // footerArrow.classList.remove("footer--displayed");
-            };
-
-
-            footerDisplayed = false;
-
-        }
-
-    }
+    // }
 
     /** Utility Functions **/
 
@@ -1695,117 +1525,117 @@ export default (url) => {
         return canvas.toDataURL ? canvas.toDataURL('image/webp').indexOf('image/webp') === 5 : false;
     }
 
-    function hideNewFooter() {
+    // function hideNewFooter() {
 
-        if (footerDisplayed) {
-            let footerContainer = document.getElementById("footer-outer-container");
-            let footerInnerContainer = document.getElementById("footer--inner--container");
-            let elementsContainer = document.getElementById("footer--transitory--container");
-            let footerUpArrow = document.getElementById("footer--up--arrow");
-            let footerDownArrow = document.getElementById("footer--down--arrow");
-            let footerRightContainer = document.getElementById("footer--right--container");
-            let footerArrow = document.getElementById("footer--arrow");
-            let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
+    //     if (footerDisplayed) {
+    //         let footerContainer = document.getElementById("footer-outer-container");
+    //         let footerInnerContainer = document.getElementById("footer--inner--container");
+    //         let elementsContainer = document.getElementById("footer--transitory--container");
+    //         let footerUpArrow = document.getElementById("footer--up--arrow");
+    //         let footerDownArrow = document.getElementById("footer--down--arrow");
+    //         let footerRightContainer = document.getElementById("footer--right--container");
+    //         let footerArrow = document.getElementById("footer--arrow");
+    //         let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
 
-            footerContainer.classList.remove("displayed");
-            footerInnerContainer.classList.remove("displayed");
-            elementsContainer.classList.remove("displayed");
-            footerUpArrow.classList.add("hidden");
-            footerDownArrow.classList.add("displayed");
+    //         footerContainer.classList.remove("displayed");
+    //         footerInnerContainer.classList.remove("displayed");
+    //         elementsContainer.classList.remove("displayed");
+    //         footerUpArrow.classList.add("hidden");
+    //         footerDownArrow.classList.add("displayed");
 
-            if (!isMobileDevice()) {
-                footerRightContainer.classList.remove("footer--displayed");
-                footerArrow.classList.remove("footer--displayed");
-            };
+    //         if (!isMobileDevice()) {
+    //             footerRightContainer.classList.remove("footer--displayed");
+    //             footerArrow.classList.remove("footer--displayed");
+    //         };
 
-            if (isMobileDevice()) {
-                displayHamburgerMenu();
-                topLeftLogo.classList.remove("hidden");
-                changeNavigationElementsToLightColor();
-            }
+    //         if (isMobileDevice()) {
+    //             displayHamburgerMenu();
+    //             topLeftLogo.classList.remove("hidden");
+    //             changeNavigationElementsToLightColor();
+    //         }
 
-            footerDisplayed = false;
+    //         footerDisplayed = false;
 
-        }
+    //     }
 
-    }
+    // }
 
-    function changeNavigationElementsToLightColor() {
+    // function changeNavigationElementsToLightColor() {
 
-        let ethLogoText = document.getElementById("ethereum--menu--svg");
-        let hamburgerMenu = document.getElementById("hamburger--menu--svg");
+    //     let ethLogoText = document.getElementById("ethereum--menu--svg");
+    //     let hamburgerMenu = document.getElementById("hamburger--menu--svg");
 
-        ethLogoText.classList.remove("header--logo--displayed")
-        hamburgerMenu.classList.remove("header--logo--displayed")
+    //     ethLogoText.classList.remove("header--logo--displayed")
+    //     hamburgerMenu.classList.remove("header--logo--displayed")
 
-    }
+    // }
 
-    function changeNavigationElementsToDarkColor() {
+    // function changeNavigationElementsToDarkColor() {
 
-        let ethLogoText = document.getElementById("ethereum--menu--svg");
-        let hamburgerMenu = document.getElementById("hamburger--menu--svg");
+    //     let ethLogoText = document.getElementById("ethereum--menu--svg");
+    //     let hamburgerMenu = document.getElementById("hamburger--menu--svg");
 
-        ethLogoText.classList.add("header--logo--displayed")
-        hamburgerMenu.classList.add("header--logo--displayed")
+    //     ethLogoText.classList.add("header--logo--displayed")
+    //     hamburgerMenu.classList.add("header--logo--displayed")
 
-    }
+    // }
 
-    function displayHamburgerMenu() {
-        let hamburgerMenu = document.getElementById("hamburger--menu--container");
-        hamburgerMenu.classList.remove("hide--hamburger--menu")
-    }
+    // function displayHamburgerMenu() {
+    //     let hamburgerMenu = document.getElementById("hamburger--menu--container");
+    //     hamburgerMenu.classList.remove("hide--hamburger--menu")
+    // }
 
-    function hideHamburgerMenu() {
-        let hamburgerMenu = document.getElementById("hamburger--menu--container");
-        hamburgerMenu.classList.add("hide--hamburger--menu")
-    }
+    // function hideHamburgerMenu() {
+    //     let hamburgerMenu = document.getElementById("hamburger--menu--container");
+    //     hamburgerMenu.classList.add("hide--hamburger--menu")
+    // }
 
-    function displayMainContent() {
+    // function displayMainContent() {
 
-        // let textContainer = document.getElementById("main--content--inner--container");
-        let textContainer = document.getElementById("homepage--welcome--text--inner--container");
+    //     // let textContainer = document.getElementById("main--content--inner--container");
+    //     let textContainer = document.getElementById("homepage--welcome--text--inner--container");
 
-        if (isHomePage()) {
-            textContainer.classList.add("homepage--displayed");
-        }
+    //     if (isHomePage()) {
+    //         textContainer.classList.add("homepage--displayed");
+    //     }
 
-        textContainer.classList.add("displayed");
+    //     textContainer.classList.add("displayed");
 
-        // Helps us ensure that the animation isn't triggered more than once in the @render function
-        // where we end up calling this function
-        mainContentShownOnPage = true;
-    }
+    //     // Helps us ensure that the animation isn't triggered more than once in the @render function
+    //     // where we end up calling this function
+    //     mainContentShownOnPage = true;
+    // }
 
 
-    function hideMainContent() {
+    // function hideMainContent() {
 
-        // let textContainer = document.getElementById("main--content--inner--container");
-        let textContainer = document.getElementById("homepage--welcome--text--inner--container");
+    //     // let textContainer = document.getElementById("main--content--inner--container");
+    //     let textContainer = document.getElementById("homepage--welcome--text--inner--container");
 
-        if (isHomePage()) {
-            textContainer.classList.remove("homepage--displayed");
-        }
+    //     if (isHomePage()) {
+    //         textContainer.classList.remove("homepage--displayed");
+    //     }
 
-        textContainer.classList.remove("displayed");
+    //     textContainer.classList.remove("displayed");
 
-        mainContentShownOnPage = false;
-        mainContentDisplayed = false;
+    //     mainContentShownOnPage = false;
+    //     mainContentDisplayed = false;
 
-    }
+    // }
 
-    function displayScrollDownCTA() {
+    // function displayScrollDownCTA() {
 
-        let cta = document.body; // document.getElementById("home-scroll-navigation-container");
-        cta.classList.remove("hide--scroll");
+    //     // let cta = document.body; // document.getElementById("home-scroll-navigation-container");
+    //     // cta.classList.remove("hide--scroll");
 
-    }
+    // }
 
-    function hideScrollDownCTA() {
+    // function hideScrollDownCTA() {
 
-        let cta = document.body; // document.getElementById("home-scroll-navigation-container");
-        cta.classList.add("hide--scroll");
+    //     // let cta = document.body; // document.getElementById("home-scroll-navigation-container");
+    //     // cta.classList.add("hide--scroll");
 
-    };
+    // };
 
 
     /** EVENT HANDLERS **/
@@ -1823,32 +1653,24 @@ export default (url) => {
     let scrollDownAnimationTriggered = false;
 
     // New factors
-    function triggerAnimation(ev) {
+    // function triggerAnimation(ev) {
+    //     let { deltaY } = ev;
 
-        let { deltaY } = ev;
-
-        if (deltaY > 0) {
-
-            // New Method - Automatic Animation
-
-            if (!scrollDownAnimationTriggered) {
-                scrollUpAnimationTriggered = true;
-            };
-
-            if (!textColorTransformed) {
-                turnMainContentColorWhite();
-                textColorTransformed = true;
-            };
-
-        } else {
-
-            if (!scrollUpAnimationTriggered) {
-                scrollDownAnimationTriggered = true;
-            };
-
-        }
-    }
-
+    //     if (deltaY > 0) {
+    //         // New Method - Automatic Animation
+    //         if (!scrollDownAnimationTriggered) {
+    //             scrollUpAnimationTriggered = true;
+    //         };
+    //         // if (!textColorTransformed) {
+    //         //     turnMainContentColorWhite();
+    //         //     textColorTransformed = true;
+    //         // };
+    //     } else {
+    //         if (!scrollUpAnimationTriggered) {
+    //             scrollDownAnimationTriggered = true;
+    //         };
+    //     }
+    // }
 
     /**
      * Ensures that the scene resizes with user window resizing
@@ -1874,17 +1696,17 @@ export default (url) => {
         // Important to note the difference beteween @wheel and @scroll event
         // @wheel event triggers on scroll AND zoom => Back in 2015, was not a standard
         // @scroll event occurs when element scrollbar is being scrolled
-        document.addEventListener("wheel", triggerAnimation);
-        document.addEventListener("scroll", triggerAnimation);
+        // document.addEventListener("wheel", triggerAnimation);
+        // document.addEventListener("scroll", triggerAnimation);
 
         // Event Listener for Mobile
         // Implements "swipe" behavior on the page
-        document.addEventListener("touchstart", handleTouchStart, false);
-        document.addEventListener("touchmove", handleTouchMove, false);
+        // document.addEventListener("touchstart", handleTouchStart, false);
+        // document.addEventListener("touchmove", handleTouchMove, false);
 
         // Display footer based on whether the user is hovering above footer element or not.
         if (isMobileDevice()) {
-            document.getElementById("footer--inner--container--two").addEventListener("mousedown", toggleNewFooter, false);
+            // document.getElementById("footer--inner--container--two").addEventListener("mousedown", toggleNewFooter, false);
         } else {
             /** Sets footer animation for desktop => Not done through CSS because in this case the child element causes a change in the parent */
             // document.getElementById("footer--inner--container--two").addEventListener("mouseenter", toggleNewFooter, false);
@@ -1897,13 +1719,13 @@ export default (url) => {
 
         return () => {
             window.removeEventListener('resize', resize)
-            document.removeEventListener("wheel", triggerAnimation);
-            document.removeEventListener("scroll", triggerAnimation);
-            document.removeEventListener("touchstart", handleTouchStart);
-            document.removeEventListener("touchmove", handleTouchMove);
+            // document.removeEventListener("wheel", triggerAnimation);
+            // document.removeEventListener("scroll", triggerAnimation);
+            // document.removeEventListener("touchstart", handleTouchStart);
+            // document.removeEventListener("touchmove", handleTouchMove);
 
             if (isMobileDevice()) {
-                document.getElementById("footer--inner--container--two").removeEventListener("mousedown", toggleNewFooter);
+                // document.getElementById("footer--inner--container--two").removeEventListener("mousedown", toggleNewFooter);
             } else {
                 // document.getElementById("footer--inner--container--two").removeEventListener("mouseenter", toggleNewFooter);
                 // document.getElementById("footer--inner--container--two").removeEventListener("mouseleave", toggleNewFooter);
@@ -1922,7 +1744,6 @@ export default (url) => {
      *
      */
     function modifyElementsAccordingToDevice() {
-
         // let footerUpArrow = document.getElementById("footer--up--arrow");
         // let footerDownArrow = document.getElementById("footer--down--arrow");
         // let footerRightContainer = document.getElementById("footer--right--container");
@@ -1936,7 +1757,6 @@ export default (url) => {
         }
 
         setDocumentHeight();
-
     }
 
     function setDocumentHeight() {
@@ -1944,15 +1764,15 @@ export default (url) => {
         doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
     };
 
-    function triggerScrollUpAnimation() {
+    // function triggerScrollUpAnimation() {
 
-        if (!scrollDownAnimationTriggered) {
-            scrollUpAnimationTriggered = true;
-        };
+    //     if (!scrollDownAnimationTriggered) {
+    //         scrollUpAnimationTriggered = true;
+    //     };
 
-        turnMainContentColorWhite();
+    //     turnMainContentColorWhite();
 
-    }
+    // }
 
     /** Mobile Device Related Functions => Allow us to implement swipe up or down functionalities **/
 
@@ -2023,30 +1843,30 @@ export default (url) => {
 
     };
 
-    function turnMainContentColorWhite() {
+    // function turnMainContentColorWhite() {
 
-        document.getElementById("main--content--title").style.color = "white";
+    //     // document.getElementById("main--content--title").style.color = "white";
 
-        if (!isHomePage()) {
+    //     // if (!isHomePage()) {
 
-            let paragraphOne = document.getElementById("main--content--general--paragraph");
+    //     //     let paragraphOne = document.getElementById("main--content--general--paragraph");
 
-            if (paragraphOne) {
-                paragraphOne.style.color = "white";
-            }
+    //     //     if (paragraphOne) {
+    //     //         paragraphOne.style.color = "white";
+    //     //     }
 
-            let paragaphTwo = document.getElementById("main--content--general--paragraph--two");
+    //     //     let paragaphTwo = document.getElementById("main--content--general--paragraph--two");
 
-            if (paragaphTwo) {
-                document.getElementById("main--content--general--paragraph--two").style.color = "white";
-            }
+    //     //     if (paragaphTwo) {
+    //     //         document.getElementById("main--content--general--paragraph--two").style.color = "white";
+    //     //     }
 
-        }
+    //     // }
 
-        // document.getElementById("downward--arrow").style.color = "white" ;
-        // document.getElementById("next--page--text").style.color = "white";
+    //     // document.getElementById("downward--arrow").style.color = "white" ;
+    //     // document.getElementById("next--page--text").style.color = "white";
 
-    }
+    // }
 
     const cleanUpAfterThreejs = begin();
     const clearAllListeners = addEventListeners();

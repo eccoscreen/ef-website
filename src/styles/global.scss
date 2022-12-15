@@ -245,6 +245,13 @@ object {
   cursor: ew-resize;
   overflow: clip;
   /* display: none; */
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 #main--content--inner--container {
@@ -263,7 +270,7 @@ object {
   -ms-overflow-style: none;
   scrollbar-width: none;
   align-items: center;
-  overflow-y: clip;
+  overflow-y: auto; // clip;
 }
 
 #main--content--inner--container.vertical--scroll--allowed {
@@ -509,16 +516,53 @@ ol li {
 
 /* Triggers hover state on the scroll down element, removed for now */
 
-.hide--scroll {
-  .home-scroll-navigation-container {
+@keyframes enable-scroll {
+  0% {
+    overflow-y: clip !important;
+  }
+
+  100% {
+    overflow-y: auto !important;
+  }
+}
+
+.content-scrolled {
+  #home-scroll-navigation-container {
     opacity: 0;
     transition: opacity 0.3s ease-out;
     pointer-events: none;
   }
 
+  #main--content--inner--container {
+    // overflow-y: auto;
+    transform: translateY(0);
+    transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+    animation: enable-scroll 2s linear forwards;
+
+    &.homepage {
+      overflow-y: hidden;
+
+      #homepage--welcome--text--inner--container {
+        transform: translateY(22vh);
+      }
+    }
+  }
+
+  // Naming here is odd? This isn't homepage text styling, yet all the pages use this id
+  #homepage--welcome--text--inner--container {
+    transform: translateY(0vh);
+    transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+  }
+
   #ethereum--menu--svg,
   #hamburger--menu--svg {
     filter: none !important;
+  }
+
+  #main--content--title,
+  #main--content--general--paragraph,
+  #main--content--general--paragraph--two {
+    color: white !important;
   }
 }
 
