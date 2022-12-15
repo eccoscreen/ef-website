@@ -15,6 +15,8 @@ const useScrollDirection = () => {
 
       const scrollableContentElement = document.getElementById("main--content--inner--container")
       
+      if (!scrollableContentElement) return;
+      
       if (scrollableContentElement?.scrollTop > 0) {
         setScrollDirection(ScrollDirection.DOWN);
       } else {
