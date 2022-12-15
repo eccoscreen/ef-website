@@ -270,7 +270,7 @@ object {
   -ms-overflow-style: none;
   scrollbar-width: none;
   align-items: center;
-  overflow-y: auto; // clip;
+  overflow-y: clip;
 }
 
 #main--content--inner--container.vertical--scroll--allowed {
