@@ -194,7 +194,7 @@ export default (url) => {
     const ETHER_GLB = "ether.glb";
     const ETHER_OBJ = "ether.obj";
     // Defines the current file type => Needs to be changed if we change the asset from glb format to obj format
-    const FILE_TYPE = "obj";
+    const FILE_TYPE = "glb";
     /**
      * Used to load and render the ETH object made out of particles into the threeJS scene
      */
