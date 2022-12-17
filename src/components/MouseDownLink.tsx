@@ -1,13 +1,13 @@
 'use client'
 import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 /*
   TODO: Threejs seems to capture onClick events so for links overlaying the canvas we'll have to rely on mousedown event inbstead - 
   probably a cleaner solution somewhere but just getting to functional parity for now
 */
 const MouseDownLink = (props: LinkProps & { children?: React.ReactNode, [key: string]: any }) => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <Link
@@ -16,17 +16,21 @@ const MouseDownLink = (props: LinkProps & { children?: React.ReactNode, [key: st
         e.stopPropagation();
         e.preventDefault();
 
-        let transitionPageElement = document.getElementById("transition--container");
+        const isExternalLink = props.href.toString().startsWith('http');
 
-        if (transitionPageElement) {
-          transitionPageElement.classList.remove("removed");
+        if (isExternalLink) {
+          window.open(props.href.toString(), '_blank');
+        } else {
+          const transitionPageElement = document.getElementById("transition--container");
+
+          if (transitionPageElement) {
+            transitionPageElement.classList.remove("removed");
+          }
+
+          setTimeout(() => {
+            document.location.href = props.href.toString();
+          }, 1000)
         }
-
-        setTimeout(() => {
-          document.location.href = props.href.toString();
-        }, 1000)
-
-        // document.location.href = props.href.toString();
 
         // TODO: We need to properly dispose of threejs on client side navigation, but there is no trivial way to do it
         // router.push(props.href.toString())

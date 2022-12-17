@@ -273,14 +273,14 @@ object {
   overflow-y: clip;
 }
 
-#main--content--inner--container.vertical--scroll--allowed {
-  overflow-y: auto;
-}
+// #main--content--inner--container.vertical--scroll--allowed {
+//   overflow-y: auto;
+// }
 
-#main--content--inner--container.displayed {
-  transform: translateY(0);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
+// #main--content--inner--container.displayed {
+//   transform: translateY(0);
+//   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+// }
 
 /* #main--content--inner--container.homepage {
   max-width: 550px;
@@ -310,16 +310,16 @@ object {
   max-width: 600px;
 }
 
-#homepage--welcome--text--inner--container.displayed {
-  transform: translateY(0);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
+// #homepage--welcome--text--inner--container.displayed {
+//   transform: translateY(0);
+//   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+// }
 
-#homepage--welcome--text--inner--container.homepage--displayed {
-  /* transform: translateY(100%); */
-  transform: translateY(22vh);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
+// #homepage--welcome--text--inner--container.homepage--displayed {
+//   /* transform: translateY(100%); */
+//   transform: translateY(22vh);
+//   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+// }
 
 #main--content--title {
   font-weight: 400;
@@ -514,16 +514,15 @@ ol li {
   // }
 }
 
-/* Triggers hover state on the scroll down element, removed for now */
 
-@keyframes enable-scroll {
-  0% {
-    overflow-y: clip !important;
-  }
+$transition-time: 2s;
+$transition-curve: cubic-bezier(.37, 0, .01, 1);
 
-  100% {
-    overflow-y: auto !important;
-  }
+// We play this animation just to get the animation start and animation end events on the JS side (done to circumvent an issue with scrolling while transitioning)
+@keyframes scroll-animation-timer {
+  0% {}
+
+  100% {}
 }
 
 .content-scrolled {
@@ -534,14 +533,11 @@ ol li {
   }
 
   #main--content--inner--container {
-    // overflow-y: auto;
     transform: translateY(0);
-    transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-    animation: enable-scroll 2s linear forwards;
+    transition: transform $transition-curve $transition-time;
+    animation: scroll-animation-timer 1.5s;
 
     &.homepage {
-      overflow-y: hidden;
-
       #homepage--welcome--text--inner--container {
         transform: translateY(22vh);
       }
@@ -551,7 +547,7 @@ ol li {
   // Naming here is odd? This isn't homepage text styling, yet all the pages use this id
   #homepage--welcome--text--inner--container {
     transform: translateY(0vh);
-    transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+    transition: transform $transition-curve $transition-time;
   }
 
   #ethereum--menu--svg,
@@ -1687,34 +1683,8 @@ with the footer  */
 
 }
 
-
-/* MOBILE AND TABLET DEVICES */
-
-/* MOBILE DEVICES */
-
-
-
-/* Animation used for the arrow that faces downwards letting the user know that they should scroll */
-@keyframes hover {
-  0% {
-    transform: translateX(-50%) translateY(-3px);
-  }
-
-  50% {
-    transform: translateX(-50%) translateY(3px)
-  }
-
-  100% {
-    transform: translateX(-50%) translateY(-3px);
-  }
-}
-
-
-/* Hover Effects */
-
 #next--page--navigation--container:hover #downward--arrow {
   filter: invert(9%) sepia(20%) saturate(482%) hue-rotate(106deg) brightness(101%) contrast(103%);
-  /* background-color: red; */
 }
 
 #next--page--navigation--container:hover .next--page--text {

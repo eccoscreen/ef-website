@@ -20,7 +20,7 @@
 
 
 
-  
+
 
   @media (max-width: 499px) {
     height: 40px;
@@ -49,7 +49,7 @@
 
     :global(#footer--inner--container--two) {
       opacity: 1;
-    } 
+    }
 
     :global(#footer--main--content--container) {
       height: calc(var(--doc-height) - 40px);
@@ -115,13 +115,19 @@
   }
 }
 
+@keyframes hover {
+  0% {
+    transform: translateX(-50%) translateY(-3px);
+  }
 
+  50% {
+    transform: translateX(-50%) translateY(3px)
+  }
 
-
-
-
-
-
+  100% {
+    transform: translateX(-50%) translateY(-3px);
+  }
+}
 
 // Scroll indicator 
 .home-scroll-navigation-container {
@@ -156,8 +162,3 @@
 .homepage-scroll-down-bottom-arrow {
   cursor: ew-resize;
 }
-
-
-
-
-
