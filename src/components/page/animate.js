@@ -182,19 +182,15 @@ export default (url) => {
      * #3d #animation #ethereum #object
      */
 
-    const LARGE_NUMBER_OF_VERTEX_OBJECT = "ETH_Logo_Planet_Match.obj"; // 48K vertices => The old one
+/////    const LARGE_NUMBER_OF_VERTEX_OBJECT = "ETH_Logo_Planet_Match.obj"; // 48K vertices => The old one
     // The new ethereum objects are below
-    const ETH_1K_OBJ = "eth_1k.obj";
-    const ETH_5K_OBJ = "eth_2_5k.obj";
-    const ETH_6K_OBJ = "eth_6k.obj";
-    const ETH_12K = "eth_12k.obj"; // This is the one currently displayed as you can see in the @addMainObjectToScene function
-    const ETH_24K = "eth_24k.obj";
-    const ETH_12K_MIN = "eth_12k.glb";
-    const SPHARE = "sphare.glb";
+
+/////    const ETH_12K_MIN = "eth_12k.glb";
     const ETHER_GLB = "ether.glb";
     const ETHER_OBJ = "ether.obj";
+
     // Defines the current file type => Needs to be changed if we change the asset from glb format to obj format
-    const FILE_TYPE = "glb";
+    const FILE_TYPE = "obj";
     /**
      * Used to load and render the ETH object made out of particles into the threeJS scene
      */
@@ -608,13 +604,13 @@ export default (url) => {
         scene.add(group);
 
         // The geometry of the poitns
-        sparklesGeometry = new THREE.BufferGeometry();
+/////        sparklesGeometry = new THREE.BufferGeometry();
 
-        if (nameOfFinalFileSelected === "Eth_logo_grids.obj") {
-            meshSurfaceSamplerPointSize = 0.06;
-        } else {
-            meshSurfaceSamplerPointSize = 0.02;
-        };
+/////        if (nameOfFinalFileSelected === "Eth_logo_grids.obj") {
+/////            meshSurfaceSamplerPointSize = 0.06;
+/////        } else {
+/////            meshSurfaceSamplerPointSize = 0.02;
+/////        };
 
         sparklesMaterial = new THREE.PointsMaterial({
             size: meshSurfaceSamplerPointSize,
@@ -654,11 +650,11 @@ export default (url) => {
         group.position.z = 0;
 
         // We modify the size of the ETH logo rendered depending on the file that we are using
-        if (modelFileName === "Eth_logo_grids.obj") {
-            group.scale.x = group.scale.y = group.scale.z = 3.4;
-        } else {
-            group.scale.x = group.scale.y = group.scale.z = 1.8;
-        };
+/////        if (modelFileName === "Eth_logo_grids.obj") {
+/////            group.scale.x = group.scale.y = group.scale.z = 3.4;
+/////        } else {
+/////            group.scale.x = group.scale.y = group.scale.z = 1.8;
+/////        };
 
         // let sampler = null;
         let shape = null;
@@ -1323,7 +1319,7 @@ export default (url) => {
             } else if (FILE_TYPE === "obj") {
                 finalPoints.rotation.y += generalSceneControls["ETH Rotation Speed"];
             };
-
+            
         };
 
         // Geometry with Surface Sampler
