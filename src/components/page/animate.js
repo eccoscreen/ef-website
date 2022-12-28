@@ -230,7 +230,7 @@ export default (url) => {
          * Depending on the object loaded, change the size of the particles by modifying the variable below
          * #ethereum #3d #object
          */
-        animatedModelParticleSize = 0.04;
+        animatedModelParticleSize = 0.055;
 
         animatedModelPointsMaterial = new THREE.PointsMaterial({
             // color: "rgb(400, 255, 255)",
