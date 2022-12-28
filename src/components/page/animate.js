@@ -1624,14 +1624,14 @@ export default (url) => {
 
     // function displayScrollDownCTA() {
 
-    //     // let cta = document.body; // document.getElementById("home-scroll-navigation-container");
+    //     // let cta = document.body; // document.getElementById("scroll-nav-container");
     //     // cta.classList.remove("hide--scroll");
 
     // }
 
     // function hideScrollDownCTA() {
 
-    //     // let cta = document.body; // document.getElementById("home-scroll-navigation-container");
+    //     // let cta = document.body; // document.getElementById("scroll-nav-container");
     //     // cta.classList.add("hide--scroll");
 
     // };
