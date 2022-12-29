@@ -5,7 +5,7 @@ import css from './Footer.module.scss';
 const Footer = () => {
   const [open, setOpen] = React.useState(false);
 
-  let className = css['footer-outer-container'];
+  let className = css['outer-container'];
 
   if (open) className += ` ${css['displayed']}`;
 
@@ -21,12 +21,10 @@ const Footer = () => {
           </svg>
         </div>
 
-        <div id="footer--inner--container--two">
+        <div className={css['inner-container']}>
           <div id="footer--content--container--desktop">
             <div id="footer--content--inner--container">
-              <div id="footer--ethereum--copyright--container">
-                <p id="footer--ethereum--copyright--text">&copy; Ethereum Foundation, 2022</p>
-              </div>
+              <div className={css['copyright']} >&copy; {new Date().getFullYear()} The Ethereum Foundation, All Rights Reserved.</div>
               <div id="footer--main--content--container">
                 <div id="footer--main--content">
                   {/* <!-- Action Items are all the items that are clickable in the footer: logo, links, and contact details --> */}
@@ -79,7 +77,7 @@ const Footer = () => {
                     </div>
                     <div className="dividing--line"></div>
                   </div>
-                  <div id="footer--disclaimer--container">
+                  <div className={css['canari-disclaimer']}>
                     <div id="canari--icon--container">
                       <object data="/assets/canari-bird.svg" id="canari--icon" width="30" height="30" aria-labelledby="Canari Bird Icon">Canari Bird Icon</object>
                     </div>

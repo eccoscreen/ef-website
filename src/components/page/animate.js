@@ -1437,7 +1437,7 @@ export default (url) => {
     // function toggleNewFooter() {
     //     if (!footerDisplayed) {
 
-    //         let footerContainer = document.getElementById("footer-outer-container");
+    //         let footerContainer = document.getElementById("outer-container");
     //         // let footerInnerContainer = document.getElementById("footer--inner--container");
     //         // let elementsContainer = document.getElementById("footer--transitory--container");
     //         // let footerUpArrow = document.getElementById("footer--up--arrow");
@@ -1467,7 +1467,7 @@ export default (url) => {
 
     //     } else {
 
-    //         let footerContainer = document.getElementById("footer-outer-container");
+    //         let footerContainer = document.getElementById("outer-container");
     //         // let footerInnerContainer = document.getElementById("footer--inner--container");
     //         // let elementsContainer = document.getElementById("footer--transitory--container");
     //         // let footerUpArrow = document.getElementById("footer--up--arrow");
@@ -1527,7 +1527,7 @@ export default (url) => {
     // function hideNewFooter() {
 
     //     if (footerDisplayed) {
-    //         let footerContainer = document.getElementById("footer-outer-container");
+    //         let footerContainer = document.getElementById("outer-container");
     //         let footerInnerContainer = document.getElementById("footer--inner--container");
     //         let elementsContainer = document.getElementById("footer--transitory--container");
     //         let footerUpArrow = document.getElementById("footer--up--arrow");
@@ -1705,11 +1705,11 @@ export default (url) => {
 
         // Display footer based on whether the user is hovering above footer element or not.
         if (isMobileDevice()) {
-            // document.getElementById("footer--inner--container--two").addEventListener("mousedown", toggleNewFooter, false);
+            // document.getElementById("inner-container").addEventListener("mousedown", toggleNewFooter, false);
         } else {
             /** Sets footer animation for desktop => Not done through CSS because in this case the child element causes a change in the parent */
-            // document.getElementById("footer--inner--container--two").addEventListener("mouseenter", toggleNewFooter, false);
-            // document.getElementById("footer--inner--container--two").addEventListener("mouseleave", toggleNewFooter, false);
+            // document.getElementById("inner-container").addEventListener("mouseenter", toggleNewFooter, false);
+            // document.getElementById("inner-container").addEventListener("mouseleave", toggleNewFooter, false);
         }
 
         // Window
@@ -1724,10 +1724,10 @@ export default (url) => {
             // document.removeEventListener("touchmove", handleTouchMove);
 
             if (isMobileDevice()) {
-                // document.getElementById("footer--inner--container--two").removeEventListener("mousedown", toggleNewFooter);
+                // document.getElementById("inner-container").removeEventListener("mousedown", toggleNewFooter);
             } else {
-                // document.getElementById("footer--inner--container--two").removeEventListener("mouseenter", toggleNewFooter);
-                // document.getElementById("footer--inner--container--two").removeEventListener("mouseleave", toggleNewFooter);
+                // document.getElementById("inner-container").removeEventListener("mouseenter", toggleNewFooter);
+                // document.getElementById("inner-container").removeEventListener("mouseleave", toggleNewFooter);
             }
 
             // document.getElementById("next--page--navigation--container").removeEventListener("mousedown", goToNextPage);

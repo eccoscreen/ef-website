@@ -150,31 +150,9 @@ body {
   height: var(--doc-height);
   overflow-y: clip;
   transition: height 0.2s ease-out;
-  font-family: Darius-Light, serif;
+  font-family: "Libre Franklin", sans-serif;
 }
 
-/* Initial Page */
-
-// #ethereum--foundation--logo--text {
-//   position: absolute;
-//   top: 0px;
-//   left: 0px;
-//   margin-top: 43px;
-//   margin-left: 43px;
-//   color: white;
-//   font-family: Darius-Light, serif;
-//   font-weight: 300;
-//   font-size: 22px;
-//   z-index: 110;
-//   width: 200px;
-//   height: 60px;
-//   transition: opacity 0.1s ease-out;
-// }
-
-// #ethereum--foundation--logo--text.hidden {
-//   opacity: 0;
-//   transition: opacity 0.1s ease-out;
-// }
 
 #canvas {
   pointer-events: none;
@@ -562,17 +540,6 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   }
 }
 
-/* NEW STYLEs */
-#footer--inner--container--two {
-  width: 100vw;
-  height: 100%;
-  background-color: #36364C;
-  ;
-  display: flex;
-  flex-direction: row;
-  opacity: 0.4;
-  transition: height 0.2s ease-out, min-height 0.2s ease-out, opacity 0.2s ease-out;
-}
 
 /* #mobile => this needs to be extended to 100% */
 #footer--content--container--desktop {
@@ -591,27 +558,6 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   height: 100%;
 }
 
-#footer--ethereum--copyright--container {
-  width: 100%;
-  height: 100%;
-  /* background-color: orange; */
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 20px;
-  box-sizing: border-box;
-}
-
-#footer--ethereum--copyright--text {
-  font-size: 14px;
-  color: white;
-  font-weight: 500;
-  ;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  font-family: "Libre Franklin", sans-serif;
-  font-weight: 400;
-}
 
 /*  */
 #footer--main--content--container {
@@ -716,18 +662,6 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   font-family: "Libre Franklin";
   color: white;
   text-decoration: none;
-}
-
-#footer--disclaimer--container {
-  width: 50%;
-  height: 100%;
-  /* background-color: pink; */
-  padding-left: 5px;
-  padding-right: 5px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  font-family: "Libre Franklin", sans-serif;
 }
 
 #canari--icon--container {
@@ -1506,12 +1440,7 @@ with the footer  */
     transition: padding-left 0.2s ease-out;
   }
 
-  /* Ensures that the CopyRight text is centered */
-  #footer--ethereum--copyright--container {
-    padding-right: 0px;
-    justify-content: center;
-    max-height: 40px;
-  }
+ 
 
   /* Make position absolute will still keep it within the
   footer outer container */
@@ -1604,16 +1533,6 @@ with the footer  */
 
   /* We don't add margin top to it because it's container already has one*/
 
-  #footer--disclaimer--container {
-    width: 100%;
-    /* background-color: pink; */
-    padding-left: 0px;
-    padding-right: 0px;
-    display: flex;
-    flex-direction: column;
-    font-family: "Libre Franklin", serif;
-  }
-
   #canari--icon--container {
     padding-left: 0px;
     padding-right: 0px;
@@ -1667,20 +1586,6 @@ with the footer  */
   #canari--disclaimer {
     line-height: 22px;
   }
-}
-
-
-@media (max-width: 300px) {
-
-  #canari--disclaimer {
-    line-height: 18px;
-    font-size: 14px;
-  }
-
-  // .menu--content--text {
-  //   font-size: 17px;
-  // }
-
 }
 
 #next--page--navigation--container:hover #downward--arrow {

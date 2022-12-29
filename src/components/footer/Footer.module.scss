@@ -1,4 +1,4 @@
-.footer-outer-container {
+.outer-container {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -9,17 +9,18 @@
   width: 100vw;
   z-index: 105;
   cursor: default;
-  /* pointer-events: none; */
-  /* display: none; */
-  /* #testing #footer #refactor */
-  /* background-color: red; */
   transition: height 0.2s ease-out, max-height 0.2s ease-out, min-height 0.2s ease-out;
   color: white;
 
-
-
-
-
+  .inner-container {
+    width: 100vw;
+    height: 100%;
+    background-color: #36364C;
+    display: flex;
+    flex-direction: row;
+    opacity: 0.4;
+    transition: height 0.2s ease-out, min-height 0.2s ease-out, opacity 0.2s ease-out;
+  }
 
 
   @media (max-width: 499px) {
@@ -47,7 +48,7 @@
       transition: margin-top 0.2s ease-out, transform 0.2s ease-out;
     }
 
-    :global(#footer--inner--container--two) {
+    .inner-container {
       opacity: 1;
     }
 
@@ -86,14 +87,12 @@
       min-height: 220px;
       transition: height 0.2s ease-out, min-height 0.2s ease-out;
 
-      :global(#footer--inner--container--two) {
+      :global(#inner-container) {
         opacity: 1;
         transition: opacity 0.2s ease-out;
       }
 
-      :global(#footer--ethereum--copyright--container) {
-        max-height: 40px;
-      }
+
 
       :global(#footer--main--content--container) {
         display: block;
@@ -115,15 +114,16 @@
   }
 }
 
+
+
+
 @keyframes hover {
   0% {
     transform: translateX(-50%) translateY(-3px);
   }
-
   50% {
     transform: translateX(-50%) translateY(3px)
   }
-
   100% {
     transform: translateX(-50%) translateY(-3px);
   }
@@ -162,3 +162,33 @@
 .scroll-nav-arrow {
   cursor: ew-resize;
 }
+
+
+.canari-disclaimer {
+  width: 50%;
+  height: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 499px) {
+  width: 100%;
+  flex-direction: column;
+  }
+}
+
+
+
+.copyright {
+  width: 100%;
+  height: 100%;
+  /* background-color: orange; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
