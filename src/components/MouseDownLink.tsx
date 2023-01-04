@@ -16,10 +16,12 @@ const MouseDownLink = (props: LinkProps & { children?: React.ReactNode, [key: st
         e.stopPropagation();
         e.preventDefault();
 
-        const isExternalLink = props.href.toString().startsWith('http');
+        const link = props.href.toString();
+
+        const isExternalLink = link.startsWith('http') || link.startsWith('mailto');
 
         if (isExternalLink) {
-          window.open(props.href.toString(), '_blank');
+          window.open(link, '_blank');
         } else {
           const transitionPageElement = document.getElementById("transition--container");
 
@@ -28,11 +30,11 @@ const MouseDownLink = (props: LinkProps & { children?: React.ReactNode, [key: st
           }
 
           setTimeout(() => {
-            document.location.href = props.href.toString();
+            document.location.href = link;
           }, 1000)
         }
 
-        // TODO: We need to properly dispose of threejs on client side navigation, but there is no trivial way to do it
+        // TODO: We need to properly dispose of threejs on client side navigation to use inline routing (full refresh needed to reset page state/not have animations leaking)
         // router.push(props.href.toString())
       }}
     />

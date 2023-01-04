@@ -1,3 +1,5 @@
+@import 'styles/variables.scss';
+
 @font-face {
   font-family: Darius;
   src: url(fonts/BwDariusDEMO-Black.otf)
@@ -140,6 +142,10 @@
 }
 
 /* Higher Level CSS */
+html {
+  font-size: $medium-fixed;
+  font-family: $font-primary;
+}
 
 body {
   position: relative;
@@ -150,17 +156,23 @@ body {
   height: var(--doc-height);
   overflow-y: clip;
   transition: height 0.2s ease-out;
-  font-family: "Libre Franklin", sans-serif;
 }
 
+a {
+  text-decoration: none;
 
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Initial Page */
 #canvas {
   pointer-events: none;
   z-index: 0;
   cursor: pointer;
   position: relative;
 }
-
 
 .disabled {
   cursor: not-allowed;
@@ -208,7 +220,6 @@ object {
 }
 
 /* General */
-
 #main--content--outer--container {
   width: 100vw;
   height: 100vh;
@@ -251,53 +262,12 @@ object {
   overflow-y: clip;
 }
 
-// #main--content--inner--container.vertical--scroll--allowed {
-//   overflow-y: auto;
-// }
-
-// #main--content--inner--container.displayed {
-//   transform: translateY(0);
-//   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-// }
-
-/* #main--content--inner--container.homepage {
-  max-width: 550px;
-  padding-left: unset;
-  padding-right: unset;
-  padding-bottom: unset;
-  padding-top: unset;
-  color: white;
-  height: unset;
-  width: unset;
-  display: flex;
-  align-items: unset;
-  flex-direction: column;
-  transform: translateY(70vh);
-  transition: transform cubic-bezier(.37,0,.01,1) 2s;
-}
-
-#main--content--inner--container.homepage.displayed {
-  transform: translateY(-20px);
-  transition: transform cubic-bezier(.37,0,.01,1) 2s;
-} */
-
 /* Used to ensure that the main content never goes beyond a certain limit in width */
 #homepage--welcome--text--inner--container {
   transform: translateY(80vh);
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   max-width: 600px;
 }
-
-// #homepage--welcome--text--inner--container.displayed {
-//   transform: translateY(0);
-//   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-// }
-
-// #homepage--welcome--text--inner--container.homepage--displayed {
-//   /* transform: translateY(100%); */
-//   transform: translateY(22vh);
-//   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-// }
 
 #main--content--title {
   font-weight: 400;
@@ -439,7 +409,6 @@ ol li {
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-
 #main--content--title.displayed {
   transform: translateY(-20px);
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
@@ -473,7 +442,6 @@ ol li {
 
 #next--page--navigation--container:hover {
   cursor: pointer;
-
 }
 
 .next--page--text {
@@ -486,12 +454,7 @@ ol li {
   cursor: pointer;
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   color: white;
-
-  // a {
-  //   color: white;
-  // }
 }
-
 
 $transition-time: 2s;
 $transition-curve: cubic-bezier(.37, 0, .01, 1);
@@ -504,9 +467,8 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 }
 
 .content-scrolled {
-  #scroll-nav-container {
+  #scroll-indicator {
     opacity: 0;
-    transition: opacity 0.5s ease-out;
     pointer-events: none;
   }
 
@@ -540,35 +502,6 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   }
 }
 
-
-/* #mobile => this needs to be extended to 100% */
-#footer--content--container--desktop {
-  width: calc(100% - 72px);
-  height: 100%;
-  /* background-color: red; */
-  padding-left: 30px;
-  transition: padding-left 0.2s ease-out;
-}
-
-#footer--content--inner--container {
-  display: flex;
-  flex-direction: column-reverse;
-  /* background-color: grey; */
-  width: 100%;
-  height: 100%;
-}
-
-
-/*  */
-#footer--main--content--container {
-  display: none;
-  /* display: block; */
-  padding: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  box-sizing: border-box;
-}
-
 @media (min-width: 500px) {
   #main--content--inner--container {
     padding-left: max(5vw, 15px);
@@ -576,315 +509,8 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   }
 }
 
-#footer--main--content {
-  width: 100%;
-  height: 100%;
-  /* background-color: magenta; */
-  flex-direction: row;
-  display: flex;
-}
-
-#footer--action--items--container {
-  width: 50%;
-  height: 100%;
-  /* background-color: green;; */
-  display: flex;
-  flex-direction: row;
-}
-
-#footer--ethereum--logo {
-  height: 55px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-
 #logo--and--links--container {
-  /* background-color: blue; */
   width: 70%;
-}
-
-#footer--links--container--two {
-  display: flex;
-  flex-direction: row;
-  /* background-color: mediumaquamarine; */
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-width: 400px;
-}
-
-.footer--link--two {
-  font-size: 16px;
-  font-weight: 300;
-  font-family: "Libre Franklin";
-  margin-top: 3px;
-  margin-bottom: 3px;
-  color: white;
-  text-decoration: none;
-  margin-right: 5px;
-}
-
-.footer--link--two:hover {
-  text-decoration: underline;
-}
-
-#contact--list--container {
-  width: 30%;
-  height: 100%;
-  /* background-color: mediumslateblue; */
-  text-align: center;
-  padding-left: 5px;
-  padding-right: 5px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.contact--item--container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.contact--item--title {
-  font-size: 14px;
-  font-family: Darius-Regular, serif;
-  margin-top: 0px;
-  margin-bottom: 2px;
-  font-weight: 600;
-}
-
-.contact--item--email {
-  font-size: 14px;
-  font-weight: 400;
-  display: block;
-  font-family: "Libre Franklin";
-  color: white;
-  text-decoration: none;
-}
-
-#canari--icon--container {
-  padding-left: 5px;
-  padding-right: 5px;
-  height: 100%;
-  /* background-color: blue; */
-  box-sizing: border-box;
-  padding-top: 15px;
-}
-
-#canari--icon {
-  height: 25px;
-  width: 25px;
-}
-
-#canari--disclaimer {
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 16px;
-  /* Color could be at top container */
-  color: white;
-  margin-left: 5px;
-  display: inline;
-  line-height: 21px;
-  font-weight: 400;
-}
-
-
-
-/* #mobile => this needs to be made position absolute  */
-/* when the click is triggered, it needs to disappear */
-#footer-arrow-container-desktop {
-  width: 72px;
-  height: 100%;
-  /* background-color: yellow; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: align-items 0.2s ease-out;
-}
-
-/* Need to create effect so that when user hovers over the parent
-the styling changes */
-#footer--arrow--desktop {
-  height: 20px;
-  width: 20px;
-  /* background-color: black; */
-  transition: margin-top 0.2s ease-out;
-  transform: rotate(180deg);
-}
-
-
-
-/* 
-On mobile the arrow can be set as an absolute
-ON desktop it is not set as absolute
-*/
-
-/* #footer--wide--screen--arrow */
-
-/* The content container height needs to increase */
-/* THe transparent container height needs to increase */
-
-
-/* END OF NEW STYLES */
-
-
-#footer--inner--container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  padding-left: 20px;
-  padding-right: 20px;
-  box-sizing: border-box;
-  display: flex;
-  cursor: default;
-  opacity: 0.5;
-  background-color: #36364C;
-  /* pointer-events: none; */
-}
-
-#footer--inner--container.displayed {
-  opacity: 1;
-  transition: opacity 0.5s ease-out;
-}
-
-#footer--content--container {
-  display: flex;
-  flex-direction: row;
-}
-
-#footer--ethereum--foundation--text {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 180%;
-  text-align: center;
-  letter-spacing: 0.05em;
-  color: #FFFFFF;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  font-family: "Libre Franklin", sans-serif;
-}
-
-#footer--arrow {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  transform: rotate(180deg);
-}
-
-#footer--arrow.footer--displayed {
-  transform: rotate(0deg);
-  transition: transform 0.3s ease-out;
-}
-
-#footer--left--container {
-  display: flex;
-  flex-direction: column;
-  width: 97%;
-  min-width: 97%;
-  /* background-color: red;  */
-  height: 100%;
-  flex-direction: column-reverse;
-  -webkit-flex-direction: column-reverse;
-  box-sizing: border-box;
-  padding-right: 20px;
-  pointer-events: none;
-}
-
-#footer--right--container {
-  width: 3%;
-  min-width: 3%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-#footer--right--container.footer--displayed {
-  align-items: normal;
-  justify-content: center;
-  padding-top: 20px;
-}
-
-#footer--unmoveable--text--container {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  cursor: pointer;
-  position: relative;
-}
-
-#footer--up--arrow {
-  position: absolute;
-  opacity: 1;
-  right: -30px;
-  transform: rotate(180deg) translateY(2px);
-  width: 15px;
-  height: 15px;
-  transition: opacity 0.1s ease-out;
-}
-
-#footer--up--arrow.hidden {
-  opacity: 0;
-  transition: opacity 0.1s ease-out;
-}
-
-#footer--down--arrow {
-  position: absolute;
-  opacity: 1;
-  right: 0px;
-  top: -40px;
-  width: 15px;
-  height: 15px;
-  opacity: 0;
-  transition: opacity 0.1s ease-out;
-}
-
-#footer--down--arrow.displayed {
-  opacity: 1;
-  transition: opacity 0.1s ease-out;
-}
-
-#footer--middle--container {
-  display: flex;
-  max-width: 250px;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-}
-
-#footer--middle--container.footer--displayed {
-  opacity: 1;
-  transition: opacity 0.4s ease-out;
-}
-
-.footer--subtitle {
-  color: #999999;
-  font-size: 15;
-  font-weight: 400;
-  font-family: "Libre Franklin", sans-serif;
-  margin-top: 0px;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  cursor: pointer;
-  pointer-events: auto;
-}
-
-/* Defines the content area that is added or removed based on whether the user hovers or interacts
-with the footer  */
-#footer--transitory--container {
-  display: flex;
-  flex-direction: row;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-}
-
-#footer--transitory--container.displayed {
-  opacity: 1;
-  transition: opacity 0.85s ease-out;
 }
 
 .column--container {
@@ -895,118 +521,6 @@ with the footer  */
 
 .link--group--container {
   margin-bottom: 15px;
-}
-
-#footer--column--right:last-child {
-  margin-bottom: 0px;
-}
-
-#footer--right--icon {
-  width: 30px;
-  height: 30px;
-}
-
-.footer--title {
-  font-family: "Abhaya Libre", serif;
-  font-size: 16px;
-  font-weight: 500;
-  margin-top: 0px;
-  margin-bottom: 3px;
-  color: white;
-  cursor: default;
-}
-
-.footer--subtitle {
-  /* background-color: purple;  */
-  font-size: 12px;
-  font-family: "Libre Franklin", sans-serif;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  color: white;
-  text-decoration: none;
-}
-
-.footer--subtitle:hover {
-  text-decoration: underline;
-}
-
-.footer--link {
-  color: white;
-  font-size: 13px;
-  font-family: "Libre Franklin", sans-serif;
-  margin-top: 3px;
-  margin-bottom: 3px;
-  text-decoration: none;
-  pointer-events: all;
-}
-
-.footer--link:hover {
-  text-decoration: underline;
-}
-
-#footer--links--container {
-  display: flex;
-  flex-direction: row;
-  max-width: 300px;
-  flex-wrap: wrap;
-  justify-content: space-between
-}
-
-#footer--right--container,
-#footer--left--container {
-  width: 250px;
-}
-
-#footer--description--container {
-  display: flex;
-  flex-direction: row;
-  margin-left: 30px;
-}
-
-#canari--bird--footer--container {
-  width: 23px;
-  height: 23px;
-  margin-right: 15px;
-  margin-top: 10px;
-}
-
-#footer--description {
-  font-size: 12px;
-  font-family: "Libre Franklin", sans-serif;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  color: white;
-  line-height: 20px;
-}
-
-#footer--column--left {
-  width: 300px;
-  position: relative;
-}
-
-#footer--column--center {
-  width: 20%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-#footer--column--right {
-  width: 100%;
-}
-
-#footer--left--side--container {
-  display: flex;
-  flex-direction: row;
-  /* background-color: red; */
-  width: 50%;
-  justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-#footer--right--side--container {
-  width: 50%;
 }
 
 /* Transition Container - used between page loads */
@@ -1052,21 +566,6 @@ with the footer  */
 
 #loading--text.hidden {
   display: none;
-}
-
-/* Details */
-
-
-// Footer
-
-#footer--left--logo {
-  width: 105px;
-  margin-bottom: 15px;
-}
-
-#footer--left--logo.hidden {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .prevent--link--styling {
@@ -1175,79 +674,7 @@ with the footer  */
 
 
 /* Media Queries for Laptops, Desktops, and larger devices */
-
-@media (max-width: 1300px) {
-
-  .contact--item--title,
-  .contact--item--email {
-    font-size: 13px;
-    text-align: left;
-  }
-
-}
-
-
-@media (max-width: 1100px) {
-
-  #footer--ethereum--logo {
-    height: 55px;
-    transition: height 0.2s ease-out;
-  }
-
-  #logo--and--links--container {
-    flex-direction: column;
-    transition: flex-direction 0.2s ease-out;
-  }
-
-  .footer--links--two {
-    font-size: 14px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    transition: font-size 0.2s ease-out;
-  }
-
-
-  #contact--list--container {
-    flex-direction: row;
-    width: fit-content;
-    height: fit-content;
-    padding-left: 0px;
-    padding-right: 0px;
-    justify-content: flex-start;
-    text-align: left;
-  }
-
-  #footer--action--items--container {
-    flex-direction: column;
-  }
-
-  #logo--and--links--container {
-    width: 90%;
-    transition: width 0.2s ease-out;
-  }
-
-  .contact--item--container {
-    transition: margin-right 0.2s ease-out;
-    margin-right: 15px;
-  }
-
-  #canari--disclaimer {
-    font-size: 14px;
-    line-height: 16px;
-    transition: font-size 0.2s ease-out;
-  }
-
-  .contact--item--title,
-  .contact--item--email {
-    font-size: 13px;
-    text-align: left;
-  }
-
-}
-
 @media (max-width: 750px) {
-
-
   #main--content--title {
     font-size: 42px;
     transition: font-size 0.15s ease-out;
@@ -1257,55 +684,9 @@ with the footer  */
     font-size: 16px;
     transition: font-size 0.15s ease-out;
   }
-
-  .footer--link--two {
-    font-size: 14px;
-    transition: font-size 0.2s ease-out;
-  }
-
 }
-
-@media (max-width: 900px) {
-
-  #footer--content--container--desktop {
-    padding-left: 20px;
-    transition: padding-left 0.2s ease-out;
-  }
-
-}
-
-@media (max-width: 700px) {
-  .footer--link--two {
-    font-size: 12px;
-    transition: width 0.2s ease-out;
-  }
-
-  #logo--and--links--container {
-    width: 95%;
-    transition: width 0.2s ease-out;
-  }
-
-  .contact--item--container {
-    margin-right: 12px;
-  }
-
-  .contact--item--title,
-  .contact--item--email {
-    font-size: 13px;
-    transition: font-size 0.2s ease-out;
-  }
-
-  #canari--disclaimer {
-    font-size: 14px;
-    line-height: 14px;
-    transition: font-size 0.2s ease-out;
-  }
-
-}
-
 
 @media (max-width: 600px) {
-
   #main--content--title {
     font-size: 38px;
     transition: font-size 0.15s ease-out;
@@ -1315,51 +696,9 @@ with the footer  */
     font-size: 16px;
     transition: font-size 0.15s ease-out;
   }
-
-  #canari--disclaimer {
-    font-size: 13px;
-    line-height: 13px;
-    transition: font-size 0.2s ease-out;
-  }
-
 }
 
-
 @media (max-width: 580px) {
-
-  .contact--item--title,
-  .contact--item--email {
-    font-size: 11px;
-    transition: font-size 0.2s ease-out;
-  }
-
-  // #hamburger--menu--container {
-  //   position: absolute;
-  //   top: 0px;
-  //   right: 0px;
-  //   margin-top: 30px;
-  //   margin-right: 28px;
-  //   z-index: 109;
-  //   cursor: pointer;
-  //   user-select: none;
-  // }
-
-  // #ethereum--foundation--logo--text {
-  //   position: absolute;
-  //   top: 0px;
-  //   left: 0px;
-  //   margin-top: 9px;
-  //   margin-left: 25px;
-  //   color: white;
-  //   font-family: Darius-Light, serif;
-  //   font-weight: 300;
-  //   font-size: 22px;
-  //   z-index: 110;
-  //   width: 200px;
-  //   height: 60px;
-  //   width: 130px;
-  // }
-
   #main--content--inner--container {
     padding-left: max(5vw, 15px);
     padding-right: max(5vw, 15px);
@@ -1368,46 +707,10 @@ with the footer  */
   #main--content--title {
     font-size: 32px;
   }
-
-  #contact--list--container {
-    flex-direction: column;
-    margin-top: 7px;
-  }
-
-  .contact--item--container {
-    margin-top: 3px;
-    margin-bottom: 3px;
-  }
-
-  #canari--disclaimer {
-    font-size: 12px;
-    line-height: 12px;
-    transition: font-size 0.2s ease-out;
-  }
-
 }
-
 
 /* Target smartphones */
 @media (max-width: 499px) {
-
-
-  // #ethereum--foundation--logo--text {
-  //   position: absolute;
-  //   top: 0px;
-  //   left: 0px;
-  //   margin-top: 9px;
-  //   margin-left: 25px;
-  //   color: white;
-  //   font-family: Darius-Light, serif;
-  //   font-weight: 300;
-  //   font-size: 22px;
-  //   z-index: 110;
-  //   width: 200px;
-  //   height: 60px;
-  //   width: 130px;
-  // }
-
   #main--content--title {
     font-size: 34px;
     transition: font-size 0.15s ease-out;
@@ -1427,164 +730,17 @@ with the footer  */
     font-size: 27px;
   }
 
-  /* New Footer Code */
-
-  /* We need to make it so that when we trigger
-  an increase in the footer outer container everything follows */
-
-  /* Ensures that the container that holds the content and copyright
-  extends vertically to fill the footer completely */
-  #footer--content--container--desktop {
-    width: 100%;
-    padding-left: 0px;
-    transition: padding-left 0.2s ease-out;
-  }
-
- 
-
-  /* Make position absolute will still keep it within the
-  footer outer container */
-  #footer-arrow-container-desktop {
-    position: absolute;
-    right: 10px;
-    pointer-events: none;
-    /* background-color: transparent; */
-    align-items: flex-start;
-  }
-
-
   #main--content--inner--container {
     padding-left: max(5vw, 15px);
     padding-right: max(5vw, 15px);
   }
-
-  #footer--main--content--container {
-    display: none;
-  }
-
-  #footer--main--content {
-    width: 100%;
-    height: 100%;
-    /* background-color: magenta; */
-    flex-direction: column;
-  }
-
-  #footer--action--items--container {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  #footer--ethereum--logo {
-    height: 40px;
-    margin-top: 2vh;
-    margin-bottom: 3vh;
-    /* background-color: red; */
-    width: 100%;
-    display: inherit;
-  }
-
-  #logo--and--links--container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    /* background-color: blue; */
-  }
-
-  #footer--links--container--two {
-    width: 100%;
-    flex-direction: column;
-
-  }
-
-  .footer--link--two {
-    font-size: 15px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    text-align: center;
-  }
-
-  .dividing--line {
-    width: 100%;
-    background-color: white;
-    min-height: 1px;
-    opacity: 0.5;
-    margin-top: 2vh;
-    margin-bottom: 2vh;
-  }
-
-  #contact--list--container {
-    height: auto;
-    width: 100%;
-    text-align: center;
-    flex-direction: column;
-  }
-
-  .contact--item--container {
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-  }
-
-  .contact--item--title,
-  .contact--item--email {
-    font-size: 15px;
-    transition: font-size 0.2s ease-out;
-    text-align: center;
-  }
-
-  /* We don't add margin top to it because it's container already has one*/
-
-  #canari--icon--container {
-    padding-left: 0px;
-    padding-right: 0px;
-    height: auto;
-    width: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    /* background-color: blue; */
-    padding-top: 0px;
-    display: flex;
-    justify-content: center;
-  }
-
-  #canari--icon {
-    height: 33px;
-    width: 33px;
-  }
-
-  #canari--disclaimer {
-    /* Color could be at top container */
-    margin-left: 0px;
-    width: 100%;
-    display: block;
-    font-family: "Libre Franklin", sans-serif;
-    line-height: 22px;
-    font-size: 15px;
-  }
-
 }
 
 
 @media (max-width: 420px) {
-
-  // #hamburger--menu--container {
-  //   position: absolute;
-  //   top: 0px;
-  //   right: 0px;
-  //   margin-top: 30px;
-  //   margin-right: 28px;
-  //   z-index: 109;
-  //   cursor: pointer;
-  //   user-select: none;
-  // }
-
-
   #main--content--inner--container {
     padding-left: max(5vw, 15px);
     padding-right: max(5vw, 15px);
-  }
-
-  #canari--disclaimer {
-    line-height: 22px;
   }
 }
 

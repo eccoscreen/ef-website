@@ -2,6 +2,7 @@
 import { usePathname } from 'next/navigation';
 import React, { useReducer } from "react";
 import Footer from "../components/footer/Footer";
+import FooterNew from "../components/footer/Footer";
 import Nav from "../components/nav/Nav";
 import animate from "../components/page/animate";
 import useScrollDirection, { ScrollDirection } from '../utils/useScrollDirection';
@@ -24,7 +25,7 @@ const RootLayout = ({ children }: {
       <body className={scrollDirection === ScrollDirection.UP ? '' : 'content-scrolled'}>
         {children}
         <Nav />
-        <Footer />
+        <FooterNew />
       </body>
     </html>
   )

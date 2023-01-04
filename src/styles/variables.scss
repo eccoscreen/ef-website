@@ -1,0 +1,29 @@
+// Color palette (naming is from figma, expand palette as necessary, and should keep matching the naming 1:1 from figma to here)
+$ef-dark: #36364C;
+$white: #FFFFFF;
+
+// Color application
+$footer-color: $ef-dark;
+$primay-font-color: var(--primary-font-color-override, $white); // Allows overriding default color if desired (for any part of the app), falls back to white
+
+// Font families
+$font-primary: "Darius-Light", serif;
+$font-secondary: "Libre Franklin", sans-serif;
+
+// Sizes (root relative) - use this mostly (allows us to scale entire app by changing root font size) 
+$very-small: 0.75rem;
+$small: 0.875rem;
+$medium: 1rem;
+$large: 1.25rem;
+
+// Sizes (fixed)
+$very-small-fixed: 12px;
+$small-fixed: 14px;
+$medium-fixed: 16px;
+$large-fixed: 20px;
+
+// Sizes (parent relative)
+$very-small-em: 0.75em;
+$small-em: 0.875rem;
+$medium-em: 1em;
+$large-em: 1.25em;
