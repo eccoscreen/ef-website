@@ -43,7 +43,7 @@ $breakpoint-1: 1050px;
     .trigger {
       user-select: none;
       bottom: 0px;
-      padding: 5px 0px;
+      padding: 5px 32px;
       width: 100%;
       display: flex;
       justify-content: flex-end;
@@ -63,7 +63,6 @@ $breakpoint-1: 1050px;
         width: 20px;
         transition: transform 0.2s ease-out;
         transform: rotateZ(0deg);
-        margin-right: 32px;
       }
     }
 
