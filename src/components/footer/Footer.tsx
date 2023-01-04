@@ -1,10 +1,10 @@
 import React from 'react';
 import MouseDownLink from '../MouseDownLink';
-import css from './FooterNew.module.scss';
+import css from './Footer.module.scss';
 import EFLogo from 'assets/images/ef-logo.svg';
 
 const Footer = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   let className = css['container'];
 
