@@ -13,8 +13,27 @@ const nextConfig = {
         rules: [
           {
             test: /\.svg$/,
-            issuer: /\.tsx?$/,
-            use: ['@svgr/webpack'],
+            issuer: { not: /\.(css|scss|sass)$/ },
+            use: [
+              {
+                loader: '@svgr/webpack',
+                options: {
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                            cleanupIDs: false, // Critical to have this, otherwise svgs can start affecting each other
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
           },
           {
             test: /\.(glsl|vs|fs|vert|frag)$/,

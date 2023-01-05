@@ -467,6 +467,9 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 }
 
 .content-scrolled {
+  // --fill-color is used downstream by components that need to change color when content is scrolled
+  --fill-color: white;
+
   #scroll-indicator {
     opacity: 0;
     pointer-events: none;
@@ -488,11 +491,6 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   #homepage--welcome--text--inner--container {
     transform: translateY(0vh);
     transition: transform $transition-curve $transition-time;
-  }
-
-  #ethereum--menu--svg,
-  #hamburger--menu--svg {
-    filter: none !important;
   }
 
   #main--content--title,

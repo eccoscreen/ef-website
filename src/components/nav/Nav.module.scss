@@ -1,3 +1,5 @@
+@import 'styles/variables.scss';
+
 /* Main Menu */
 .main--menu--container {
   position: absolute;
@@ -84,7 +86,7 @@
   }
 }
 
-.ethereum--foundation--logo--text {
+.ef-logo {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -97,6 +99,20 @@
   width: 200px;
   height: 60px;
   transition: opacity 0.1s ease-out;
+
+  path {
+    &:first-child {
+      fill: var(--fill-color, #{$ef-dark});
+    }
+  }
+
+  &.open {
+    path {
+      &:first-child {
+        fill: white !important;
+      }
+    }
+  }
 
   &.hidden {
     opacity: 0;
@@ -183,7 +199,6 @@
 }
 
 .menu--content--dot {
-  // /* -webkit-text-shadow: 0 0 5px 0 rgba(255,255,255,1); */
   text-shadow: 0 0 5px rgba(255, 255, 255, 1);
   display: inline;
   font-size: 20px;
@@ -196,17 +211,7 @@
   opacity: 0;
 }
 
-// .menu--content--text,
-// .menu--content--dot,
-// .secondary--links--container {
-//   &.displayed {
-//     opacity: 1;
-//     pointer-events: auto;
-//     transition: opacity 0.3s ease-in;
-//   }
-// }
-
-.hamburger--menu--container {
+.hamburger-menu {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -226,14 +231,15 @@
     margin-right: 28px;
   }
 
-  &.hide--hamburger--menu {
-    pointer-events: none;
-    opacity: 0;
+  * {
+    fill: var(--fill-color, #{$ef-dark});
   }
-}
 
-.header--logo--displayed {
-  filter: invert(80%) sepia(8%) saturate(2216%) hue-rotate(201deg) brightness(101%) contrast(84%);
+  &.open {
+    * {
+      fill: white !important;
+    }
+  }
 }
 
 .menu--content--text:hover,
