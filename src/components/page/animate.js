@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { OrbitControls } from './assets/OrbitControls.js';
-// Updated through /jsm dev branch
 import { RenderPass } from './assets/RenderPass.js'; // Updated DEV branch
 import { UnrealBloomPass } from './assets/UnrealBloomPass.js'; // Added to test out bloom pass upon the objects
 import { GlitchPass } from './assets/GlitchPass.js'; // Updated DEV branch
@@ -9,7 +8,6 @@ import * as GLTFLoader from './assets/GLTFLoader.js'; // Updated
 import firefliesVertexShader from './animations/firefliesVertexShader.glsl';
 import firefliesVertexShaderETHLogo from './animations/firefliesVertexShader_ETHLogo.glsl';
 import firefliesFragmentShader from './animations/firefliesFragmentShader.glsl';
-import { resolve } from 'path';
 // import './animations/firefliesVertexShader_ETHLogo_SLOW.glsl';
 // import './animations/firefliesFragmentShaderTwo.glsl';
 // import './animations/explosionVertexShader.glsl';
@@ -147,22 +145,6 @@ export default (url) => {
         // Updates color
         sparklesGeometry.setAttribute("color", new THREE.Float32BufferAttribute(meshSurfaceColors, 3));
     }
-
-    // /** Loaders **/
-    // function initLoadingManager() {
-    //     loadingManager = new THREE.LoadingManager();
-
-    //     loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
-    //     }
-
-    //     loadingManager.onLoad = () => { }
-
-    //     loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-    //     }
-
-    //     loadingManager.onError = (url) => {
-    //     }
-    // }
 
     function removeLoadingScreen() {
         let transitionContainer = document.getElementById("transition--container");
@@ -1052,7 +1034,7 @@ export default (url) => {
 
     function begin() {
         // TODO: Possibly a way to do this without waiting for the animation to begin which would remove the need for a loading spinner entirely
-        // How? - Probably some webpack configuration that allows us to inline the assets so they're included in the page bundle rather than fetched asynchronously when page loads
+        // How? - Probably some webpack con2figuration that allows us to inline the assets so they're included in the page bundle rather than fetched asynchronously when page loads
         loadAssets()
             .then(() => addMainObjectToScene())
             .then(() => {
@@ -1259,23 +1241,6 @@ export default (url) => {
         return average;
     }
 
-
-    /**
-     * As the name suggests, function run after the user scrolls up to display the main content on the page
-     * This allows us to prevent a race condition within which the user can both scroll to display the main content on the page
-     * and scroll the content itself, which ends up giving unexpected results
-     */
-    // function allowScrollBehaviorOnMainContent() {
-    //     let mainContentContainer = document.getElementById("main--content--inner--container");
-    //     mainContentContainer.classList.add("vertical--scroll--allowed");
-    // }
-
-    // function disallowScrollBehaviorOnMainContent() {
-    //     let mainContentContainer = document.getElementById("main--content--inner--container");
-    //     mainContentContainer.classList.remove("vertical--scroll--allowed");
-    // }
-
-
     /** Animation Code **/
     function animate() {
         if (statsAdded) {
@@ -1429,76 +1394,6 @@ export default (url) => {
 
         return;
     }
-
-    /**
-     * Hides or displays the footer depending on whether the user is hovering over the element
-     * @called in @addEventListeners function
-     */
-    // function toggleNewFooter() {
-    //     if (!footerDisplayed) {
-
-    //         let footerContainer = document.getElementById("outer-container");
-    //         // let footerInnerContainer = document.getElementById("footer--inner--container");
-    //         // let elementsContainer = document.getElementById("footer--transitory--container");
-    //         // let footerUpArrow = document.getElementById("footer--up--arrow");
-    //         // let footerDownArrow = document.getElementById("footer--down--arrow");
-    //         // let footerRightContainer = document.getElementById("footer--right--container");
-    //         // let footerArrow = document.getElementById("footer--arrow");
-    //         let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
-
-    //         footerContainer.classList.add("displayed");
-    //         // footerInnerContainer.classList.add("displayed");
-    //         // elementsContainer.classList.add("displayed");
-    //         // footerUpArrow.classList.add("hidden");
-    //         // footerDownArrow.classList.add("displayed");
-
-    //         if (isMobileDevice()) {
-    //             hideHamburgerMenu();
-    //             topLeftLogo.classList.add("hidden");;
-    //         };
-
-    //         if (isMobileDevice()) {
-    //             // footerRightContainer.classList.add("footer--displayed");
-    //             // footerArrow.classList.add("footer--displayed");
-    //             // changeNavigationElementsToLightColor();
-    //         };
-
-    //         footerDisplayed = true;
-
-    //     } else {
-
-    //         let footerContainer = document.getElementById("outer-container");
-    //         // let footerInnerContainer = document.getElementById("footer--inner--container");
-    //         // let elementsContainer = document.getElementById("footer--transitory--container");
-    //         // let footerUpArrow = document.getElementById("footer--up--arrow");
-    //         // let footerDownArrow = document.getElementById("footer--down--arrow");
-    //         // let footerRightContainer = document.getElementById("footer--right--container");
-    //         // let footerArrow = document.getElementById("footer--arrow");
-    //         let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
-
-    //         footerContainer.classList.remove("displayed");
-    //         // footerInnerContainer.classList.remove("displayed");
-    //         // elementsContainer.classList.remove("displayed");
-    //         // footerUpArrow.classList.remove("hidden");
-    //         // footerDownArrow.classList.remove("displayed");
-
-    //         if (isMobileDevice()) {
-    //             displayHamburgerMenu();
-    //             topLeftLogo.classList.remove("hidden");;
-    //         }
-
-    //         if (!isMobileDevice()) {
-    //             // footerRightContainer.classList.remove("footer--displayed");
-    //             // footerArrow.classList.remove("footer--displayed");
-    //         };
-
-
-    //         footerDisplayed = false;
-
-    //     }
-
-    // }
-
     /** Utility Functions **/
 
     function isMobileDevice() {
@@ -1524,153 +1419,10 @@ export default (url) => {
         return canvas.toDataURL ? canvas.toDataURL('image/webp').indexOf('image/webp') === 5 : false;
     }
 
-    // function hideNewFooter() {
-
-    //     if (footerDisplayed) {
-    //         let footerContainer = document.getElementById("outer-container");
-    //         let footerInnerContainer = document.getElementById("footer--inner--container");
-    //         let elementsContainer = document.getElementById("footer--transitory--container");
-    //         let footerUpArrow = document.getElementById("footer--up--arrow");
-    //         let footerDownArrow = document.getElementById("footer--down--arrow");
-    //         let footerRightContainer = document.getElementById("footer--right--container");
-    //         let footerArrow = document.getElementById("footer--arrow");
-    //         let topLeftLogo = document.getElementById("ethereum--foundation--logo--text");
-
-    //         footerContainer.classList.remove("displayed");
-    //         footerInnerContainer.classList.remove("displayed");
-    //         elementsContainer.classList.remove("displayed");
-    //         footerUpArrow.classList.add("hidden");
-    //         footerDownArrow.classList.add("displayed");
-
-    //         if (!isMobileDevice()) {
-    //             footerRightContainer.classList.remove("footer--displayed");
-    //             footerArrow.classList.remove("footer--displayed");
-    //         };
-
-    //         if (isMobileDevice()) {
-    //             displayHamburgerMenu();
-    //             topLeftLogo.classList.remove("hidden");
-    //             changeNavigationElementsToLightColor();
-    //         }
-
-    //         footerDisplayed = false;
-
-    //     }
-
-    // }
-
-    // function changeNavigationElementsToLightColor() {
-
-    //     let ethLogoText = document.getElementById("ethereum--menu--svg");
-    //     let hamburgerMenu = document.getElementById("hamburger--menu--svg");
-
-    //     ethLogoText.classList.remove("header--logo--displayed")
-    //     hamburgerMenu.classList.remove("header--logo--displayed")
-
-    // }
-
-    // function changeNavigationElementsToDarkColor() {
-
-    //     let ethLogoText = document.getElementById("ethereum--menu--svg");
-    //     let hamburgerMenu = document.getElementById("hamburger--menu--svg");
-
-    //     ethLogoText.classList.add("header--logo--displayed")
-    //     hamburgerMenu.classList.add("header--logo--displayed")
-
-    // }
-
-    // function displayHamburgerMenu() {
-    //     let hamburgerMenu = document.getElementById("hamburger--menu--container");
-    //     hamburgerMenu.classList.remove("hide--hamburger--menu")
-    // }
-
-    // function hideHamburgerMenu() {
-    //     let hamburgerMenu = document.getElementById("hamburger--menu--container");
-    //     hamburgerMenu.classList.add("hide--hamburger--menu")
-    // }
-
-    // function displayMainContent() {
-
-    //     // let textContainer = document.getElementById("main--content--inner--container");
-    //     let textContainer = document.getElementById("homepage--welcome--text--inner--container");
-
-    //     if (isHomePage()) {
-    //         textContainer.classList.add("homepage--displayed");
-    //     }
-
-    //     textContainer.classList.add("displayed");
-
-    //     // Helps us ensure that the animation isn't triggered more than once in the @render function
-    //     // where we end up calling this function
-    //     mainContentShownOnPage = true;
-    // }
-
-
-    // function hideMainContent() {
-
-    //     // let textContainer = document.getElementById("main--content--inner--container");
-    //     let textContainer = document.getElementById("homepage--welcome--text--inner--container");
-
-    //     if (isHomePage()) {
-    //         textContainer.classList.remove("homepage--displayed");
-    //     }
-
-    //     textContainer.classList.remove("displayed");
-
-    //     mainContentShownOnPage = false;
-    //     mainContentDisplayed = false;
-
-    // }
-
-    // function displayScrollDownCTA() {
-
-    //     // let cta = document.body; // document.getElementById("scroll-nav-container");
-    //     // cta.classList.remove("hide--scroll");
-
-    // }
-
-    // function hideScrollDownCTA() {
-
-    //     // let cta = document.body; // document.getElementById("scroll-nav-container");
-    //     // cta.classList.add("hide--scroll");
-
-    // };
-
-
-    /** EVENT HANDLERS **/
-
     /**
      * Used to update the camera position when certain conditions are met - here we simply move the camera
      * forward or backward
      **/
-
-
-    let textColorTransformed = false;
-
-    // New variables
-    let scrollUpAnimationTriggered = false;
-    let scrollDownAnimationTriggered = false;
-
-    // New factors
-    // function triggerAnimation(ev) {
-    //     let { deltaY } = ev;
-
-    //     if (deltaY > 0) {
-    //         // New Method - Automatic Animation
-    //         if (!scrollDownAnimationTriggered) {
-    //             scrollUpAnimationTriggered = true;
-    //         };
-    //         // if (!textColorTransformed) {
-    //         //     turnMainContentColorWhite();
-    //         //     textColorTransformed = true;
-    //         // };
-    //     } else {
-    //         if (!scrollUpAnimationTriggered) {
-    //             scrollDownAnimationTriggered = true;
-    //         };
-    //     }
-    // }
-
     /**
      * Ensures that the scene resizes with user window resizing
      */
@@ -1689,49 +1441,12 @@ export default (url) => {
      * Higher order function to attach all the necessary listeners to the page
      **/
     function addEventListeners() {
-
-        /** General **/
         window.addEventListener('resize', resize, false)
-        // Important to note the difference beteween @wheel and @scroll event
-        // @wheel event triggers on scroll AND zoom => Back in 2015, was not a standard
-        // @scroll event occurs when element scrollbar is being scrolled
-        // document.addEventListener("wheel", triggerAnimation);
-        // document.addEventListener("scroll", triggerAnimation);
-
-        // Event Listener for Mobile
-        // Implements "swipe" behavior on the page
-        // document.addEventListener("touchstart", handleTouchStart, false);
-        // document.addEventListener("touchmove", handleTouchMove, false);
-
-        // Display footer based on whether the user is hovering above footer element or not.
-        if (isMobileDevice()) {
-            // document.getElementById("inner-container").addEventListener("mousedown", toggleNewFooter, false);
-        } else {
-            /** Sets footer animation for desktop => Not done through CSS because in this case the child element causes a change in the parent */
-            // document.getElementById("inner-container").addEventListener("mouseenter", toggleNewFooter, false);
-            // document.getElementById("inner-container").addEventListener("mouseleave", toggleNewFooter, false);
-        }
-
-        // Window
+        // TODO: setDocumentHeight can be done on the react side
         window.addEventListener("resize", setDocumentHeight);
-
 
         return () => {
             window.removeEventListener('resize', resize)
-            // document.removeEventListener("wheel", triggerAnimation);
-            // document.removeEventListener("scroll", triggerAnimation);
-            // document.removeEventListener("touchstart", handleTouchStart);
-            // document.removeEventListener("touchmove", handleTouchMove);
-
-            if (isMobileDevice()) {
-                // document.getElementById("inner-container").removeEventListener("mousedown", toggleNewFooter);
-            } else {
-                // document.getElementById("inner-container").removeEventListener("mouseenter", toggleNewFooter);
-                // document.getElementById("inner-container").removeEventListener("mouseleave", toggleNewFooter);
-            }
-
-            // document.getElementById("next--page--navigation--container").removeEventListener("mousedown", goToNextPage);
-            // document.getElementById("downward--arrow").removeEventListener("mousedown", goToNextPage);
             window.removeEventListener("resize", setDocumentHeight);
         }
     }
@@ -1743,129 +1458,14 @@ export default (url) => {
      *
      */
     function modifyElementsAccordingToDevice() {
-        // let footerUpArrow = document.getElementById("footer--up--arrow");
-        // let footerDownArrow = document.getElementById("footer--down--arrow");
-        // let footerRightContainer = document.getElementById("footer--right--container");
-
-        if (!isMobileDevice()) {
-            // footerUpArrow.style.display = "none";
-            // footerDownArrow.style.display = "none";
-        } else {
-            // footerRightContainer.style.display = "none";
-            // If it is mobile device then we hide the footer--right--container
-        }
-
         setDocumentHeight();
     }
 
+    // TODO: Deprecate and move to the react side
     function setDocumentHeight() {
         const doc = document.body;
         doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
     };
-
-    // function triggerScrollUpAnimation() {
-
-    //     if (!scrollDownAnimationTriggered) {
-    //         scrollUpAnimationTriggered = true;
-    //     };
-
-    //     turnMainContentColorWhite();
-
-    // }
-
-    /** Mobile Device Related Functions => Allow us to implement swipe up or down functionalities **/
-
-    let xDown = 0;
-    let yDown = 0;
-
-    function getTouches(event) {
-        return event.touches || event.originalEvent.touches;
-    }
-
-    function handleTouchStart(evt) {
-        const firstTouch = getTouches(evt)[0];
-        xDown = firstTouch.clientX;
-        yDown = firstTouch.clientY;
-    };
-
-    function handleTouchMove(evt) {
-
-        if (!xDown || !yDown) {
-            return;
-        }
-
-        var xUp = evt.touches[0].clientX;
-        var yUp = evt.touches[0].clientY;
-
-        var xDiff = xDown - xUp;
-        var yDiff = yDown - yUp;
-
-        if (Math.abs(xDiff) > Math.abs(yDiff)) {
-            if (xDiff > 0) {
-                // Right swipe
-            } else {
-                // Left swipe
-            }
-        } else {
-
-            if (yDiff > 0) {
-
-                // Up swipe
-
-                if (!scrollDownAnimationTriggered) {
-                    scrollUpAnimationTriggered = true;
-                };
-
-
-                if (!textColorTransformed) {
-                    turnMainContentColorWhite();
-                    // #toDo: main--content--general--paragraph
-                    // should be turned into class
-                    // #toDo: should be main--content--general--paragraph--two
-                    // next--page--text #toDo
-                    textColorTransformed = true;
-                }
-
-            } else {
-
-                // Down swipe
-                if (!scrollUpAnimationTriggered) {
-                    scrollDownAnimationTriggered = true;
-                };
-
-            }
-        }
-
-        // Reset values
-        xDown = null;
-        yDown = null;
-
-    };
-
-    // function turnMainContentColorWhite() {
-
-    //     // document.getElementById("main--content--title").style.color = "white";
-
-    //     // if (!isHomePage()) {
-
-    //     //     let paragraphOne = document.getElementById("main--content--general--paragraph");
-
-    //     //     if (paragraphOne) {
-    //     //         paragraphOne.style.color = "white";
-    //     //     }
-
-    //     //     let paragaphTwo = document.getElementById("main--content--general--paragraph--two");
-
-    //     //     if (paragaphTwo) {
-    //     //         document.getElementById("main--content--general--paragraph--two").style.color = "white";
-    //     //     }
-
-    //     // }
-
-    //     // document.getElementById("downward--arrow").style.color = "white" ;
-    //     // document.getElementById("next--page--text").style.color = "white";
-
-    // }
 
     const cleanUpAfterThreejs = begin();
     const clearAllListeners = addEventListeners();

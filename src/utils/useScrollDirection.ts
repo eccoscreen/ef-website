@@ -5,6 +5,14 @@ export enum ScrollDirection {
   DOWN = 'down'
 }
 
+let xDown = 0;
+let yDown = 0;
+
+function getTouches(event: any) {
+    return event.touches || event.originalEvent.touches;
+}
+
+// TODO: Should probably rethink this and make it more "reacty" - e.g. use a gesture library and apply the listeners to the components that need them directly rather than using window listeners
 const useScrollDirection = () => {
   const [scrollDirection, setScrollDirection] = React.useState<ScrollDirection>(ScrollDirection.UP);
 
@@ -24,12 +32,48 @@ const useScrollDirection = () => {
       }
     }
 
+    const handleTouchStart = (e: any) => {
+      const firstTouch = getTouches(e)[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+    }
+
+    const handleTouchMove = (e: any) => {
+      // if (!xDown || !yDown) {
+      //     return;
+      // }
+
+      var xUp = e.touches[0].clientX;
+      var yUp = e.touches[0].clientY;
+
+      var xDiff = xDown - xUp;
+      var yDiff = yDown - yUp;
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+          if (xDiff > 0) {
+              // Right swipe
+          } else {
+              // Left swipe
+          }
+      } else {
+          if (yDiff > 0) {
+            setScrollDirection(ScrollDirection.DOWN);
+          } else {
+            setScrollDirection(ScrollDirection.UP);
+          }
+      }
+    }
+
     window.addEventListener('wheel', handleScroll)
     window.addEventListener('scroll', handleScroll)
+    window.addEventListener('touchstart', handleTouchStart)
+    window.addEventListener('touchmove', handleTouchMove)
 
     return () => {
       window.removeEventListener('wheel', handleScroll)
       window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
     }
   }, [])
 

@@ -9,28 +9,34 @@ const Nav = () => {
 
   return (
     <>
-      <MouseDownLink href="/">
-        <EFLogo className={(() => {
-          let className = css['ef-logo'];
+      <div
+        className={`${css['header']} boundary`}
+      >
+        <div>
+          <MouseDownLink href="/">
+            <EFLogo className={(() => {
+              let className = `${css['ef-logo']}`;
 
-          if (open) {
-            className += ` ${css['open']}`;
-          }
+              if (open) {
+                className += ` ${css['open']}`;
+              }
 
-          return className;
-        })()} />
-      </MouseDownLink>
+              return className;
+            })()} />
+          </MouseDownLink>
 
-      <div className={(() => {
-        let className = css['hamburger-menu'];
+          <div className={(() => {
+            let className = css['hamburger-menu'];
 
-        if (open) {
-          className += ` ${css['open']}`;
-        }
+            if (open) {
+              className += ` ${css['open']}`;
+            }
 
-        return className;
-      })()} >
-        <HamburgerIcon onMouseDown={() => setOpen(!open)} />
+            return className;
+          })()} >
+            <HamburgerIcon onMouseDown={() => setOpen(!open)} />
+          </div>
+        </div>
       </div>
 
       <section className={`${css['main--menu--container']} ${open ? css['open'] : ''}`} id="main--menu--container">

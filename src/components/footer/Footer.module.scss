@@ -1,6 +1,6 @@
 @import 'styles/variables.scss';
 
-$breakpoint-1: 1050px;
+$footer-height: 43px; // Can make this dynamic but probably overkill
 
 .container {
   position: absolute;
@@ -23,8 +23,7 @@ $breakpoint-1: 1050px;
 
       .trigger {
         .chevron {
-          transform: rotateZ(180deg);
-          transition: transform 0.3s ease-out;
+          transform: rotateX(180deg) translate3d(0, 0, 0) !important;
         }
       }
 
@@ -41,7 +40,9 @@ $breakpoint-1: 1050px;
     opacity: 0.5;
 
     .trigger {
+      z-index: 2;
       user-select: none;
+      height: $footer-height;
       bottom: 0px;
       padding: 5px 32px;
       width: 100%;
@@ -59,16 +60,14 @@ $breakpoint-1: 1050px;
       }
 
       .chevron {
-        height: 20px;
-        width: 20px;
         transition: transform 0.2s ease-out;
-        transform: rotateZ(0deg);
+        transform: rotateX(0deg) translate3d(0, 0, 0);
       }
     }
 
     .unfold {
       z-index: -1;
-      padding: 20px 32px;
+      padding: 20px 0px;
       padding-bottom: 0px;
       opacity: 0;
       width: 100%;
@@ -79,14 +78,26 @@ $breakpoint-1: 1050px;
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
+      justify-content: center;
       user-select: none;
 
       @media (max-width: $breakpoint-1) {
-        justify-content: center;
-        flex-direction: column;
-        min-height: var(--doc-height);
+        height: var(--doc-height);
         top: 100%;
         padding-bottom: 64px;
+      }
+
+      .scroll-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: auto;
+        flex-grow: 1;
+        padding: 0px 32px;
+
+        @media (max-width: $breakpoint-1) {
+          justify-content: center;
+          flex-direction: column;
+        }
       }
 
       .direction-wrapper {
@@ -95,7 +106,7 @@ $breakpoint-1: 1050px;
         flex-shrink: 0;
 
         @media (max-width: $breakpoint-1) {
-          flex-basis: 100%;
+          flex-basis: auto;
           flex-direction: column;
         }
       }
@@ -106,6 +117,7 @@ $breakpoint-1: 1050px;
         flex-direction: column;
 
         @media (max-width: $breakpoint-1) {
+          flex-basis: auto;
           justify-content: center;
           align-items: center;
 
@@ -130,7 +142,6 @@ $breakpoint-1: 1050px;
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
-
 
           @media (max-width: $breakpoint-1) {
             justify-content: center;

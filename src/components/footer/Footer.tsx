@@ -2,6 +2,7 @@ import React from 'react';
 import MouseDownLink from '../MouseDownLink';
 import css from './Footer.module.scss';
 import EFLogo from 'assets/images/ef-logo.svg';
+import Chevron from 'assets/icons/chevron.svg';
 
 const Footer = () => {
   const [open, setOpen] = React.useState(false);
@@ -12,7 +13,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className={className} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onTouchStart={() => setOpen(!open)}>
+      <footer className={className} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
         <div className={css['scroll-indicator']} id="scroll-indicator">
           <p className={css['text']}> Scroll </p>
           <svg width="37" height="37" className={css['arrow']} viewBox="0 0 52 46" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,54 +24,55 @@ const Footer = () => {
         </div>
 
         <div className={css['content']}>
-          <div className={css['trigger']}>
+          <div className={css['trigger']} onTouchStart={() => setOpen(!open)}>
             <p className={css['copyright']}>
               &copy; Ethereum Foundation, 2022
             </p>
 
-            <div className={css['chevron']}>
-              <object data="/assets/arrow.svg" width="20" height="20" aria-label="Footer Arrow">Footer Arrow</object>
-            </div>
+            <Chevron className={css['chevron']} />
           </div>
 
           <div className={css['unfold']}>
-            <div className={css['direction-wrapper']}>
-              <div className={css['meta']}>
-                <EFLogo className={css['logo']} />
+            <div className={css['scroll-wrapper']}>
+              <div className={css['direction-wrapper']}>
+                <div className={css['meta']}>
+                  <EFLogo className={css['logo']} />
 
-                <div className={css['links']}>
-                  <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://devcon.org/" className={css['link']}>DevCon</MouseDownLink>
-                  <div className={css['separator']}>:</div>
-                  <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://blog.ethereum.org/" className={css['link']}>Blog</MouseDownLink>
-                  <div className={css['break']}>
-                    <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/terms-of-use/" className={css['link']}>Terms of Use</MouseDownLink>
+                  <div className={css['links']}>
+                    <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://devcon.org/" className={css['link']}>DevCon</MouseDownLink>
                     <div className={css['separator']}>:</div>
-                    <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/privacy-policy/" className={css['link']}>Privacy Policy</MouseDownLink>
-                    <div className={css['separator']}>:</div>
-                    <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/cookie-policy/" className={css['link']}>Cookie Policy</MouseDownLink>
+                    <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://blog.ethereum.org/" className={css['link']}>Blog</MouseDownLink>
+                    <div className={css['break']}>
+                      <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/terms-of-use/" className={css['link']}>Terms of Use</MouseDownLink>
+                      <div className={css['separator']}>:</div>
+                      <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/privacy-policy/" className={css['link']}>Privacy Policy</MouseDownLink>
+                      <div className={css['separator']}>:</div>
+                      <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://ethereum.org/en/cookie-policy/" className={css['link']}>Cookie Policy</MouseDownLink>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={css['contacts']}>
+                  <div>
+                    <p className={css['title']}>General Contact</p>
+                    <MouseDownLink href="mailto:info@ethereum.org?subject=Hello" className={css['email']}>info@ethereum.org</MouseDownLink>
+                  </div>
+                  <div>
+                    <p className={css['title']}>Press Contact</p>
+                    <MouseDownLink href="mailto:press@ethereum.org?subject=Hello" className={css['email']}>press@ethereum.org</MouseDownLink>
                   </div>
                 </div>
               </div>
 
-              <div className={css['contacts']}>
-                <div>
-                  <p className={css['title']}>General Contact</p>
-                  <MouseDownLink href="mailto:info@ethereum.org?subject=Hello" className={css['email']}>info@ethereum.org</MouseDownLink>
-                </div>
-                <div>
-                  <p className={css['title']}>Press Contact</p>
-                  <MouseDownLink href="mailto:press@ethereum.org?subject=Hello" className={css['email']}>press@ethereum.org</MouseDownLink>
-                </div>
+
+
+              <div className={css['canary']}>
+                <object data="/assets/canari-bird.svg" className={css['icon']} width="30" height="30" aria-labelledby="Canari Bird Icon">Canari Bird Icon</object>
+
+                <p>
+                  The Ethereum Foundation (Stiftung Ethereum) has never been contacted by any agency anywhere in the world in a way which requires that contact not to be disclosed. Stiftung Ethereum will publicly disclose any sort of inquiry from government agencies that falls outside the scope of regular business operations.
+                </p>
               </div>
-            </div>
-
-
-            <div className={css['canary']}>
-              <object data="/assets/canari-bird.svg" className={css['icon']} width="30" height="30" aria-labelledby="Canari Bird Icon">Canari Bird Icon</object>
-
-              <p>
-                The Ethereum Foundation (Stiftung Ethereum) has never been contacted by any agency anywhere in the world in a way which requires that contact not to be disclosed. Stiftung Ethereum will publicly disclose any sort of inquiry from government agencies that falls outside the scope of regular business operations.
-              </p>
             </div>
           </div>
         </div>

@@ -16,11 +16,6 @@ const Head = (props: HeadProps) => {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
 
-      <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&family=Space+Mono&display=swap"
-        rel="stylesheet"
-      />
-
       <link rel='shortcut icon' sizes='196x196' href='/eth-colorful-icon.svg' />
       <link rel='stylesheet' href='https://use.typekit.net/akf2vsf.css' />
 
