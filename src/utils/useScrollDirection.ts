@@ -13,7 +13,7 @@ const useScrollDirection = () => {
       const scrolledDown = e.deltaY > 0;
       const direction = scrolledDown ? ScrollDirection.DOWN : ScrollDirection.UP;
 
-      const scrollableContentElement = document.getElementById("main--content--inner--container")
+      const scrollableContentElement = document.getElementById("inner-container")
       
       if (!scrollableContentElement) return;
       

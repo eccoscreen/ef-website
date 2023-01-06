@@ -12,16 +12,14 @@ const Ethereum = (props: any) => {
       <div id="canvas"></div>
 
       <ContentBlock>
-        <div id="homepage--welcome--text--inner--container" className="disable--selection">
-          <h1 id="main--content--title" className=""> What is Ethereum? </h1>
-          <p id="main--content--general--paragraph" className="">
-            Ethereum is a technology built for the public good.
-            <br></br>
-            It is a worldwide system, an <b>open-source platform <sup>1</sup></b> to write computer code that stores and automates digital databases using smart contracts, without relying upon a <b>central intermediary <sup>2</sup></b>, solving trust with <b>cryptographic <sup>3</sup></b> techniques.
-            <br></br>
-            Ethereum is not owned by anybody, and it is built and maintained by thousands of people, organizations, and users all over the world; it is a commons from which everyone can benefit. In the code, there are incentives for participants to help secure the system. Access to Ethereum is open to everyone; no permission is required. The network is powered by <b>nodes<sup>4</sup></b> that anyone can run.
-            The global network of Ethereum nodes all together work to maintain a shared <b>state <sup>5</sup></b> - a foundation of trust upon which more complex human relationships can grow.
-          </p>
+        <div id="content-body" className="disable--selection">
+          <h1>What is Ethereum?</h1>
+          
+          <p>Ethereum is a technology built for the public good.</p>
+
+          <p>It is a worldwide system, an <b>open-source platform <sup>1</sup></b> to write computer code that stores and automates digital databases using smart contracts, without relying upon a <b>central intermediary <sup>2</sup></b>, solving trust with <b>cryptographic <sup>3</sup></b> techniques.</p>
+          
+          <p>Ethereum is not owned by anybody, and it is built and maintained by thousands of people, organizations, and users all over the world; it is a commons from which everyone can benefit. In the code, there are incentives for participants to help secure the system. Access to Ethereum is open to everyone; no permission is required. The network is powered by <b>nodes<sup>4</sup></b> that anyone can run. The global network of Ethereum nodes all together work to maintain a shared <b>state <sup>5</sup></b> - a foundation of trust upon which more complex human relationships can grow.</p>
           <MouseDownLink href="/ef" id="next--page--navigation--container">
             <object data="/assets/bottom-arrow.svg" id="downward--arrow" width="50" height="50" aria-labelledby="Explore Infinite Garden Button"> Explore Infinite Garden </object>
             <p className="next--page--text"> What is the EF? </p>
@@ -42,10 +40,10 @@ const Ethereum = (props: any) => {
         </div>
       </ContentBlock>
 
-      {/* <main id="main--content--outer--container" className="">
-        <div id="main--content--inner--container">
-          <div id="homepage--welcome--text--inner--container" className="disable--selection">
-            <h1 id="main--content--title" className=""> What is Ethereum? </h1>
+      {/* <main id="outer-container" className="">
+        <div id="inner-container">
+          <div id="content-body" className="disable--selection">
+            <h1> What is Ethereum? </h1>
             <p id="main--content--general--paragraph" className="">
               Ethereum is a technology built for the public good.
               <br></br>

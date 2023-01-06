@@ -12,7 +12,7 @@ $breakpoint-1: 1050px;
   transition: height 0.2s ease-out, max-height 0.2s ease-out, min-height 0.2s ease-out;
   color: white;
   font-size: $small;
-  font-family: $font-secondary;
+  font-family: $font-primary;
 
   // Styling adjustments for when footer opens
   &.open {
@@ -212,7 +212,7 @@ $breakpoint-1: 1050px;
           }
 
           .text {
-            font-family: $font-secondary;
+            font-family: $font-primary;
           }
 
           .email {
@@ -228,7 +228,7 @@ $breakpoint-1: 1050px;
         flex-grow: 1;
         margin-bottom: 12px;
         display: flex;
-        font-family: $font-secondary;
+        font-family: $font-primary;
         padding-right: 30px;
 
         @media (max-width: $breakpoint-1) {

@@ -1,20 +1,5 @@
 @import 'styles/variables.scss';
 
-@font-face {
-  font-family: Darius;
-  src: url(fonts/BwDariusDEMO-Black.otf)
-}
-
-@font-face {
-  font-family: Darius-Light;
-  src: url(fonts/BwDariusDEMO-Light.otf)
-}
-
-@font-face {
-  font-family: Darius-Regular;
-  src: url(fonts/BwDariusDEMO-Regular.otf)
-}
-
 /** Imported Fonts **/
 
 /* libre-franklin-200 - latin */
@@ -220,7 +205,7 @@ object {
 }
 
 /* General */
-#main--content--outer--container {
+main#outer-container {
   width: 100vw;
   height: 100vh;
   background-color: transparent;
@@ -243,7 +228,7 @@ object {
   }
 }
 
-#main--content--inner--container {
+#inner-container {
   width: 100vw;
   height: 100vh;
   padding-left: max(20vw, 100px);
@@ -263,13 +248,13 @@ object {
 }
 
 /* Used to ensure that the main content never goes beyond a certain limit in width */
-#homepage--welcome--text--inner--container {
+#content-body {
   transform: translateY(80vh);
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   max-width: 600px;
 }
 
-#main--content--title {
+main h1 {
   font-weight: 400;
   font-family: "Abhaya Libre", serif;
   font-size: 42px;
@@ -279,21 +264,11 @@ object {
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-#main--content--title.hidden {
+main h1.hidden {
   opacity: 0;
   transition: opacity 0.2s ease-in;
 }
 
-.main--content--paragraph {
-  line-height: 1.9;
-  font-size: 18px;
-  font-family: "Libre Franklin", sans-serif;
-  font-weight: 200;
-  opacity: 1;
-  transition: opacity 0.4s ease-in;
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-  margin-top: 10px;
-}
 
 h3 {
   font-weight: 400;
@@ -307,34 +282,19 @@ h3 {
   margin-bottom: 20px;
 }
 
-#main--content--title.hidden {
-  opacity: 0;
-  transition: opacity 0.2s ease-in;
-}
 
-#main--content--general--paragraph,
-#main--content--general--paragraph--two {
+main p {
   line-height: 1.9;
   font-size: 18px;
-  font-family: "Libre Franklin", sans-serif;
   font-weight: 200;
   opacity: 1;
   transition: opacity 0.4s ease-in;
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-  margin-top: 10px;
-  text-decoration: none;
-  color: white;
+  margin: 25px 0;
 }
-
-#main--content--general--paragraph.hidden,
-#main--content--general--paragraph--two.hidden {
+mian p.hidden {
   opacity: 0;
   transition: opacity 0.2s ease-in;
-}
-
-/* #temporary #toDo: figure out why this is different behavior */
-#main--content--general--paragraph--two {
-  margin-top: -10px;
 }
 
 ol {
@@ -409,16 +369,11 @@ ol li {
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-#main--content--title.displayed {
+main h1.displayed {
   transform: translateY(-20px);
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-#main--content--general--paragraph,
-#main--content--general--paragraph--two.displayed {
-  transform: translateY(-20px);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
 
 #homepage--welcome--text--paragraph.displayed {
   transform: translateY(-20px);
@@ -475,33 +430,28 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
     pointer-events: none;
   }
 
-  #main--content--inner--container {
+  #inner-container {
     transform: translateY(0);
     transition: transform $transition-curve $transition-time;
     animation: scroll-animation-timer 1.5s;
 
     &.homepage {
-      #homepage--welcome--text--inner--container {
+      #content-body {
         transform: translateY(22vh);
       }
     }
   }
 
   // Naming here is odd? This isn't homepage text styling, yet all the pages use this id
-  #homepage--welcome--text--inner--container {
+  #content-body {
     transform: translateY(0vh);
     transition: transform $transition-curve $transition-time;
   }
 
-  #main--content--title,
-  #main--content--general--paragraph,
-  #main--content--general--paragraph--two {
-    color: white !important;
-  }
 }
 
 @media (min-width: 500px) {
-  #main--content--inner--container {
+  #inner-container {
     padding-left: max(5vw, 15px);
     padding-right: max(5vw, 15px);
   }
@@ -673,7 +623,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 
 /* Media Queries for Laptops, Desktops, and larger devices */
 @media (max-width: 750px) {
-  #main--content--title {
+  main h1 {
     font-size: 42px;
     transition: font-size 0.15s ease-out;
   }
@@ -685,7 +635,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 }
 
 @media (max-width: 600px) {
-  #main--content--title {
+  main h1 {
     font-size: 38px;
     transition: font-size 0.15s ease-out;
   }
@@ -697,19 +647,19 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 }
 
 @media (max-width: 580px) {
-  #main--content--inner--container {
+  #inner-container {
     padding-left: max(5vw, 15px);
     padding-right: max(5vw, 15px);
   }
 
-  #main--content--title {
+  main h1 {
     font-size: 32px;
   }
 }
 
 /* Target smartphones */
 @media (max-width: 499px) {
-  #main--content--title {
+  main h1 {
     font-size: 34px;
     transition: font-size 0.15s ease-out;
   }
@@ -728,7 +678,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
     font-size: 27px;
   }
 
-  #main--content--inner--container {
+  #inner-container {
     padding-left: max(5vw, 15px);
     padding-right: max(5vw, 15px);
   }
@@ -736,7 +686,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 
 
 @media (max-width: 420px) {
-  #main--content--inner--container {
+  #inner-container {
     padding-left: max(5vw, 15px);
     padding-right: max(5vw, 15px);
   }

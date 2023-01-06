@@ -7,8 +7,7 @@ $footer-color: $ef-dark;
 $primay-font-color: var(--primary-font-color-override, $white); // Allows overriding default color if desired (for any part of the app), falls back to white
 
 // Font families
-$font-primary: "Darius-Light", serif;
-$font-secondary: "Libre Franklin", sans-serif;
+$font-primary: "Libre Franklin", sans-serif;
 
 // Sizes (root relative) - use this mostly (allows us to scale entire app by changing root font size) 
 $very-small: 0.75rem;

@@ -1266,12 +1266,12 @@ export default (url) => {
      * and scroll the content itself, which ends up giving unexpected results
      */
     // function allowScrollBehaviorOnMainContent() {
-    //     let mainContentContainer = document.getElementById("main--content--inner--container");
+    //     let mainContentContainer = document.getElementById("inner-container");
     //     mainContentContainer.classList.add("vertical--scroll--allowed");
     // }
 
     // function disallowScrollBehaviorOnMainContent() {
-    //     let mainContentContainer = document.getElementById("main--content--inner--container");
+    //     let mainContentContainer = document.getElementById("inner-container");
     //     mainContentContainer.classList.remove("vertical--scroll--allowed");
     // }
 
@@ -1591,8 +1591,8 @@ export default (url) => {
 
     // function displayMainContent() {
 
-    //     // let textContainer = document.getElementById("main--content--inner--container");
-    //     let textContainer = document.getElementById("homepage--welcome--text--inner--container");
+    //     // let textContainer = document.getElementById("inner-container");
+    //     let textContainer = document.getElementById("content-body");
 
     //     if (isHomePage()) {
     //         textContainer.classList.add("homepage--displayed");
@@ -1608,8 +1608,8 @@ export default (url) => {
 
     // function hideMainContent() {
 
-    //     // let textContainer = document.getElementById("main--content--inner--container");
-    //     let textContainer = document.getElementById("homepage--welcome--text--inner--container");
+    //     // let textContainer = document.getElementById("inner-container");
+    //     let textContainer = document.getElementById("content-body");
 
     //     if (isHomePage()) {
     //         textContainer.classList.remove("homepage--displayed");
@@ -1844,7 +1844,7 @@ export default (url) => {
 
     // function turnMainContentColorWhite() {
 
-    //     // document.getElementById("main--content--title").style.color = "white";
+    //     // document.getElementById("content-title").style.color = "white";
 
     //     // if (!isHomePage()) {
 
