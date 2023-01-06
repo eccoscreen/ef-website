@@ -17,7 +17,7 @@ const EthereumFoundation = () => {
 
           <p>Behind that simple description, the EF is hard to categorize. We are not a tech company, or a “normal” non-profit. Just as Ethereum requires new concepts and technologies, it has spawned new kinds of organizations.</p>
 
-          <p>We are at the frontier of a new kind of organization: one that supports a blockchain and its ecosystem without controlling it. Since the Ethereum ecosystem evolves every day, it is important for the EF to also keep learning and evolving to support Ethereum's long term growth.</p>
+          <p>We are at the frontier of a new kind of organization: one that supports a blockchain and its ecosystem without controlling it. Since the Ethereum ecosystem evolves every day, it is important for the EF to also keep learning and evolving to support Ethereum&apos;s long term growth.</p>
           
           <p>Over the course of this evolution, the EF has become more like a community of teams than a traditional organization.</p>
           <div id="executive--board--container">
