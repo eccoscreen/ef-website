@@ -11,17 +11,15 @@ const EthereumFoundation = () => {
 
       <div id="canvas"></div>
       <ContentBlock>
-        <div id="homepage--welcome--text--inner--container" className="disable--selection">
-          <h1 id="main--content--title" className=""> What is the EF? </h1>
-          <p id="main--content--general--paragraph" className="">
-            The Ethereum Foundation (EF) is a non-profit that supports the Ethereum ecosystem. We are part of a larger community of organizations and individuals that fund protocol development, <MouseDownLink id="grow--ecosystem--link" href="https://esp.ethereum.foundation/">grow the ecosystem</MouseDownLink>, and advocate for Ethereum.
-            <br></br>
-            Behind that simple description, the EF is hard to categorize. We are not a tech company, or a “normal” non-profit. Just as Ethereum requires new concepts and technologies, it has spawned new kinds of organizations.
-            <br></br>
-            We are at the frontier of a new kind of organization: one that supports a blockchain and its ecosystem without controlling it. Since the Ethereum ecosystem evolves every day, it is important for the EF to also keep learning and evolving to support Ethereum’s long term growth.
-            <br></br>
-            Over the course of this evolution, the EF has become more like a community of teams than a traditional organization.
-          </p>
+        <div id="content-body" className="disable--selection">
+          <h1>What is the EF?</h1>
+          <p>The Ethereum Foundation (EF) is a non-profit that supports the Ethereum ecosystem. We are part of a larger community of organizations and individuals that fund protocol development, <MouseDownLink id="grow--ecosystem--link" href="https://esp.ethereum.foundation/">grow the ecosystem</MouseDownLink>, and advocate for Ethereum.</p>
+
+          <p>Behind that simple description, the EF is hard to categorize. We are not a tech company, or a “normal” non-profit. Just as Ethereum requires new concepts and technologies, it has spawned new kinds of organizations.</p>
+
+          <p>We are at the frontier of a new kind of organization: one that supports a blockchain and its ecosystem without controlling it. Since the Ethereum ecosystem evolves every day, it is important for the EF to also keep learning and evolving to support Ethereum&apos;s long term growth.</p>
+          
+          <p>Over the course of this evolution, the EF has become more like a community of teams than a traditional organization.</p>
           <div id="executive--board--container">
             <h3 id="executive--board--title">Meet our Executive Board</h3>
 
