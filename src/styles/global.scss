@@ -393,7 +393,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 
 /* Transition Container - used between page loads */
 
-#transition--container {
+#transition-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -411,27 +411,26 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   display: flex;
 }
 
-#transition--container.removed {
+#transition-container.removed {
   opacity: 0;
   transition: opacity 0.8s ease-in;
   pointer-events: none;
 }
 
-#transition--container.displayed {
+#transition-container.displayed {
   opacity: 1;
   transition: opacity 0.8s ease-in;
   pointer-events: none;
 }
 
-.loading--text {
+#transition-container p {
   font-size: 15px;
   color: black;
-  font-family: "Libre Franklin", sans-serif;
   padding-top: 120px;
   background: url(assets/ETH-loading.svg) no-repeat 0% 50%;
 }
 
-#loading--text.hidden {
+#transition-container p.hidden {
   display: none;
 }
 

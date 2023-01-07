@@ -147,7 +147,7 @@ export default (url) => {
     }
 
     function removeLoadingScreen() {
-        let transitionContainer = document.getElementById("transition--container");
+        let transitionContainer = document.getElementById("transition-container");
         transitionContainer.classList.add("removed")
     };
 

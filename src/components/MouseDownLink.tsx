@@ -23,7 +23,7 @@ const MouseDownLink = (props: LinkProps & { children?: React.ReactNode, [key: st
         if (isExternalLink) {
           window.open(link, '_blank');
         } else {
-          const transitionPageElement = document.getElementById("transition--container");
+          const transitionPageElement = document.getElementById("transition-container");
 
           if (transitionPageElement) {
             transitionPageElement.classList.remove("removed");

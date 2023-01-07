@@ -5,8 +5,8 @@ import ContentBlock from '../../components/page/Content';
 const EthereumFoundation = () => {
   return (
     <>
-      <div id="transition--container">
-        <p className="loading--text" id="loading--text">One moment...</p>
+      <div id="transition-container">
+        <p>One moment...</p>
       </div>
 
       <div id="canvas"></div>

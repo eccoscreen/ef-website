@@ -5,8 +5,8 @@ import MouseDownLink from '../components/MouseDownLink';
 const HomePage = (props: any) => {
   return (
     <>
-      <div id="transition--container">
-        <p className="loading--text" id="loading--text">One moment...</p>
+      <div id="transition-container">
+        <p>One moment...</p>
       </div>
 
       <div id="canvas"></div>
