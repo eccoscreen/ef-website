@@ -17,7 +17,7 @@ const HomePage = (props: any) => {
             <h1>Welcome to the Infinite Garden</h1>
             <MouseDownLink href="/infinitegarden" id="next-navigation">
               <object data="/assets/bottom-arrow.svg" width="50" height="50" aria-labelledby="Next"> Next</object>
-              <p className="next--page--text"> Explore </p>
+              <p> Explore </p>
             </MouseDownLink>
           </div>
         </div>

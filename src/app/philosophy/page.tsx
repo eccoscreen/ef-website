@@ -32,7 +32,7 @@ const Philosophy = (props: any) => {
 
           <MouseDownLink href="/" id="next-navigation">
             <object data="/assets/bottom-arrow.svg" width="50" height="50" aria-labelledby="Next"> Next</object>
-            <p className="next--page--text"> Back Home </p>
+            <p> Back Home </p>
           </MouseDownLink>
         </div>
       </ContentBlock>
