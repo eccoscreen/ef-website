@@ -23,8 +23,8 @@ const InfiniteGarden = (props: any) => {
 
           <p>The Infinite Garden is an embodiment of the spirit of the Ethereum Foundation as one gardener in a vast ecosystem -- nurture and grow, but do not control, and continue to play.</p>
 
-          <MouseDownLink href="/ethereum" id="next--page--navigation--container">
-            <object data="/assets/bottom-arrow.svg" id="downward--arrow" width="50" height="50" aria-labelledby="Explore Infinite Garden Button"> Explore Infinite Garden </object>
+          <MouseDownLink href="/ethereum" id="next-navigation">
+            <object data="/assets/bottom-arrow.svg" width="50" height="50" aria-labelledby="Next"> Next</object>
             <p className="next--page--text"> What is Ethereum? </p>
           </MouseDownLink>
         </div>

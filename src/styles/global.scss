@@ -341,23 +341,18 @@ ol li {
   transition: opacity 0.2s ease-in;
 }
 
-#downward--arrow {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 15px;
-  margin-top: 100px;
-  margin: 0px auto 10px auto;
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
-
 #home--cta--container {
   position: absolute;
   left: 50%;
   bottom: 100px;
 }
 
-#next--page--navigation--container,
-#next--page--navigation--container--two {
+main h1.displayed {
+  transform: translateY(-20px);
+  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+}
+
+#next-navigation {
   cursor: pointer;
   width: 50%;
   display: flex;
@@ -369,8 +364,12 @@ ol li {
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-main h1.displayed {
-  transform: translateY(-20px);
+#next-navigation object {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 15px;
+  margin-top: 100px;
+  margin: 0px auto 10px auto;
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
@@ -380,7 +379,7 @@ main h1.displayed {
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-#downward--arrow.displayed {
+#next-navigation object.displayed {
   transform: translateY(-20px);
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
@@ -390,12 +389,12 @@ main h1.displayed {
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-#next--page--navigation--container.displayed {
+#next-navigation.displayed {
   transform: translateY(-20px);
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-#next--page--navigation--container:hover {
+#next-navigation:hover {
   cursor: pointer;
 }
 
@@ -520,24 +519,22 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   text-decoration: none;
 }
 
-#executive--board--container {
+#executive-board {
   display: flex;
   flex-direction: column;
   margin-top: 30px;
   max-width: 80%;
-  font-family: "Abhaya Libre", serif;
-  color: white;
   margin: 0 auto;
   font-weight: 400;
 }
 
-#executive--board--title {
+#executive-board h3 {
   font-size: 38px;
   margin-top: 0px;
   text-align: center;
 }
 
-.executive--board--member--container {
+#executive-board .member {
   width: 100%;
   margin-bottom: 40px;
   display: flex;
@@ -545,7 +542,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   align-items: center;
 }
 
-.column--container--executive--board {
+#executive-board .info {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -554,43 +551,31 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   box-sizing: border-box;
 }
 
-.executive--board--member--image {
+#executive-board img {
   width: 150px;
   height: 150px;
   margin-right: 30px;
 }
 
-.executive--board--member--name {
-  font-size: 30px;
+#executive-board .name {
   margin-bottom: 5px;
   text-align: left;
   margin-top: 0px;
   font-weight: 400;
 }
 
-.executive--board--member--title,
-.executive--board--social--media--handle {
-  font-family: "Libre Franklin";
-  font-weight: 300;
-  font-size: 18px;
-  letter-spacing: 0.03em;
-  margin-bottom: 40px;
-  position: relative;
-  text-decoration: none;
-  color: white;
-}
-
-.executive--board--member--title {
+#executive-board .title {
   margin-top: 0px;
   margin-bottom: 20px;
 }
 
-.executive--board--social--media--handle {
+.social-link {
   position: relative;
   left: 26px;
+  color: #FFF;
 }
 
-.executive--board--social--media--handle::after {
+.social-link::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -609,14 +594,14 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 }
 
 #grow--ecosystem--link:hover,
-.executive--board--social--media--handle:hover,
+.social-link:hover,
 .menu--content--text:hover,
 #secondary--links--container a:hover,
-#next--page--navigation--container:hover .next--page--text {
+#next-navigation:hover .next--page--text {
   color: #8FFFEB;
 }
 
-#next--page--navigation--container:hover #downward--arrow {
+#next-navigation:hover object {
   filter: invert(9%) sepia(20%) saturate(482%) hue-rotate(106deg) brightness(101%) contrast(103%);
 }
 
@@ -670,7 +655,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
     transition: font-size 0.15s ease-out;
   }
 
-  .executive--board--member--container {
+  .member {
     flex-direction: column;
   }
 
@@ -692,19 +677,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   }
 }
 
-#next--page--navigation--container:hover #downward--arrow {
-  filter: invert(9%) sepia(20%) saturate(482%) hue-rotate(106deg) brightness(101%) contrast(103%);
-}
-
-#next--page--navigation--container:hover .next--page--text {
-  color: #8FFFEB;
-}
-
-#next--page--navigation--container--two:hover #downward--arrow {
-  filter: invert(9%) sepia(20%) saturate(482%) hue-rotate(106deg) brightness(101%) contrast(103%);
-}
-
-#next--page--navigation--container--two:hover .next--page--text {
+#next-navigation:hover .next--page--text {
   color: #8FFFEB;
 }
 

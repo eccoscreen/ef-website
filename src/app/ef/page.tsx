@@ -20,40 +20,39 @@ const EthereumFoundation = () => {
           <p>We are at the frontier of a new kind of organization: one that supports a blockchain and its ecosystem without controlling it. Since the Ethereum ecosystem evolves every day, it is important for the EF to also keep learning and evolving to support Ethereum&apos;s long term growth.</p>
           
           <p>Over the course of this evolution, the EF has become more like a community of teams than a traditional organization.</p>
-          <div id="executive--board--container">
-            <h3 id="executive--board--title">Meet our Executive Board</h3>
 
-            <div className="executive--board--member--container">
-              <img className="executive--board--member--image" src="/assets/portrait-aya-miyaguchi.png" alt="Portrait of Aya Miyaguchi, the Executive Director of Ethereum" height="150" width="150" />
-              <div className="column--container--executive--board">
-                <h4 className="executive--board--member--name">Aya Miyaguchi</h4>
-                <p className="executive--board--member--title">Executive Director</p>
-                <div className="social--media--link--container">
-                  <MouseDownLink id="executive--board--link--aya" href="https://twitter.com/ayamiyagotchi" className="executive--board--social--media--handle">@AyaMiyagotchi</MouseDownLink>
-                </div>
+          <div id="executive-board">
+            <h3>Meet our Executive Board</h3>
+
+            <div className="member">
+              <img src="/assets/portrait-aya-miyaguchi.png" alt="Aya Miyaguchi, the Executive Director of Ethereum" height="150" width="150" />
+              <div className="info">
+                <h4 className="name">Aya Miyaguchi</h4>
+                <p className="title">Executive Director</p>
+                <MouseDownLink href="https://twitter.com/ayamiyagotchi" className="social-link">@AyaMiyagotchi</MouseDownLink>
               </div>
             </div>
 
-            <div className="executive--board--member--container">
-              <img className="executive--board--member--image" src="/assets/portrait-vitalik-buterin.png" alt="Portrait of Vitalik Buterin, the Co-founder of Ethereum" height="150" width="150" />
-              <div className="column--container--executive--board">
-                <h4 className="executive--board--member--name">Vitalik Buterin</h4>
-                <p className="executive--board--member--title">Co-founder of Ethereum</p>
-                <MouseDownLink id="executive--board--link--vitalik" href="https://twitter.com/VitalikButerin" className="executive--board--social--media--handle">@VitalikButerin</MouseDownLink>
+            <div className="member">
+              <img src="/assets/portrait-vitalik-buterin.png" alt="Vitalik Buterin, the Co-founder of Ethereum" height="150" width="150" />
+              <div className="info">
+                <h4 className="name">Vitalik Buterin</h4>
+                <p className="title">Co-founder of Ethereum</p>
+                <MouseDownLink href="https://twitter.com/VitalikButerin" className="social-link">@VitalikButerin</MouseDownLink>
               </div>
             </div>
 
-            <div className="executive--board--member--container">
-              <img className="executive--board--member--image" src="/assets/portrait-patrick-storchenegger.png" alt="Portrait of Patrick Storchenegger, one of Ethereum's board members" height="150" width="150" />
-              <div className="column--container--executive--board">
-                <h4 className="executive--board--member--name">Patrick Storchenegger</h4>
-                <p className="executive--board--member--title">Board Member</p>
+            <div className="member">
+              <img src="/assets/portrait-patrick-storchenegger.png" alt="Patrick Storchenegger, one of Ethereum's board members" height="150" width="150" />
+              <div className="info">
+                <h4 className="name">Patrick Storchenegger</h4>
+                <p className="title">Board Member</p>
               </div>
             </div>
 
           </div>
-          <MouseDownLink href="/philosophy" id="next--page--navigation--container">
-            <object data="/assets/bottom-arrow.svg" id="downward--arrow" width="50" height="50" aria-labelledby="Explore Infinite Garden Button"> Explore Infinite Garden </object>
+          <MouseDownLink href="/philosophy" id="next-navigation">
+            <object data="/assets/bottom-arrow.svg" width="50" height="50" aria-labelledby="Next"> Next</object>
             <p className="next--page--text"> Sit with our philosophy </p>
           </MouseDownLink>
         </div>
