@@ -82,9 +82,9 @@
   /* Legacy iOS */
 }
 
-:root {
-  --doc-height: 100%;
-}
+// :root {
+//   --doc-height: 100%;
+// }
 
 /* Higher Level CSS */
 html {
@@ -112,6 +112,10 @@ a {
   }
 }
 
+.disable--selection {
+  user-select: none;
+}
+
 /* Initial Page */
 #canvas {
   pointer-events: none;
@@ -120,99 +124,8 @@ a {
   position: relative;
 }
 
-.disabled {
-  cursor: not-allowed;
-}
-
-.hidden {
-  opacity: 0;
-}
-
-/* p, h1, h2, h3, h4, a, button */
-.disable--selection {
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently
-  supported by Chrome, Edge, Opera and Firefox */
-}
-
-.disable--selection.displayed {
-  -webkit-touch-callout: auto;
-  /* iOS Safari */
-  -webkit-user-select: auto;
-  /* Safari */
-  -khtml-user-select: auto;
-  /* Konqueror HTML */
-  -moz-user-select: auto;
-  /* Old versions of Firefox */
-  -ms-user-select: auto;
-  /* Internet Explorer/Edge */
-  user-select: auto;
-  /* Non-prefixed version, currently
-  supported by Chrome, Edge, Opera and Firefox */
-}
-
 object {
   pointer-events: none;
-}
-
-/* General */
-main#outer-container {
-  width: 100vw;
-  height: 100vh;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: ew-resize;
-  overflow: clip;
-  /* display: none; */
-
-  /* Firefox */
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-#inner-container {
-  width: 100vw;
-  height: 100vh;
-  padding-left: max(20vw, 100px);
-  padding-right: max(20vw, 100px);
-  box-sizing: border-box;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding-top: 20vh;
-  box-sizing: border-box;
-  padding-bottom: 20vh;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  align-items: center;
-  overflow-y: clip;
-}
-
-/* Used to ensure that the main content never goes beyond a certain limit in width */
-#content-body {
-  transform: translateY(80vh);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-  max-width: 600px;
 }
 
 main h1 {
@@ -220,16 +133,20 @@ main h1 {
   font-family: "Abhaya Libre", serif;
   font-size: 42px;
   text-align: center;
-  opacity: 1;
-  transition: opacity 0.4s ease-in;
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
 
-main h1.hidden {
-  opacity: 0;
-  transition: opacity 0.2s ease-in;
-}
+  @media (max-width: 600px) {
+    font-size: 38px;
+  }
 
+  @media (max-width: 580px) {
+    font-size: 32px;
+  }
+
+  /* Target smartphones */
+  @media (max-width: 499px) {
+    font-size: 34px;
+  }
+}
 
 h3 {
   font-weight: 400;
@@ -241,8 +158,11 @@ h3 {
   color: white;
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   margin-bottom: 20px;
-}
 
+  @media (max-width: 499px) {
+    font-size: 27px;
+  }
+}
 
 main p {
   line-height: 1.9;
@@ -251,10 +171,6 @@ main p {
   transition: opacity 0.4s ease-in;
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   margin: 25px 0;
-}
-mian p.hidden {
-  opacity: 0;
-  transition: opacity 0.2s ease-in;
 }
 
 ol {
@@ -267,7 +183,7 @@ ol li {
   margin-bottom: 8px;
 }
 
-#reference-list li{
+#reference-list li {
   line-height: 1.6;
   font-size: 14px;
   opacity: 1;
@@ -280,11 +196,6 @@ ol li {
   display: flex;
   flex-direction: column;
   margin-top: 60px;
-}
-
-main h1.displayed {
-  transform: translateY(-20px);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
 #next-navigation {
@@ -307,7 +218,6 @@ main h1.displayed {
   margin: 0px auto 10px auto;
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
-
 
 #next-navigation object.displayed {
   transform: translateY(-20px);
@@ -341,6 +251,23 @@ main h1.displayed {
 $transition-time: 2s;
 $transition-curve: cubic-bezier(.37, 0, .01, 1);
 
+/* Used to ensure that the main content never goes beyond a certain limit in width */
+// #content-body {
+//   transform: translateY(80vh);
+//   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+//   max-width: 600px;
+// }
+
+#page-content {
+  transform: translateY(100vh);
+  // transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+  transition: transform $transition-curve $transition-time;
+}
+
+#content-body {
+  max-width: 600px;
+}
+
 .content-scrolled {
   // --fill-color is used downstream by components that need to change color when content is scrolled
   --fill-color: white;
@@ -350,49 +277,28 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
     pointer-events: none;
   }
 
-  #inner-container {
-    transform: translateY(0);
-    transition: transform $transition-curve $transition-time;
-    animation: scroll-animation-timer 1.5s;
+  #page-content {
+    transform: translateY(0vh);
+    overflow: auto;
+    // transform: translateY(0);
+    // transition: transform $transition-curve $transition-time;
+    // animation: scroll-animation-timer 1.5s;
 
     &.homepage {
-      #content-body {
-        transform: translateY(22vh);
-      }
+      transform: translateY(22vh);
+      // #content-body {
+      //   transform: translateY(22vh);
+      // }
     }
   }
 
-  // Naming here is odd? This isn't homepage text styling, yet all the pages use this id
-  #content-body {
-    transform: translateY(0vh);
-    transition: transform $transition-curve $transition-time;
-  }
-
-}
-
-@media (min-width: 500px) {
-  #inner-container {
-    padding-left: max(5vw, 15px);
-    padding-right: max(5vw, 15px);
-  }
-}
-
-#logo--and--links--container {
-  width: 70%;
-}
-
-.column--container {
-  display: flex;
-  flex-direction: column;
-  width: 120px;
-}
-
-.link--group--container {
-  margin-bottom: 15px;
+  // #content-body {
+  //   transform: translateY(0vh);
+  //   transition: transform $transition-curve $transition-time;
+  // }
 }
 
 /* Transition Container - used between page loads */
-
 #transition-container {
   position: absolute;
   top: 0;
@@ -434,10 +340,6 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   display: none;
 }
 
-.prevent--link--styling {
-  text-decoration: none;
-}
-
 #executive-board {
   display: flex;
   flex-direction: column;
@@ -458,6 +360,10 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  @media (max-width: 499px) {
+    flex-direction: column;
+  }
 }
 
 #executive-board .info {
@@ -522,66 +428,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   filter: invert(9%) sepia(20%) saturate(482%) hue-rotate(106deg) brightness(101%) contrast(103%);
 }
 
-
-/* Media Queries for Laptops, Desktops, and larger devices */
-@media (max-width: 750px) {
-  main h1 {
-    font-size: 42px;
-    transition: font-size 0.15s ease-out;
-  }
-
-}
-
-@media (max-width: 600px) {
-  main h1 {
-    font-size: 38px;
-    transition: font-size 0.15s ease-out;
-  }
-
-}
-
-@media (max-width: 580px) {
-  #inner-container {
-    padding-left: max(5vw, 15px);
-    padding-right: max(5vw, 15px);
-  }
-
-  main h1 {
-    font-size: 32px;
-  }
-}
-
-/* Target smartphones */
-@media (max-width: 499px) {
-  main h1 {
-    font-size: 34px;
-    transition: font-size 0.15s ease-out;
-  }
-
-
-  .member {
-    flex-direction: column;
-  }
-
-  h3 {
-    font-size: 27px;
-  }
-
-  #inner-container {
-    padding-left: max(5vw, 15px);
-    padding-right: max(5vw, 15px);
-  }
-}
-
-
-@media (max-width: 420px) {
-  #inner-container {
-    padding-left: max(5vw, 15px);
-    padding-right: max(5vw, 15px);
-  }
-}
-
-
+// Utility to bound content to max 1680px (e.g. to prevent huge distances between header items on very wide screens)
 .boundary {
   width: 100%;
   display: grid;
@@ -606,7 +453,6 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   >.expand-left {
     grid-column: 1 / 3;
   }
-
 
   &.no-overflow {
     overflow: hidden;

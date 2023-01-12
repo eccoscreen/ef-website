@@ -1,4 +1,5 @@
 import React from 'react';
+import { pageContentID } from 'components/page/Content';
 
 export enum ScrollDirection {
   UP = 'up',
@@ -21,7 +22,7 @@ const useScrollDirection = () => {
       const scrolledDown = e.deltaY > 0;
       const direction = scrolledDown ? ScrollDirection.DOWN : ScrollDirection.UP;
 
-      const scrollableContentElement = document.getElementById("inner-container")
+      const scrollableContentElement = document.getElementById(pageContentID)
       
       if (!scrollableContentElement) return;
       

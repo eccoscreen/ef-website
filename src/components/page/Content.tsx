@@ -1,21 +1,35 @@
 'use client'
 import React from 'react';
+import css from './Content.module.scss';
 
-const ContentBlock = (props: any) => {
-  const [noScroll, setNoScroll] = React.useState(true);
+export const pageContentID = 'page-content';
 
+type ContentBlockProps = {
+  isHomePage?: boolean,
+  children?: React.ReactNode
+}
+
+const ContentBlock = (props: ContentBlockProps) => {
   return (
-    <main id="outer-container">
-      {/*
-        Some weird scrolling edge case (at least on chrome, didnt test others) if we set overflow: auto; while the transition is playing. 
-        Current solution below is to wait with setting the property until after the transition (using a dummy animation for the timing) is complete.
+    <main
+      id="page-content-container"
+      className={css['container']}
+    >
+      <div
+        id={pageContentID}
+        className={(() => {
+          let className = css['content'];
 
-        TODO: Find a better solution to this issue?
-      */}
-      <div id="inner-container" style={{ overflowY: noScroll ? 'clip' : 'auto' }} onAnimationStart={() => setNoScroll(true)} onAnimationEnd={() => setNoScroll(false)}>
+          if (props.isHomePage) {
+            className += ` homepage`;
+          }
+
+          return className;
+        })()}
+      >
         {props.children}
       </div>
-    </main>
+    </main >
   )
 }
 

@@ -1,0 +1,44 @@
+.container {
+  // -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 85%, transparent 92%);
+  mask-image: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, transparent 100%);
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: ew-resize;
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.content {
+  width: 100vw;
+  height: 100vh;
+  padding-left: max(20vw, 100px);
+  padding-right: max(20vw, 100px);
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  align-items: center;
+  overflow-y: clip;
+
+  @media (max-width: 500px) {
+    padding-left: max(5vw, 15px);
+    padding-right: max(5vw, 15px);
+  }
+}
