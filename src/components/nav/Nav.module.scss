@@ -258,6 +258,7 @@
   z-index: 110;
   cursor: pointer;
   user-select: none;
+  transition: fill 1s linear;
 
   @media (max-width: $breakpoint-1) {
     margin-right: 16px;

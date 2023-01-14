@@ -9,6 +9,14 @@ export enum ScrollDirection {
 let xDown = 0;
 let yDown = 0;
 
+const checkIsContentScrolled = () => {
+  const scrollableContentElement = document.getElementById(pageContentID)
+      
+  if (!scrollableContentElement) return false;
+
+  return scrollableContentElement?.scrollTop > 0;
+}
+
 function getTouches(event: any) {
     return event.touches || event.originalEvent.touches;
 }
@@ -22,11 +30,9 @@ const useScrollDirection = () => {
       const scrolledDown = e.deltaY > 0;
       const direction = scrolledDown ? ScrollDirection.DOWN : ScrollDirection.UP;
 
-      const scrollableContentElement = document.getElementById(pageContentID)
+      const isContentScrolled = checkIsContentScrolled();
       
-      if (!scrollableContentElement) return;
-      
-      if (scrollableContentElement?.scrollTop > 0) {
+      if (isContentScrolled) {
         setScrollDirection(ScrollDirection.DOWN);
       } else {
         setScrollDirection(direction);
@@ -57,11 +63,13 @@ const useScrollDirection = () => {
               // Left swipe
           }
       } else {
-          if (yDiff > 0) {
-            setScrollDirection(ScrollDirection.DOWN);
-          } else {
-            setScrollDirection(ScrollDirection.UP);
-          }
+        const isContentScrolled = checkIsContentScrolled();
+
+        if (isContentScrolled || yDiff > 0) {
+          setScrollDirection(ScrollDirection.DOWN);
+        } else {
+          setScrollDirection(ScrollDirection.UP);
+        }
       }
     }
 
