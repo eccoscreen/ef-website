@@ -1,12 +1,9 @@
 .container {
-  // -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 85%, transparent 92%);
-  mask-image: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, transparent 100%);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0.2) 100%);
   width: 100vw;
   height: 100vh;
-  background-color: transparent;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  background: transparent;
   z-index: 1;
   position: absolute;
   top: 0;
@@ -23,14 +20,14 @@
 
 .content {
   width: 100vw;
-  height: 100vh;
+  max-height: 100vh;
   padding-left: max(20vw, 100px);
   padding-right: max(20vw, 100px);
-  padding-top: 20vh;
-  padding-bottom: 20vh;
-  color: white;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
   display: flex;
   flex-direction: column;
+  margin: auto;
 
   -ms-overflow-style: none;
   scrollbar-width: none;

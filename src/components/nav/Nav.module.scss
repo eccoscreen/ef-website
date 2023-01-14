@@ -15,11 +15,16 @@
   z-index: 108;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   opacity: 0;
   transition: opacity 0.2s ease-out;
   pointer-events: none;
+  display: flex;
+  background-position: 50% 50%;
+  background-size: cover;
+  overflow: auto;
+  background-image: url("/new-ethereum-foundation-menu-background.svg");
 
   &.open {
     opacity: 1;
@@ -101,7 +106,7 @@
   left: 0px;
   margin-top: 24px;
   color: white;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 22px;
   z-index: 110;
   width: 200px;
@@ -143,35 +148,54 @@
 }
 
 .main--menu--internal--container {
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
   width: 100%;
-  height: 100%;
-  background-position: 50% 50%;
-  background-size: cover;
-  background-image: url("/new-ethereum-foundation-menu-background.svg");
+  padding-top: 15vh;
+  padding-bottom: 15vh;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: auto;
 }
 
 .menu--content--container {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
 }
 
 .secondary--links--container {
   display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-  justify-content: space-around;
+  // justify-content: space-evenly;
+  align-items: center;
   max-width: 250px;
   border-top: 1px solid rgb(255, 255, 255, 0.3);
-  padding-top: 15px;
+  padding-top: 20px;
   width: 100%;
-  margin-top: 60px;
+  margin-top: 20px;
   opacity: 0;
   transition: opacity 0.3s ease-in;
+
+  >* {
+    display: flex;
+    justify-content: center;
+    flex-basis: 0px;
+    flex-shrink: 0;
+    flex-grow: 1;
+
+    &:first-child {
+      justify-content: flex-end;
+    }
+
+    &:last-child {
+      justify-content: flex-start;
+    }
+  }
+
+  span {
+    flex-basis: 40px;
+    flex-grow: 0;
+  }
 }
 
 .main--menu--secondary--link {
@@ -204,10 +228,6 @@
   opacity: 0;
   text-decoration: none;
   cursor: pointer;
-
-  @media (max-width: 300px) {
-    font-size: 17px;
-  }
 }
 
 .menu--content--dot {
@@ -235,17 +255,6 @@
   @media (max-width: $breakpoint-1) {
     margin-right: 16px;
   }
-
-
-  // @media (max-width: 580px) {
-  //   margin-top: 30px;
-  //   margin-right: 28px;
-  // }
-
-  // @media (max-width: 420px) {
-  //   margin-top: 30px;
-  //   margin-right: 28px;
-  // }
 
   * {
     fill: var(--fill-color, #{$ef-dark});

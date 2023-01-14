@@ -11,25 +11,35 @@ type ContentBlockProps = {
 
 const ContentBlock = (props: ContentBlockProps) => {
   return (
-    <main
-      id="page-content-container"
-      className={css['container']}
-    >
-      <div
-        id={pageContentID}
-        className={(() => {
-          let className = css['content'];
-
-          if (props.isHomePage) {
-            className += ` homepage`;
-          }
-
-          return className;
-        })()}
-      >
-        {props.children}
+    <>
+      <div id="transition-container">
+        <p>One moment...</p>
       </div>
-    </main >
+
+      <main
+        id="page-content-container"
+        className={css['container']}
+      >
+        <div
+          id={pageContentID}
+          className={(() => {
+            let className = css['content'];
+
+            if (props.isHomePage) {
+              className += ` homepage`;
+            }
+
+            return className;
+          })()}
+        >
+          {props.children}
+        </div>
+      </main>
+
+      <div id="canvas"></div>
+
+
+    </>
   )
 }
 

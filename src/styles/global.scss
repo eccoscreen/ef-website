@@ -130,7 +130,7 @@ object {
 
 main h1 {
   font-weight: 400;
-  font-family: "Abhaya Libre", serif;
+  font-family: $font-secondary;
   font-size: 42px;
   text-align: center;
 
@@ -150,7 +150,7 @@ main h1 {
 
 h3 {
   font-weight: 400;
-  font-family: "Abhaya Libre", serif;
+  font-family: $font-secondary;
   font-size: 32px;
   text-align: center;
   opacity: 1;
@@ -251,16 +251,8 @@ ol li {
 $transition-time: 2s;
 $transition-curve: cubic-bezier(.37, 0, .01, 1);
 
-/* Used to ensure that the main content never goes beyond a certain limit in width */
-// #content-body {
-//   transform: translateY(80vh);
-//   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-//   max-width: 600px;
-// }
-
 #page-content {
   transform: translateY(100vh);
-  // transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   transition: transform $transition-curve $transition-time;
 }
 
@@ -280,22 +272,7 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
   #page-content {
     transform: translateY(0vh);
     overflow: auto;
-    // transform: translateY(0);
-    // transition: transform $transition-curve $transition-time;
-    // animation: scroll-animation-timer 1.5s;
-
-    &.homepage {
-      transform: translateY(22vh);
-      // #content-body {
-      //   transform: translateY(22vh);
-      // }
-    }
   }
-
-  // #content-body {
-  //   transform: translateY(0vh);
-  //   transition: transform $transition-curve $transition-time;
-  // }
 }
 
 /* Transition Container - used between page loads */
