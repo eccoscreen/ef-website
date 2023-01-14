@@ -147,11 +147,18 @@
   }
 }
 
-.main--menu--internal--container {
-  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
+.mask {
+  height: 100%;
   width: 100%;
-  padding-top: 15vh;
-  padding-bottom: 15vh;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 88%, rgba(0, 0, 0, 0) 100%);
+  display: flex;
+  overflow: auto;
+}
+
+.main--menu--internal--container {
+  width: 100%;
+  padding-top: 12vh;
+  padding-bottom: 12vh;
   display: flex;
   align-items: center;
   flex-direction: column;
