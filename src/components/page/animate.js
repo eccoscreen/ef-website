@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { OrbitControls } from './assets/OrbitControls.js';
 import { RenderPass } from './assets/RenderPass.js'; // Updated DEV branch
 import { UnrealBloomPass } from './assets/UnrealBloomPass.js'; // Added to test out bloom pass upon the objects
-import { GlitchPass } from './assets/GlitchPass.js'; // Updated DEV branch
 import { EffectComposer } from './assets/EffectComposer.js'; // Updated DEV Branch
 import * as GLTFLoader from './assets/GLTFLoader.js'; // Updated
 import firefliesVertexShader from './animations/firefliesVertexShader.glsl';
@@ -25,10 +24,8 @@ export default (url) => {
     let composer;
     let bloomPass;
     let bloomPassEnabled;
-    let glitch;
     let stats;
     let speed = 0.02;
-    let wildGlitch = false;
     let color = [137, 188, 222]
     let innerWidth = window.innerWidth
     let innerHeight = window.innerHeight
@@ -1175,10 +1172,6 @@ export default (url) => {
         // allows GPU-accelerated image processing and effects as the renderer creates the 2D image for the canvas
         composer = new EffectComposer(renderer);
         composer.addPass(new RenderPass(scene, camera));
-
-        glitch = new GlitchPass(0)
-        glitch.renderToScreen = false
-        glitch.goWild = wildGlitch
 
         // New Pass
         bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
