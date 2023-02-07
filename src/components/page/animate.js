@@ -23,7 +23,6 @@ export default (url) => {
     let renderer;
     let composer;
     let bloomPass;
-    let bloomPassEnabled;
     let stats;
     let speed = 0.02;
     let color = [137, 188, 222]
@@ -1180,23 +1179,6 @@ export default (url) => {
         bloomPass.radius = bloomParams.bloomRadius;
 
         composer.addPass(bloomPass);
-
-        bloomPassEnabled = true;
-
-    };
-
-    function removeBloomPass() {
-        composer.removePass(bloomPass);
-        bloomPassEnabled = false;
-    };
-
-    function addBloomPass() {
-        bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-        bloomPass.threshold = bloomParams.bloomThreshold;
-        bloomPass.strength = bloomParams.bloomStrength;
-        bloomPass.radius = bloomParams.bloomRadius;
-        composer.addPass(bloomPass);
-        bloomPassEnabled = true;
     };
 
     function addStatsElement() {
