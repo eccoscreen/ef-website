@@ -7,10 +7,6 @@ import * as GLTFLoader from './assets/GLTFLoader.js'; // Updated
 import firefliesVertexShader from './animations/firefliesVertexShader.glsl';
 import firefliesVertexShaderETHLogo from './animations/firefliesVertexShader_ETHLogo.glsl';
 import firefliesFragmentShader from './animations/firefliesFragmentShader.glsl';
-// import './animations/firefliesVertexShader_ETHLogo_SLOW.glsl';
-// import './animations/firefliesFragmentShaderTwo.glsl';
-// import './animations/explosionVertexShader.glsl';
-// import './animations/explosionVertexShaderTwo.glsl';
 
 export const Animate = (url) => {
     const generalSceneControls = {
@@ -29,23 +25,15 @@ export const Animate = (url) => {
     let innerWidth = window.innerWidth
     let innerHeight = window.innerHeight
     let container = document.getElementById('canvas');
+
     /** Fireflies **/
     let fireflies;
     let firefliesGeometry, firefliesMaterial;
     let firefliesActivated = false;
-    // const firefliesVertexShader = document.getElementById("firefliesVertexShader").textContent;
-    // const firefliesVertexShaderETHLogo = document.getElementById("firefliesVertexShader_ETHLogo").textContent;
-    // const firefliesFragmentShader = document.getElementById("firefliesFragmentShader").textContent;
-    // const firefliesVertexShaderETHLogoSlow = document.getElementById("firefliesVertexShader_ETHLogo_SLOW").textContent;
-    // const firefliesFragmentShaderTwo = document.getElementById("firefliesFragmentShaderTwo").textContent;
-    // const explosionVertexShaderTwo = document.getElementById("explosionVertexShader").textContent;
     let mouseIntensity = 0.01; // Mouse intensity needs to remain between 0.01 and 0.03
+
     /** Loaders **/
-    let objectLoader;
     let glbLoader;
-    let loadingManager;
-    let currentLoader;
-    let textureLoader;
     let texture;
     let dotTexture;
     const environment = "dev";
