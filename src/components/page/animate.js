@@ -20,7 +20,6 @@ export const Animate = (url) => {
     let composer;
     let bloomPass;
     let stats;
-    let speed = 0.02;
     let color = [137, 188, 222]
     let innerWidth = window.innerWidth
     let innerHeight = window.innerHeight
@@ -38,97 +37,46 @@ export const Animate = (url) => {
     let dotTexture;
     const environment = "dev";
     const RELATIVE_URL = environment === "dev" ? "/assets/" : "/public/assets/"
+
     // ETH Logo
     let ethLogoFirefliesMesh;
+
     // GLTF Animations
-    let sparklesGeometry, sparklesMaterial;
     let clock;
+
     // Bloom
     const bloomParams = {
         bloomStrength: 1,
         bloomThreshold: 0.98,
         bloomRadius: 0.5,
     };
+
     // Explosion
     let finalPointsShaderMaterial;
     let finalPoints;
-    // Loaders
-    let ethObjectLoaded = false;
-    let backgroundLoaded = false;
-    // Mesh Surface Sampler
-    let meshSurfaceSamplerPointSize;
-    let backgroundPaintingIsDisplayed = true;
-    let gridHelper;
-    let gridHelperDisplayed = true;
+
     // Rotation Animation
     let activateParticleRotation = true;
     let animatedModelParticleSize;
     let animatedModelPointsMaterial;
-    // ETH Logo
-    let nameOfFinalFileSelected;
+
     // Home Page Plane
     let homePagePlanetMaterial;
     let backgroundPlaneMesh;
     let backgroundPlaneMeshDisplayed = true;
+
     // Degenerate Geometry
     let degenerateGeometry;
     let degenerateMesh;
-    // Selective Bloom variables
-    // Footer
-    let footerDisplayed;
-    // Menu
-    let menuDisplayed = false;
-    let mainContentShownOnPage = false;
+
     // GUI Controllers
     let statsAdded = false;
-    // Main Object
-    let mainObject;
 
     // Mesh Surface Sampler
-    let sampler, group;
-    let meshSurfaceColors = [];
-    let meshSurfaceVertices = [];
-    // const palette = [new THREE.Color("#FAAD80"), new THREE.Color("#FF6767"), new THREE.Color("#FF3D68"), new THREE.Color("#A73489")];
-    // const palette = [new THREE.Color("#778afd"), new THREE.Color("#7168e9"), new THREE.Color("#faf3f6"), new THREE.Color("#637999")];
+    let backgroundPaintingIsDisplayed = true;
+    let gridHelper;
+    let group;
     const palette = [new THREE.Color("#FFFFFF")];
-    /* Vector to sample the new point */
-    const tempPosition = new THREE.Vector3();
-
-    function addPoint() {
-        // Sample a new point
-        sampler.sample(tempPosition);
-
-        // Push the point coordinates
-        meshSurfaceVertices.push(tempPosition.x, tempPosition.y, tempPosition.z);
-        // Updates position attribute with the new array of coordinates (which is the old array with the recentlypushed coordinates)
-        sparklesGeometry.setAttribute("position", new THREE.Float32BufferAttribute(meshSurfaceVertices, 3));
-
-
-        // Get random color from palette
-        const color = palette[Math.floor(Math.random() * palette.length)];
-        // Push picked color
-        meshSurfaceColors.push(color.r, color.g, color.b);
-        // Updates color
-        sparklesGeometry.setAttribute("color", new THREE.Float32BufferAttribute(meshSurfaceColors, 3));
-    }
-
-    function removePoint() {
-        // Push the point coordinates
-        meshSurfaceVertices.pop();
-        meshSurfaceVertices.pop();
-        meshSurfaceVertices.pop();
-
-        // Updates position attribute with the new coordinates
-        sparklesGeometry.setAttribute("position", new THREE.Float32BufferAttribute(meshSurfaceVertices, 3));
-
-        // Push picked color
-        meshSurfaceColors.pop();
-        meshSurfaceColors.pop();
-        meshSurfaceColors.pop();
-
-        // Updates color
-        sparklesGeometry.setAttribute("color", new THREE.Float32BufferAttribute(meshSurfaceColors, 3));
-    }
 
     function removeLoadingScreen() {
         let transitionContainer = document.getElementById("transition-container");
@@ -136,7 +84,6 @@ export const Animate = (url) => {
     };
 
     function initLoaders() {
-        textureLoader = new THREE.TextureLoader();
         glbLoader = new GLTFLoader.GLTFLoader();
     }
 
@@ -148,9 +95,7 @@ export const Animate = (url) => {
      * #3d #animation #ethereum #object
      */
 
-    /////    const LARGE_NUMBER_OF_VERTEX_OBJECT = "ETH_Logo_Planet_Match.obj"; // 48K vertices => The old one
     // The new ethereum objects are below
-
     /////    const ETH_12K_MIN = "eth_12k.glb";
     const ETHER_GLB = "ether.glb";
     const ETHER_OBJ = "ether.obj";
@@ -162,15 +107,12 @@ export const Animate = (url) => {
      */
 
     function addMainObjectToScene() {
-        const ASSET_TYPE = 1;
         /**
          * #ethereum #3d #object
          * Pass in one of the variables above to see the ethereum object rendered with different number
          * of vertices
          **/
         const ASSET_URL = ETHER_GLB; //ETH_12K_MIN
-
-        nameOfFinalFileSelected = ASSET_URL;
 
         /**
          * Creates a sphere composed of thousands of particles
@@ -197,9 +139,7 @@ export const Animate = (url) => {
          * #ethereum #3d #object
          */
         animatedModelParticleSize = 0.055;
-
         animatedModelPointsMaterial = new THREE.PointsMaterial({
-            // color: "rgb(400, 255, 255)",
             color: new THREE.Color(10, 10, 10),
             size: animatedModelParticleSize,
             transparent: true,
@@ -214,7 +154,6 @@ export const Animate = (url) => {
             currentLoader.load(modelFileName, function (object) {
                 let mesh = object.scene.children[0];
                 let geometry = mesh.geometry;
-
                 let scaleArray = new Float32Array(48000);
 
                 for (let i = 0; i < scaleArray.length; i++) {
@@ -228,7 +167,6 @@ export const Animate = (url) => {
 
                 finalPointsShaderMaterial = new THREE.ShaderMaterial({
                     vertexShader: firefliesVertexShaderETHLogo,
-                    // vertexShader: explosionVertexShaderTwo,
                     fragmentShader: firefliesFragmentShader,
                     transparent: true,
                     uniforms: {
@@ -251,70 +189,34 @@ export const Animate = (url) => {
                 // Morph Target I
                 // This code can be replicated across different geometries
                 // Should most likely be
-
                 let newPositions = [];
                 const positionAttribute = geometry.attributes.position;
 
                 for (let i = 0; i < positionAttribute.count; i++) {
-
-                    let xValue;
-
-                    // Only sets positive values
-                    // newPositions.push(
-                    // 	(Math.random() - 0.5) * 100,
-                    // 	(Math.random() * 1.5) * 100,
-                    // 	(Math.random() - 0.5) * 100,
-                    // );
-
                     // Sets positive and negative values
                     let distance = 50;
                     let theta = THREE.MathUtils.randFloatSpread(360);
                     let phi = THREE.MathUtils.randFloatSpread(360);
 
                     newPositions.push(
-                        // Math.ceil(Math.random() * distance * 20) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 30) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 50) * (Math.round(Math.random()) ? 1 : -1),
-                        // 10 * Math.sin(theta) * Math.cos(phi), // Puts particles on the surface of a sphere
-                        // 10 * Math.sin(theta) * Math.sin(phi), // Puts particles on the surface of a sphere
-                        // 10 * Math.cos(theta), // Puts particles on the surface of a sphere
                         Math.ceil(Math.random() * 150 * distance) * Math.sin(theta) * Math.cos(phi), // Sets particles within the sphere
                         Math.ceil(Math.random() * 150 * distance) * Math.sin(theta) * Math.sin(phi), // Sets particles within the sphere
                         Math.ceil(Math.random() * 150 * distance) * Math.cos(theta), // Sets particles within the sphere
                     );
-
                 };
-
-                // Replica Geometry
-
-                // const replica = createReplicaWithOutsideParticlesOfGeometry(geometry)
-
-                // Test II: we create our own sphere filled with actual particles
-                // newPositions = createMorphSphereGeometry();
 
                 geometry.morphAttributes.position = [];
                 geometry.morphAttributes.position[0] = new THREE.Float32BufferAttribute(newPositions, 3);
 
                 let points = new THREE.Points(geometry, animatedModelPointsMaterial);
-
-                // points.scale.x = points.scale.y = points.scale.z = 0.1;
                 points.scale.x = points.scale.y = points.scale.z = 2;
                 points.position.x = 0;
                 points.position.y = 0.5;
                 points.position.z = 0;
-
                 points.rotation.x = Math.PI / 2;
-
                 finalPoints = points;
 
                 scene.add(points);
-
                 resolve();
             })
         });
@@ -333,7 +235,6 @@ export const Animate = (url) => {
 
         // This variable affects the size of the particles
         animatedModelParticleSize = 0.2;
-
         animatedModelPointsMaterial = new THREE.PointsMaterial({
             color: new THREE.Color(10, 10, 10),
             size: animatedModelParticleSize,
@@ -346,19 +247,14 @@ export const Animate = (url) => {
 
         return new Promise((resolve) => {
             currentLoader.load(modelFileName, function (object) {
-
                 const mesh = object.scene.children[0];
                 const geometry = mesh.geometry;
-
+                const positionAttribute = geometry.attributes.position;
                 let count = 48000;
                 let newPositions = [];
                 let scaleArray = new Float32Array(count);
 
-                const positionAttribute = geometry.attributes.position;
-
-
                 for (let i = 0; i < positionAttribute.count; i++) {
-                    // let distance = 3;
                     // #distance: Modifies how far the particles are rendered from the center
                     // and therefore how close they are to camera
                     let distance = 4;
@@ -366,10 +262,6 @@ export const Animate = (url) => {
                     let phi = THREE.MathUtils.randFloatSpread(360);
 
                     newPositions.push(
-                        // Rectangular Algorithm
-                        // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
-                        // Math.ceil(Math.random() * distance * 15) * (Math.round(Math.random()) ? 1 : -1),
                         // Spherical Rendering Algorithm
                         Math.ceil(Math.random() * 50 * distance) * Math.sin(theta) * Math.cos(phi), // Sets particles within the sphere
                         Math.ceil(Math.random() * 50 * distance) * Math.sin(theta) * Math.sin(phi), // Sets particles within the sphere
@@ -378,16 +270,13 @@ export const Animate = (url) => {
 
                     // Comment: This does not affect the actual size of the particles
                     scaleArray[i] = Math.random() * 100;
-
                 };
 
                 // We simply 1. distribute points in space
                 // 2. We set the scale,
                 // 3. We create the object
-
                 let bufferGeometry = new THREE.BufferGeometry();
                 bufferGeometry.setAttribute("position", new THREE.Float32BufferAttribute(newPositions, 3));
-
                 let finalPointsGeometry = new THREE.BufferGeometry().setFromPoints(newPositions);
 
                 finalPointsGeometry.setAttribute(
@@ -403,9 +292,7 @@ export const Animate = (url) => {
                 let points = new THREE.Points(bufferGeometry, animatedModelPointsMaterial);
                 points.scale.x = points.scale.y = points.scale.z = 2;
                 finalPoints = points;
-
                 points.rotation.x = Math.PI / 2;
-
                 scene.add(points);
 
                 resolve();
@@ -419,7 +306,6 @@ export const Animate = (url) => {
      */
     function createDegenerateParticles() {
         const geometry = createPointMeshForBlockchainMiningAnimation();
-
         const meshSurfaceSamplerPointSize = 0.1;
 
         const pointsMaterial = new THREE.PointsMaterial({
@@ -436,11 +322,7 @@ export const Animate = (url) => {
         degenerateMesh.position.y = 0;
         degenerateMesh.position.z = 0;
 
-        // Set bufferGeometry morph targets
-        const endStatePositionAttributes = createDegenerateParticleSystemInEndState();
-
         scene.add(degenerateMesh);
-
     };
 
     // Helper function for @createDegenerateParticles
@@ -473,7 +355,6 @@ export const Animate = (url) => {
         degenerateGeometry = new THREE.BufferGeometry().setFromPoints(newPositions);
         degenerateGeometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3))
         degenerateGeometry.setAttribute("aScale", new THREE.Float32BufferAttribute(scales, 1))
-
         degenerateGeometry.morphAttributes.position = [];
         degenerateGeometry.morphAttributes.position[0] = new THREE.Float32BufferAttribute(newPositions, 3);
 
@@ -488,15 +369,9 @@ export const Animate = (url) => {
         let newPositions = [];
         let colors = [];
         let scales = [];
-        let distance = 50;
 
         for (let i = 0; i < particleCount; i++) {
-            const v = new THREE.Vector3(
-                0,
-                0,
-                0,
-            )
-
+            const v = new THREE.Vector3(0, 0, 0);
             newPositions.push(v);
 
             // Add color for particle
@@ -504,17 +379,13 @@ export const Animate = (url) => {
             colors.push(color.r, color.g, color.b);
 
             // Add scale array
-            // let randomScale = Math.random() * 5;
             let randomScale = 0.001;
             scales.push(randomScale);
-
         }
 
         const bufferGeometry = new THREE.BufferGeometry().setFromPoints(newPositions);
         bufferGeometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3))
         bufferGeometry.setAttribute("aScale", new THREE.Float32BufferAttribute(scales, 1));
-
-        // return bufferGeometry;
         return newPositions;
     }
 
@@ -528,13 +399,10 @@ export const Animate = (url) => {
     function createParticleMorphTargetForGeometry(geometry) {
         // New Positions
         let newPositions = [];
-
+        let distance = 50;
         const positionAttribute = geometry.attributes?.position;
 
         for (let i = 0; i < positionAttribute?.length; i++) {
-            let xValue;
-            let distance = 50;
-
             newPositions.push(
                 Math.ceil(Math.random() * distance * 20) * (Math.round(Math.random()) ? 1 : -1),
                 Math.ceil(Math.random() * distance * 30) * (Math.round(Math.random()) ? 1 : -1),
@@ -555,7 +423,6 @@ export const Animate = (url) => {
     }
 
     /** SkyBox **/
-
     function createEquirectangularBackground() {
         const geometry = new THREE.SphereGeometry(500, 60, 40);
         geometry.scale(- 1, 1, 1);
@@ -570,8 +437,8 @@ export const Animate = (url) => {
             // Philosophy page
             mesh.rotation.y = - Math.PI / 2;
         } else if (url.indexOf("ef") !== -1) {
-            mesh.rotation.y = Math.PI / -1.95;
             // EF page
+            mesh.rotation.y = Math.PI / -1.95;
         } else if (url.indexOf("ethereum") !== -1) {
             // Ethereum page
             mesh.rotation.y = - Math.PI / 1.55;
@@ -583,10 +450,7 @@ export const Animate = (url) => {
     }
 
     /** FIREFLIES **/
-
-    /**
-     * Creates and renders fireflies in scene with custom fragment and vertex shader
-     **/
+    // Creates and renders fireflies in scene with custom fragment and vertex shader
     function addFireflies() {
         firefliesGeometry = new THREE.BufferGeometry();
         const firefliesCount = 1000;
@@ -637,9 +501,7 @@ export const Animate = (url) => {
         fireflies.position.x = 0;
         fireflies.position.y = 0;
         fireflies.position.z = 0;
-
         scene.add(fireflies);
-
         firefliesActivated = true;
     }
 
@@ -660,9 +522,7 @@ export const Animate = (url) => {
         geometry.name = "HomePage_TextPlane";
 
         backgroundPlaneMesh = new THREE.Mesh(geometry, homePagePlanetMaterial)
-
         backgroundPlaneMesh.scale.x = backgroundPlaneMesh.scale.y = backgroundPlaneMesh.scale.z = 1;
-
         backgroundPlaneMesh.position.x = 0;
         backgroundPlaneMesh.position.y = 0;
         backgroundPlaneMesh.position.z = 0;
@@ -857,19 +717,15 @@ export const Animate = (url) => {
     }
 
     function initCamera() {
-
         camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.5, 1000)
         camera.position.set(0, 2, 16);
         camera.lookAt(0, 0, 0)
         scene.add(camera)
-
     };
 
     function initScene() {
-
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0x111111);
-
     }
 
     function initRenderer() {
@@ -877,23 +733,19 @@ export const Animate = (url) => {
         renderer.setSize(innerWidth, innerHeight)
         renderer.setPixelRatio(window.devicePixelRatio)
         renderer.setClearColor(0xffffff);
-        // renderer.gammaFactor = 20.2;
-        // renderer.outputEncoding = THREE.sRGBEncoding;
+
         // Tells the renderer to clear its color, depth, or stencil drawing buffers. This method
         // initializes the color buffer to the current clear color value
         renderer.clear()
-        // Append
         container.appendChild(renderer.domElement)
 
-        // Return disposal function to clear out the canvas 
+        // Return disposal function to clear out the canvas
         return () => {
-            // renderer.dispose();
             container.removeChild(renderer.domElement)
         }
     }
 
     function renderWebPImages() {
-
         let mainMenuContainer = document.getElementById("main--menu--internal--container");
 
         if (testWebP()) {
@@ -901,14 +753,12 @@ export const Animate = (url) => {
         } else {
             mainMenuContainer.classList.add("webp--not--supported");
         }
-
     }
 
     /**
      * Allows user to look around the scene
      */
     function initControls() {
-
         let controls = new OrbitControls(camera, document.body);
         controls.listenToKeyEvents(window);
 
@@ -928,11 +778,9 @@ export const Animate = (url) => {
         controls.maxPolarAngle = Math.PI * 0.5;
         controls.minPolarAngle = Math.PI * 0.5;
         controls.update();
-
     }
 
     function initPostProcessingEffects() {
-
         // Effect Composer is used to implement post processing effects in three js
         // It manages a chain of post processing passes to produce the final visual result
         // Note: Post processing passes are executed in order of their addition/insertion so changing the order
@@ -961,30 +809,9 @@ export const Animate = (url) => {
     };
 
     /** Helper Functions **/
-
     // Used to create go dray firefly particles in previous iteration
     function rgbToPercentage(arr) {
         return arr.map((value) => value / 255)
-    }
-
-    // Returns random integer between min and max
-    function randomInt(min, max) {
-        return (Math.random() * (max - min + 1)) << 0
-    }
-
-    // Calculates the average number of an array
-    function average(array) {
-        let average = 0;
-        let count = 0;
-
-        for (let i = 0; i < array.length; i++) {
-            count++;
-            let currentNum = array[i];
-            average += currentNum;
-        }
-
-        average = average / count;
-        return average;
     }
 
     /** Animation Code **/
@@ -992,45 +819,27 @@ export const Animate = (url) => {
         if (statsAdded) {
             stats.update();
         }
-
         render();
     }
-
-    let counter = 0;
-    // Variables for Filled Mesh
-    let normalFilledMeshAnimationActivated, reverseFilledMeshAnimationActivated;
-    // Variables for Degenerate Animations
-    let displayTextCounter = 0;
-    // Text Animation
-    // Variable below is used to track whether the user is at the top
-    // We compare the y value of the element scroll to the previous y value, if it is the same, then it means that we have reached the element's top
-    // It must also be positive, if it is negative, then it means that we are at the bottom
-    let mainContentDisplayed = false;
-    let scrollUpCounter = 0; // Used in order to debounce the scroll up effect
 
     // Variables related to the automatic scroll effect
     // We declare them here in order to prevent declaring them again at 60FPS which would be computationally
     // heavy
-
     let deltaY;
+
     // Stop point of the particle expansion
     const finalStopPoint = 0.002;
-    let ethLogoAnimationEnded;
     let meshOpacityAnimationEnded;
-    let ethObjectReverseAnimationEnded;
-    let backgroundOpacityReverseAnimationEnded;
     let homePage = isHomePage();
 
     function render() {
         // Standard Geometry
         if (finalPoints !== undefined && activateParticleRotation !== false) {
-
             if (FILE_TYPE === "glb") {
                 finalPoints.rotation.z += generalSceneControls["ETH Rotation Speed"];
             } else if (FILE_TYPE === "obj") {
                 finalPoints.rotation.y += generalSceneControls["ETH Rotation Speed"];
             };
-
         };
 
         // Geometry with Surface Sampler
@@ -1063,26 +872,20 @@ export const Animate = (url) => {
 
                 if (morphValue <= finalStopPoint) {
                     finalPoints.morphTargetInfluences[0] += deltaY;
-                } else {
-                    ethLogoAnimationEnded = true;
                 }
             }
         } else {
             if (backgroundPlaneMesh.material.opacity >= 0.1) {
                 backgroundPlaneMesh.material.opacity -= 0.004;
-            } else {
-                backgroundOpacityReverseAnimationEnded = true;
             }
 
             // Ensures that if the cylinder opacity goes below 0.1, it is reset to 0.1
             if (backgroundPlaneMesh.material.opacity <= 0.1) {
                 backgroundPlaneMesh.material.opacity = 0.1;
-                backgroundOpacityReverseAnimationEnded = true;
             };
 
             // Trigger the reversal of the particle expansion (thus contraction) if we are on the home page
             // and the user scrolls the opposite direction
-
             if (homePage) {
                 const currentMorphTargetInfluence = finalPoints.morphTargetInfluences[0];
 
@@ -1094,11 +897,9 @@ export const Animate = (url) => {
 
                 let morphTarget = finalPoints.morphTargetInfluences[0];
                 let finalValue = morphTarget - deltaY;
-
                 const finalStopPoint = 0;
 
                 if (finalValue >= finalStopPoint) {
-                    // finalPoints.morphTargetInfluences[0] -= finalValue;
                     finalPoints.morphTargetInfluences[0] += deltaY;
 
                     // If the morph target is ever smaller than 0, we keep it at zero
@@ -1107,7 +908,6 @@ export const Animate = (url) => {
                     if (finalPoints.morphTargetInfluences[0] <= 0) {
                         finalValue = 0;
                         finalPoints.morphTargetInfluences[0] = 0;
-                        ethObjectReverseAnimationEnded = true;
                     };
                 };
 
@@ -1116,14 +916,11 @@ export const Animate = (url) => {
                 if (finalPoints.morphTargetInfluences[0] < 0) {
                     finalValue = 0;
                     finalPoints.morphTargetInfluences[0] = 0;
-                    ethObjectReverseAnimationEnded = true;
                 };
             }
         }
 
         // Time used to change the position of the fireflies and create a randomized brownian-like movement
-        // let elapsedTime;
-
         if (clock) {
             elapsedTime = clock.getElapsedTime();
         };
@@ -1140,47 +937,33 @@ export const Animate = (url) => {
 
         return;
     }
+
     /** Utility Functions **/
-
     function isMobileDevice() {
-
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-
             return true;
-
         } else {
-
             return false;
-
         }
-
     }
 
     // Utility functions used in order to load webp image instead of other non-performant formats such as jpeg, png, etc.
     // Not used yet
     function testWebP() {
-        const canvas = typeof document === 'object' ?
-            document.createElement('canvas') : {};
+        const canvas = typeof document === 'object' ? document.createElement('canvas') : {};
         canvas.width = canvas.height = 1;
         return canvas.toDataURL ? canvas.toDataURL('image/webp').indexOf('image/webp') === 5 : false;
     }
 
-    /**
-     * Used to update the camera position when certain conditions are met - here we simply move the camera
-     * forward or backward
-     **/
-    /**
-     * Ensures that the scene resizes with user window resizing
-     */
+    /* Ensures that the scene resizes with user window resizing  */
     function resize() {
-        innerWidth = window.innerWidth
-        innerHeight = window.innerHeight
+        innerWidth = window.innerWidth;
+        innerHeight = window.innerHeight;
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
 
-        camera.aspect = innerWidth / innerHeight
-        camera.updateProjectionMatrix()
-
-        composer.setSize(innerWidth, innerHeight)
-        renderer.setSize(innerWidth, innerHeight)
+        composer.setSize(innerWidth, innerHeight);
+        renderer.setSize(innerWidth, innerHeight);
     }
 
     /**
@@ -1217,7 +1000,7 @@ export const Animate = (url) => {
     const clearAllListeners = addEventListeners();
     modifyElementsAccordingToDevice();
 
-    // Disposal function to prevent memory leaks and remove the animation from the dom 
+    // Disposal function to prevent memory leaks and remove the animation from the dom
     // TODO: This is not sufficient, we need to find out how to fully clear the existing threejs context - current solution causes lag after a few navigations, indicating threejs isnt cleaning up properly
     return () => {
         clearAllListeners();
