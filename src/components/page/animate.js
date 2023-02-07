@@ -13,6 +13,7 @@ import firefliesFragmentShader from './animations/firefliesFragmentShader.glsl';
 // import './animations/explosionVertexShaderTwo.glsl';
 
 export default (url) => {
+export const Animate = (url) => {
     const generalSceneControls = {
         ["ETH Rotation Speed"]: 0.0002,
     };
@@ -1453,3 +1454,5 @@ export default (url) => {
         cleanUpAfterThreejs();
     }
 }
+
+export default Animate
