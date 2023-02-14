@@ -705,7 +705,7 @@ export const Animate = (url) => {
         // This is the cylinder that goes between the ETH logo and the camera, which in turn allows us to create an illusion of increasing "background opacity"
         // in the whole 3D environment.
         if (backgroundPlaneMeshDisplayed) {
-            createHomePageCylinder();
+            //createHomePageCylinder();
         };
 
         // Helpers
@@ -850,11 +850,11 @@ export const Animate = (url) => {
         const contentVisible = document.body.classList.contains('content-scrolled');
 
         if (contentVisible) {
-            if (backgroundPlaneMesh.material.opacity < 0.7) {
-                backgroundPlaneMesh.material.opacity += 0.004;
-            } else {
-                meshOpacityAnimationEnded = true;
-            };
+            // if (backgroundPlaneMesh.material.opacity < 0.7) {
+            //     backgroundPlaneMesh.material.opacity += 0.004;
+            // } else {
+            //     meshOpacityAnimationEnded = true;
+            // };
 
             if (homePage) {
                 let morphValue = finalPoints.morphTargetInfluences[0];
@@ -870,14 +870,14 @@ export const Animate = (url) => {
                 }
             }
         } else {
-            if (backgroundPlaneMesh.material.opacity >= 0.1) {
-                backgroundPlaneMesh.material.opacity -= 0.004;
-            }
+            // if (backgroundPlaneMesh.material.opacity >= 0.1) {
+            //     backgroundPlaneMesh.material.opacity -= 0.004;
+            // }
 
-            // Ensures that if the cylinder opacity goes below 0.1, it is reset to 0.1
-            if (backgroundPlaneMesh.material.opacity <= 0.1) {
-                backgroundPlaneMesh.material.opacity = 0.1;
-            };
+            // // Ensures that if the cylinder opacity goes below 0.1, it is reset to 0.1
+            // if (backgroundPlaneMesh.material.opacity <= 0.1) {
+            //     backgroundPlaneMesh.material.opacity = 0.1;
+            // };
 
             // Trigger the reversal of the particle expansion (thus contraction) if we are on the home page
             // and the user scrolls the opposite direction
