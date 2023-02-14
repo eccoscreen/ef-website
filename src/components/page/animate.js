@@ -138,15 +138,16 @@ export const Animate = (url) => {
          * Depending on the object loaded, change the size of the particles by modifying the variable below
          * #ethereum #3d #object
          */
-        animatedModelParticleSize = 0.055;
+        animatedModelParticleSize = 0.155;
         animatedModelPointsMaterial = new THREE.PointsMaterial({
-            color: new THREE.Color(10, 10, 10),
+            color: new THREE.Color(10, 10, 10, 0.3),
             size: animatedModelParticleSize,
             transparent: true,
             // The line below can be removed
             map: dotTexture, // new THREE.TextureLoader().load("assets/dotTexture.png"),
             blending: THREE.AdditiveBlending,
-            depthWrite: false,
+            depthWrite: true,
+            depthTest: false,
             toneMapped: false,
         });
 
@@ -790,8 +791,8 @@ export const Animate = (url) => {
         // allows GPU-accelerated image processing and effects as the renderer creates the 2D image for the canvas
         composer = new EffectComposer(renderer);
         composer.addPass(new RenderPass(scene, camera));
-        bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2.0, window.innerHeight / 2.0), bloomParams.bloomStrength, bloomParams.bloomRadius, bloomParams.bloomThreshold);
-        composer.addPass(bloomPass);
+        //bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2.0, window.innerHeight / 2.0), bloomParams.bloomStrength, bloomParams.bloomRadius, bloomParams.bloomThreshold);
+        //composer.addPass(bloomPass);
     };
 
     function addStatsElement() {
