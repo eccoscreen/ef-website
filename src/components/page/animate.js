@@ -790,13 +790,7 @@ export const Animate = (url) => {
         // allows GPU-accelerated image processing and effects as the renderer creates the 2D image for the canvas
         composer = new EffectComposer(renderer);
         composer.addPass(new RenderPass(scene, camera));
-
-        // New Pass
-        bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2.0, window.innerHeight / 2.0), 1.5, 0.4, 0.85);
-        bloomPass.threshold = bloomParams.bloomThreshold;
-        bloomPass.strength = bloomParams.bloomStrength;
-        bloomPass.radius = bloomParams.bloomRadius;
-
+        bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2.0, window.innerHeight / 2.0), bloomParams.bloomStrength, bloomParams.bloomRadius, bloomParams.bloomThreshold);
         composer.addPass(bloomPass);
     };
 
