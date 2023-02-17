@@ -773,6 +773,7 @@ export const Animate = (url) => {
         }
 
         controls.enableZoom = false;
+        controls.enablePan = false;
         controls.screenSpacePanning = false;
         controls.minDistance = 10;
         controls.maxDistance = 100;
