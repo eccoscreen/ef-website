@@ -157,6 +157,9 @@ export const Animate = (url) => {
                 let geometry = mesh.geometry;
                 let scaleArray = new Float32Array(48000);
 
+                geometry.rotateZ(Math.PI * 0.25);
+                geometry.rotateX(Math.PI * 0.1);
+
                 for (let i = 0; i < scaleArray.length; i++) {
                     scaleArray[i] = 0.01;
                 }
