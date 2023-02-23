@@ -837,7 +837,7 @@ export const Animate = (url) => {
             if (FILE_TYPE === "glb") {
                 finalPoints.rotation.z += generalSceneControls["ETH Rotation Speed"];
             } else if (FILE_TYPE === "obj") {
-                finalPoints.rotation.y += generalSceneControls["ETH Rotation Speed"];
+                finalPoints.rotation.z += generalSceneControls["ETH Rotation Speed"];
             };
         };
 
