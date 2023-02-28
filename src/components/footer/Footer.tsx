@@ -54,11 +54,11 @@ const Footer = () => {
 
                 <div className={css['contacts']}>
                   <div>
-                    <p className={css['title']}>General Contact</p>
+                    <h4 className={css['title']}>General Contact</h4>
                     <MouseDownLink href="mailto:info@ethereum.org?subject=Hello" className={css['email']}>info@ethereum.org</MouseDownLink>
                   </div>
                   <div>
-                    <p className={css['title']}>Press Contact</p>
+                    <h4 className={css['title']}>Press Contact</h4>
                     <MouseDownLink href="mailto:press@ethereum.org?subject=Hello" className={css['email']}>press@ethereum.org</MouseDownLink>
                   </div>
                 </div>

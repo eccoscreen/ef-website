@@ -164,6 +164,18 @@ h3 {
   }
 }
 
+h4 {
+  font-weight: 400;
+  font-family: $font-secondary;
+  font-size: 22px;
+  color: white;
+  margin-bottom: 5px;
+
+  @media (max-width: 499px) {
+    font-size: 20px;
+  }
+}
+
 main p {
   line-height: 1.9;
   font-size: 18px;
@@ -208,6 +220,7 @@ ol li {
   margin: 0 auto;
   margin-top: 25px;
   transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
+  text-decoration: none;
 }
 
 #next-navigation object {
