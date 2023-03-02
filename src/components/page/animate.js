@@ -630,6 +630,24 @@ export const Animate = (url) => {
                             texture = backgroundLoader.load("assets/EF-website-landscape-infinite-garden-03-12000px.jpg");
                         }
                     }
+                } else if (url === "/whatwedo") {
+                    if (webPFormatSupported) {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-whatwedo-01-6000px.webp");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-whatwedo-01-8000px.webp");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-whatwedo-01-12000px.webp");
+                        }
+                    } else {
+                        if (screen.width < 500) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-whatwedo-01-6000px.jpg");
+                        } else if (screen.width >= 500 && screen.width <= 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-whatwedo-01-8000px.jpg");
+                        } else if (screen.width > 1700) {
+                            texture = backgroundLoader.load("assets/EF-website-landscape-whatwedo-01-12000px.jpg");
+                        }
+                    }
                 } else if (isHomePage()) {
                     if (webPFormatSupported) {
                         if (screen.width < 500) {
