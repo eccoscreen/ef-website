@@ -119,9 +119,37 @@ a {
 /* Initial Page */
 #canvas {
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
   cursor: pointer;
-  position: relative;
+  position: absolute;
+}
+
+#page-content-container {
+  z-index: 2;
+  height: 100vh;
+  background-color: rgba(30,30,60,0.0);
+}
+
+#page-content-container-visible {
+  z-index: 2;
+  height: 100vh;
+  animation-direction: normal;
+  animation: backgroundFade 3s;
+  background-color: rgba(30,30,60,0.85);
+}
+
+@keyframes backgroundFade {
+  0%   {background-color: rgba(30,30,60,0);}
+  100%   {background-color: rgba(30,30,60,0.85);}
+}
+
+.page-content-animate {
+  opacity: 0; transition: opacity 2s;
+
+}
+
+.page-content-animate.visible {
+  opacity: 1; transition: opacity 2s;
 }
 
 object {
@@ -271,7 +299,6 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 
 #content-body {
   max-width: 600px;
-  padding: 150px 150px 150px 150px;
 }
 
 .content-scrolled {

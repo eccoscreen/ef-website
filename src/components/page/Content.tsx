@@ -1,6 +1,8 @@
 'use client'
 import React from 'react';
 import css from './Content.module.scss';
+import useScrollDirection, { ScrollDirection } from '../../utils/useScrollDirection';
+
 
 export const pageContentID = 'page-content';
 
@@ -10,6 +12,8 @@ type ContentBlockProps = {
 }
 
 const ContentBlock = (props: ContentBlockProps) => {
+  const scrollDirection = useScrollDirection();
+
   return (
     <>
       <div id="transition-container">
@@ -17,7 +21,8 @@ const ContentBlock = (props: ContentBlockProps) => {
       </div>
 
       <main
-        id="page-content-container"
+        id={scrollDirection === ScrollDirection.UP ? 'page-content-container' : 'page-content-container-visible'}
+        // className={scrollDirection === ScrollDirection.UP ? 'page-content-animate' : 'page-content-animate.visible'}
         className={css['container']}
       >
         <div
