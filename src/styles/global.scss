@@ -127,20 +127,25 @@ a {
 #page-content-container {
   z-index: 2;
   height: 100vh;
+  animation: backgroundFadeOut 1s ease;
   background-color: rgba(30,30,60,0.0);
 }
 
 #page-content-container-visible {
   z-index: 2;
   height: 100vh;
-  animation-direction: normal;
-  animation: backgroundFade 3s;
+  animation: backgroundFade 1s ease;
   background-color: rgba(30,30,60,0.85);
 }
 
 @keyframes backgroundFade {
-  0%   {background-color: rgba(30,30,60,0);}
-  100%   {background-color: rgba(30,30,60,0.85);}
+  from  {background-color: rgba(30,30,60,0);}
+  to   {background-color: rgba(30,30,60,0.85);}
+}
+
+@keyframes backgroundFadeOut {
+  from   {background-color: rgba(30,30,60,0.85);}
+  to   {background-color: rgba(30,30,60,0.0);}
 }
 
 .page-content-animate {
