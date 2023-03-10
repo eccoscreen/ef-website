@@ -21,7 +21,7 @@ const RootLayout = ({ children }: {
 
   return (
     <html lang="en">
-      <body className={scrollDirection === ScrollDirection.UP ? '' : 'content-scrolled'}>
+      <body id="home" className={scrollDirection === ScrollDirection.UP ? '' : 'content-scrolled'}>
         {children}
         <Nav />
         <Footer />
