@@ -238,7 +238,7 @@ export const Animate = (url) => {
         currentLoader.setPath(RELATIVE_URL);
 
         // This variable affects the size of the particles
-        animatedModelParticleSize = 0.2;
+        animatedModelParticleSize = 0.9;
         animatedModelPointsMaterial = new THREE.PointsMaterial({
             color: new THREE.Color(10, 10, 10),
             size: animatedModelParticleSize,
