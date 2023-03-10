@@ -128,7 +128,7 @@ a {
   z-index: 2;
   height: 100vh;
   animation: backgroundFadeOut 1s ease;
-  background-color: rgba(30,30,60,0.0);
+  background-color: transparent;
 }
 
 #page-content-container-visible {
@@ -136,6 +136,10 @@ a {
   height: 100vh;
   animation: backgroundFade 1s ease;
   background-color: rgba(30,30,60,0.85);
+}
+#home #page-content-container,
+#home #page-content-container-visible {
+  background-color: transparent !important;
 }
 
 @keyframes backgroundFade {
@@ -285,7 +289,9 @@ ol li {
 }
 
 #next-navigation p {
-  font-size: 12px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  font-weight: 400;
   text-transform: uppercase;
   margin: 0 auto;
   text-decoration: none;
@@ -305,6 +311,9 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 #content-body {
   max-width: 600px;
 }
+#home #content-body{
+  color: #36364C;
+}
 
 .content-scrolled {
   // --fill-color is used downstream by components that need to change color when content is scrolled
@@ -319,6 +328,9 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
     transform: translateY(0vh);
     overflow: auto;
   }
+}
+#home.content-scrolled {
+  --fill-color: #36364C;
 }
 
 /* Transition Container - used between page loads */
@@ -446,9 +458,22 @@ $transition-curve: cubic-bezier(.37, 0, .01, 1);
 #next-navigation:hover p {
   color: #8FFFEB;
 }
+#home #next-navigation:hover p {
+  color: #FFF;
+  text-shadow: 0 0 5px #36364C;
+}
 
 #next-navigation:hover object {
   filter: invert(9%) sepia(20%) saturate(482%) hue-rotate(106deg) brightness(101%) contrast(103%);
+}
+#home #next-navigation p{
+  color: #36364C;
+}
+#home #next-navigation object {
+  filter: invert(70%) sepia(20%) saturate(482%) hue-rotate(200deg) brightness(101%);
+}
+#home #next-navigation:hover object {
+  filter: invert(0%) ;
 }
 
 // Utility to bound content to max 1680px (e.g. to prevent huge distances between header items on very wide screens)
