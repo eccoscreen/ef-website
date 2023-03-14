@@ -10,9 +10,9 @@ const Ethereum = (props: any) => {
 
         <p>Ethereum is a technology built for the public good.</p>
 
-        <p>It is a worldwide system, an <b>open-source platform <sup>1</sup></b> to write computer code that stores and automates digital databases using smart contracts, without relying upon a <b>central intermediary <sup>2</sup></b>, solving trust with <b>cryptographic <sup>3</sup></b> techniques.</p>
+        <p>It is a worldwide system, an <strong>open-source platform <sup>1</sup></strong> to write computer code that stores and automates digital databases using smart contracts, without relying upon a <strong>central intermediary <sup>2</sup></strong>, solving trust with <strong>cryptographic <sup>3</sup></strong> techniques.</p>
 
-        <p>Ethereum is not owned by anybody, and it is built and maintained by thousands of people, organizations, and users all over the world; it is a commons from which everyone can benefit. In the code, there are incentives for participants to help secure the system. Access to Ethereum is open to everyone; no permission is required. The network is powered by <b>nodes<sup>4</sup></b> that anyone can run. The global network of Ethereum nodes all together work to maintain a shared <b>state <sup>5</sup></b> - a foundation of trust upon which more complex human relationships can grow.</p>
+        <p>Ethereum is not owned by anybody, and it is built and maintained by thousands of people, organizations, and users all over the world; it is a commons from which everyone can benefit. In the code, there are incentives for participants to help secure the system. Access to Ethereum is open to everyone; no permission is required. The network is powered by <strong>nodes<sup>4</sup></strong> that anyone can run. The global network of Ethereum nodes all together work to maintain a shared <strong>state <sup>5</sup></strong> - a foundation of trust upon which more complex human relationships can grow.</p>
         <MouseDownLink href="/ef" id="next-navigation">
           <object data="/assets/bottom-arrow.svg" width="50" height="50" aria-labelledby="Next"> Next</object>
           <p> What is the EF? </p>
