@@ -193,7 +193,6 @@ h3 {
   opacity: 1;
   transition: opacity 0.4s ease-in;
   color: white;
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   margin-bottom: 20px;
 
   @media (max-width: 499px) {
@@ -218,7 +217,6 @@ main p {
   font-size: 18px;
   opacity: 1;
   transition: opacity 0.4s ease-in;
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   margin: 25px 0;
 }
 
@@ -256,8 +254,8 @@ ol li {
   justify-content: center;
   margin: 0 auto;
   margin-top: 25px;
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   text-decoration: none;
+  cursor: pointer;
 }
 
 #next-navigation object {
@@ -266,27 +264,8 @@ ol li {
   margin-bottom: 15px;
   margin-top: 100px;
   margin: 0px auto 10px auto;
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
 }
 
-#next-navigation object.displayed {
-  transform: translateY(-20px);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
-
-#next-navigation p.displayed {
-  transform: translateY(-20px);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
-
-#next-navigation.displayed {
-  transform: translateY(-20px);
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
-}
-
-#next-navigation:hover {
-  cursor: pointer;
-}
 
 #next-navigation p {
   font-size: 14px;
@@ -295,8 +274,6 @@ ol li {
   text-transform: uppercase;
   margin: 0 auto;
   text-decoration: none;
-  cursor: pointer;
-  transition: transform cubic-bezier(.37, 0, .01, 1) 2s;
   color: white;
 }
 
