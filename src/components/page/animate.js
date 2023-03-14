@@ -440,7 +440,6 @@ export const Animate = (url) => {
 
         mesh.rotation.y = - Math.PI / 2;
         if (url.indexOf("ethereum") !== -1) {
-            // Philosophy page
             mesh.rotation.y = - Math.PI / 1.55;
         } 
 
