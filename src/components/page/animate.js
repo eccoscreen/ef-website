@@ -437,18 +437,12 @@ export const Animate = (url) => {
         // Render the mesh
         const mesh = new THREE.Mesh(geometry, material);
 
-        if (url.indexOf("philosophy") !== -1) {
+
+        mesh.rotation.y = - Math.PI / 2;
+        if (url.indexOf("ethereum") !== -1) {
             // Philosophy page
-            mesh.rotation.y = - Math.PI / 2;
-        } else if (url.indexOf("ef") !== -1) {
-            // EF page
-            mesh.rotation.y = Math.PI / -1.95;
-        } else if (url.indexOf("ethereum") !== -1) {
-            // Ethereum page
             mesh.rotation.y = - Math.PI / 1.55;
-        } else if (url.indexOf("infinitegarden") !== -1) {
-            mesh.rotation.y = - Math.PI / 2;
-        }
+        } 
 
         scene.add(mesh);
     }
