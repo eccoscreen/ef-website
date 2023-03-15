@@ -8,6 +8,7 @@ const EthereumFoundation = () => {
     <ContentBlock>
       <div id="content-body" className="disable--selection">
         <h1>What We Do</h1>
+        <h4>An origin story for the Ethereum Foundation</h4>
         <p>In the beginning, Ethereum was a <strong>frontier <sup>1</sup></strong>. </p>
         <p>It was a vast open space full of possibility, and settled by only a handful of people with vision, purpose, and a willingness to accept the risks of the unknown. Together they planted a Merkle tree – a special flora that thrives in the fertile soil of consensus.</p>
         <p>Ether, a substance scattered across the landscape, was the only resource at hand for the settlers, but it was enough. Mining for Ether was very easy at first, and although it consumed power, the act enriched the soil in which the Merkle trees were to thrive.</p>
