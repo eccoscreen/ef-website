@@ -10,7 +10,7 @@ import firefliesFragmentShader from './animations/firefliesFragmentShader.glsl';
 
 export const Animate = (url) => {
     const generalSceneControls = {
-        ["ETH Rotation Speed"]: 0.0002,
+        ["ETH Rotation Speed"]: 0.00005,
     };
 
     /** Magic Variables **/
@@ -24,6 +24,7 @@ export const Animate = (url) => {
     let innerWidth = window.innerWidth
     let innerHeight = window.innerHeight
     let container = document.getElementById('canvas');
+    let controls;
 
     /** Fireflies **/
     let fireflies;
@@ -441,7 +442,7 @@ export const Animate = (url) => {
         mesh.rotation.y = - Math.PI / 2;
         if (url.indexOf("ethereum") !== -1) {
             mesh.rotation.y = - Math.PI / 1.55;
-        } 
+        }
 
         scene.add(mesh);
     }
@@ -774,7 +775,7 @@ export const Animate = (url) => {
      * Allows user to look around the scene
      */
     function initControls() {
-        let controls = new OrbitControls(camera, document.body);
+        controls = new OrbitControls(camera, document.body);
         controls.listenToKeyEvents(window);
 
         /** If we're on a mobile device, we enable damping which slows down the #camera #movement */
@@ -793,6 +794,8 @@ export const Animate = (url) => {
         controls.maxDistance = 100;
         controls.maxPolarAngle = Math.PI * 0.5;
         controls.minPolarAngle = Math.PI * 0.5;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = -0.025;
         controls.update();
     }
 
@@ -861,6 +864,8 @@ export const Animate = (url) => {
         if (ethLogoFirefliesMesh !== undefined) {
             ethLogoFirefliesMesh.rotation.y += generalSceneControls["ETH Rotation Speed"];
         };
+
+        controls.update();
 
         const contentVisible = document.body.classList.contains('content-scrolled');
 
