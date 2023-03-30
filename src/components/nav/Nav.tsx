@@ -60,7 +60,7 @@ const Nav = () => {
             <div className={css['secondary--links--container']} id="secondary--links--container">
               <MouseDownLink href="https://blog.ethereum.org/" id="ef--blog--link" target="_blank" rel="noopener noreferrer" className={css['main--menu--secondary--link']}> EF Blog </MouseDownLink>
               <span className={css['main--menu--secondary--link']}> : </span>
-              <MouseDownLink href="https://ethereum.foundation/report-2022-04.pdf" id="report--link" target="_blank" rel="noopener noreferrer" className={css['main--menu--secondary--link']}> EF Report </MouseDownLink>
+              <MouseDownLink href="/report-2022-04.pdf" id="report--link" target="_blank" rel="noopener noreferrer" className={css['main--menu--secondary--link']}> EF Report </MouseDownLink>
             </div>
           </div>
         </div>

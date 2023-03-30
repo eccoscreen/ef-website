@@ -39,7 +39,7 @@ const Footer = () => {
                   <EFLogo className={css['logo']} />
 
                   <div className={css['links']}>
-                    <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://devcon.org/" className={css['link']}>DevCon</MouseDownLink>
+                    <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://devcon.org/" className={css['link']}>Devcon</MouseDownLink>
                     <div className={css['separator']}>:</div>
                     <MouseDownLink target="_blank" rel="noopener noreferrer" href="https://blog.ethereum.org/" className={css['link']}>Blog</MouseDownLink>
                     <div className={css['break']}>
